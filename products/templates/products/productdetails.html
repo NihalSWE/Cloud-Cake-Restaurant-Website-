@@ -1,0 +1,27 @@
+{% extends "products/base.html" %}
+
+{% block title %}
+  {{ product.title }}
+{% endblock %}
+
+{% block body %}
+{% load static %}
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-6">
+      <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid rounded shadow">
+    </div>
+    <div class="col-md-6">
+      <h2 class="mb-4">{{ product.title }}</h2>
+      <p class="lead">Price: Tk. {{ product.price }}</p>
+      
+      <div class="mt-4">
+        <a href="#" class="btn btn-primary btn-lg shadow me-3">Add to Cart</a>
+        <a href="#" class="btn btn-danger btn-lg shadow">Buy Now</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,122 @@
+{% load static %} 
+
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Cloud Cake</title>
+
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/img/favicons/apple-touch-icon.png'%}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/img/favicons/favicon-32x32.png'%}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/img/favicons/favicon-16x16.png'%}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicons/favicon.ico'%}">
+    <link rel="manifest" href="{% static 'assets/img/favicons/manifest.json'%}">
+    <meta name="msapplication-TileImage" content="{% static 'assets/img/favicons/mstile-150x150.png'%}">
+    <meta name="theme-color" content="#ffffff">
+
+
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    <link href="{% static 'assets/css/theme.css'%}" rel="stylesheet" />
+    <link href="{% static 'assets/css/mystyle.css' %}" rel="stylesheet" />
+
+  </head>
+
+
+  <body>
+
+
+
+
+    <!-- ===============================================-->
+    <!--    Main Content-->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+      <nav class="navbar navbar-expand-lg navbar-custom" style="background-color: #ef3e26;">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="{% static 'assets/img/gallery/ccf.png' %}" alt="FoodShop Logo" class="img-fluid">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" aria-current="page" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Outlets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block banner %}
+ 
+
+    {% endblock %}
+      
+    {% block body %}
+
+    {% endblock %}
+
+
+      <!-- ============================================-->
+      <!-- ============================================-->
+      <!-- <section> begin ============================-->
+      <section class="py-0 pt-2 bg-1000 mb-2">
+          <hr class="border border-800" />
+          <div class="row flex-center pb-3">
+            <div class="col-md-6 order-0">
+              <p class="text-200  text-md-start">All rights Reserved &copy; Your Company, 2024</p>
+            </div>
+          </div>
+          <!-- end of .container-->
+</section>
+      <!-- <section> close ============================-->
+      <!-- ============================================-->
+
+
+    </main>
+    <!-- ===============================================-->
+    <!--    End of Main Content-->
+    <!-- ===============================================-->
+
+
+
+
+    <!-- ===============================================-->
+    <!--    JavaScripts-->
+    <!-- ===============================================-->
+    <script src="{%  static 'vendors/@popperjs/popper.min.js'%}"></script>
+    <script src="{% static 'vendors/bootstrap/bootstrap.min.js'%}"></script>
+    <script src="{% static 'vendors/is/is.min.js'%}"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script src="{% static 'vendors/fontawesome/all.min.js'%}"></script>
+    <script src="{% static 'assets/js/theme.js'%}"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&amp;display=swap" rel="stylesheet">
+  </body>
+
+</html>

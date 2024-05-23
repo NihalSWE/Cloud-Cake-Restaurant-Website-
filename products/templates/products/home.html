@@ -1,0 +1,249 @@
+{% extends "products/base.html" %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block banner %}
+<section class="py-5 overflow-hidden bg-primary" id="home">
+  <div class="container">
+    <div class="row flex-center">
+      <div class="col-md-7 col-lg-6 py-8 text-md-start text-center">
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block body %}
+{% load static %}
+      <!-- ============================================-->
+      <!-- <section> begin ============================-->
+        <section class="py-0">
+
+            <div class="container">
+              <div class="row h-100 gx-2 mt-7">
+                <div class="col-sm-6 col-lg-3 mb-3 mb-md-0 h-100 pb-4">
+                  <div class="card card-span h-100">
+                    <div class="position-relative"> <img class="img-fluid rounded-3 w-100" src="{% static 'assets/img/gallery/discount-item-1.png'%}" alt="..." />
+                      <div class="card-actions">
+                        <div class="badge badge-foodwagon p-4">
+                          <div class="d-flex flex-between-center">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body px-0">
+                      <h5 class="fw-bold text-1000 text-truncate">Flat Hill Slingback</h5><span class="badge bg-soft-danger py-2 px-3"><span class="fs-1 text-danger">6 days Remaining</span></span>
+                    </div><a class="stretched-link" href="#"></a>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-3 mb-3 mb-md-0 h-100 pb-4">
+                  <div class="card card-span h-100">
+                    <div class="position-relative"> <img class="img-fluid rounded-3 w-100" src="{% static 'assets/img/gallery/discount-item-2.png'%}" alt="..." />
+                      <div class="card-actions">
+                        <div class="badge badge-foodwagon p-4">
+                          <div class="d-flex flex-between-center">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body px-0">
+                      <h5 class="fw-bold text-1000 text-truncate">Ocean Blue Ring</h5><span class="badge bg-soft-danger py-2 px-3"><span class="fs-1 text-danger">6 days Remaining</span></span>
+                    </div><a class="stretched-link" href="#"></a>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-3 mb-3 mb-md-0 h-100 pb-4">
+                  <div class="card card-span h-100">
+                    <div class="position-relative"> <img class="img-fluid rounded-3 w-100" src="{% static 'assets/img/gallery/discount-item-3.png'%}" alt="..." />
+                      <div class="card-actions">
+                        <div class="badge badge-foodwagon p-4">
+                          <div class="d-flex flex-between-center">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body px-0">
+                      <h5 class="fw-bold text-1000 text-truncate">Brown Leathered Wallet</h5><span class="badge bg-soft-danger py-2 px-3"><span class="fs-1 text-danger">6 days Remaining</span></span>
+                    </div><a class="stretched-link" href="#"></a>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-3 mb-3 mb-md-0 h-100 pb-4">
+                  <div class="card card-span h-100">
+                    <div class="position-relative"> <img class="img-fluid rounded-3 w-100" src="{% static 'assets/img/gallery/discount-item-4.png'%}" alt="..." />
+                      <div class="card-actions">
+                        <div class="badge badge-foodwagon p-4">
+                          <div class="d-flex flex-between-center">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body px-0">
+                      <h5 class="fw-bold text-1000 text-truncate">Silverside Wristwatch</h5><span class="badge bg-soft-danger py-2 px-3"><span class="fs-1 text-danger">6 days Remaining</span></span>
+                    </div><a class="stretched-link" href="#"></a>
+                  </div>
+                </div>
+              </div>
+            </div><!-- end of .container-->
+    
+          </section>
+          <!-- <section> close ============================-->
+          <!-- ============================================-->
+    
+    
+    
+    
+          <!-- ============================================-->
+          <!-- <section> begin ============================-->
+          <section class="py-0 overflow-hidden">
+    
+            <div class="container">
+              <div class="row h-100">
+                <div class="col-lg-7 mx-auto text-center mt-4 mb-5">
+                  <h5 class="fw-bold fs-3 fs-lg-5 lh-sm">Popular items</h5>
+                </div>
+                <div class="col-12">
+                  <div class="carousel slide" id="carouselPopularItems" data-bs-touch="false" data-bs-interval="false">
+                    <div class="carousel-inner">
+                      <div class="carousel-item active" data-bs-interval="10000">
+                        {% comment %} ##-------Cakes--------- {% endcomment %}
+                        <div class="row gx-3 h-100 align-items-center">
+                            
+                          {% for cake in cakes %}
+
+                          <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
+                            <div class="card card-span h-100 rounded-3"><img class="img-fluid rounded-3 h-100" style="height: 300px; width: 300px;" src="{{cake.image.url}}" alt="..." />
+                              <div class="card-body ps-0">
+                                <h5 class="fw-bold text-1000 text-truncate mb-1">{{cake.title}}</h5>
+                                <div><span class="text-warning me-2"></div><span class="text-1000 fw-bold">Tk.{{cake.price}}</span>
+                              </div>
+                            </div>
+                            <div class="d-grid gap-2"><a class="btn btn-lg btn-danger" href="{% url 'product-detail' cake.id %}" role="button">Quick View</a></div>
+                        </div>
+
+                        {% endfor %}
+
+                      </div>
+
+                        {% comment %} ##----Breads----- {% endcomment %}
+                      <div class="row gx-3 h-100 align-items-center">
+                            
+                        {% for bread in breads %}
+
+                        <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
+                          <div class="card card-span h-100 rounded-3"><img class="img-fluid rounded-3 h-100" style="height: 300px; width: 300px;" src="{{bread.image.url}}" alt="..." />
+                            <div class="card-body ps-0">
+                              <h5 class="fw-bold text-1000 text-truncate mb-1">{{bread.title}}</h5>
+                              <div><span class="text-warning me-2"></div><span class="text-1000 fw-bold">Tk.{{bread.price}}</span>
+                            </div>
+                          </div>
+                          <div class="d-grid gap-2"><a class="btn btn-lg btn-danger" href="{% url 'product-detail' bread.id %}" role="button">Quick View</a></div>
+                      </div>
+
+                      {% endfor %}
+
+                    </div>
+
+                      {% comment %} ##-----Savory------- {% endcomment %}
+                    <div class="row gx-3 h-100 align-items-center">
+                            
+                      {% for savorie in savories %}
+
+                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
+                        <div class="card card-span h-100 rounded-3"><img class="img-fluid rounded-3 h-100" style="height: 300px; width: 300px;" src="{{savorie.image.url}}" alt="..." />
+                          <div class="card-body ps-0">
+                            <h5 class="fw-bold text-1000 text-truncate mb-1">{{savorie.title}}</h5>
+                            <div><span class="text-warning me-2"></div><span class="text-1000 fw-bold">Tk.{{savorie.price}}</span>
+                          </div>
+                        </div>
+                        <div class="d-grid gap-2"><a class="btn btn-lg btn-danger" href="{% url 'product-detail' savorie.id %}" role="button">Quick View</a></div>
+                    </div>
+
+                    {% endfor %}
+
+                  </div>
+
+                    {% comment %} ##-----Frozen-------- {% endcomment %}
+                  <div class="row gx-3 h-100 align-items-center">
+                            
+                    {% for frozen in frozens %}
+
+                    <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
+                      <div class="card card-span h-100 rounded-3"><img class="img-fluid rounded-3 h-100" style="height: 300px; width: 300px;" src="{{frozen.image.url}}" alt="..." />
+                        <div class="card-body ps-0">
+                          <h5 class="fw-bold text-1000 text-truncate mb-1">{{frozen.title}}</h5>
+                          <div><span class="text-warning me-2"></div><span class="text-1000 fw-bold">Tk.{{frozen.price}}</span>
+                        </div>
+                      </div>
+                      <div class="d-grid gap-2"><a class="btn btn-lg btn-danger" href="{% url 'product-detail' frozen.id %}" role="button">Quick View</a></div>
+                  </div>
+
+                  {% endfor %}
+                  
+                        </div>
+                        </div>
+                      </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- end of .container-->
+          </section>
+          <!-- <section> close ============================-->
+          <!-- ============================================-->
+          <!-- ============================================-->
+          <!-- <section> begin ============================-->
+          <section class="py-5 overflow-hidden">
+            <h1 class= "text-center md-2" > Food Cetagory </h1><hr>
+            <div class="container">
+              <div class="row flex-center mb-6">
+                <div class="row flex-center">
+                <div class="col-12">
+                  <div class="carousel slide" id="carouselSearchByFood" data-bs-touch="false" data-bs-interval="false">
+                    <div class="carousel-inner">
+                      <div class="carousel-item active" data-bs-interval="10000">
+                        <div class="row h-100 align-items-center">
+                          <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
+                            <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="{% static 'assets/img/gallery/Cake1.png'%}" alt="..." />
+                              <div class="card-body ps-0 text-center ">
+                                <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'cake' %}">Cakes</a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
+                            <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="{%static 'assets/img/gallery/b2.png'%}" alt="..." />
+                              <div class="card-body ps-0 text-center">
+                                <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'bread' %}">Bread & Cookies</a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
+                            <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="{% static 'assets/img/gallery/s1.png'%}" alt="..." />
+                              <div class="card-body ps-0 text-center">
+                                <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'savory' %}">Savory</a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
+                            <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="{% static 'assets/img/gallery/f2.png'%}" alt="..." />
+                              <div class="card-body ps-0 text-center">
+                                <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'frozen' %}">Frozen</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>  
+                    </div>
+                  </div>
+                </div>
+               </div>
+            </div><!-- end of .container-->
+          </section>
+          <!-- <section> close ============================-->
+{% endblock %}
+
+

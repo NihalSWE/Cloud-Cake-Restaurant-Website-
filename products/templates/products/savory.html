@@ -1,0 +1,56 @@
+{% extends "products/base.html" %}
+
+{% block title %}
+Savory items
+{% endblock %}
+
+<style>
+    
+</style>
+
+
+{% block body %}
+{% load static %}
+
+<section class="py-0 overflow-hidden">
+    
+    <div class="container">
+      <div class="row h-100">
+        <div class="col-lg-7 mx-auto text-center mt-4 mb-5">
+          <h5 class="fw-bold fs-3 fs-lg-5 lh-sm">Savory items</h5><hr>
+        </div>
+        <div class="col-12">
+          <div class="carousel slide" id="carouselPopularItems" data-bs-touch="false" data-bs-interval="false">
+            <div class="carousel-inner">
+
+              {% comment %} ##-----Savory------- {% endcomment %}
+            <div class="row gx-3 h-100 align-items-center">
+                    
+              {% for savorie in savories %}
+
+              <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
+                <div class="card card-span h-100 rounded-3"><img class="img-fluid rounded-3 h-100" style="height: 300px; width: 300px;" src="{{savorie.image.url}}" alt="..." />
+                  <div class="card-body ps-0">
+                    <h5 class="fw-bold text-1000 text-truncate mb-1">{{savorie.title}}</h5>
+                    <div><span class="text-warning me-2"></div><span class="text-1000 fw-bold">Tk.{{savorie.price}}</span>
+                  </div>
+                </div>
+                <div class="d-grid gap-2"><a class="btn btn-lg btn-danger" href="{% url 'product-detail' savorie.id %}" role="button">Quick View</a></div>
+            </div>
+
+            {% endfor %}
+
+          </div>
+
+                </div>
+              </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- end of .container-->
+  </section>
+  <!-- <section> close ============================-->
+{% endblock %}

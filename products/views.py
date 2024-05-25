@@ -1,15 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponse,get_object_or_404
 from django.views import View
-from .models import Product
+from .models import Product,AddCart
 from django.core.paginator import Paginator
 # Create your views here.
 
 
 def base(request):
     return render(request, 'products/base.html')
-
-# def home(request):
-    # return render (request,'products/home.html')
 
 class CakeView(View):
     def get(self, request):
@@ -86,27 +83,75 @@ class ProductDetailView(View):
 
 
 
-# class ProductView(View):
-#     def get(self, request):
-#         juices = Product.objects.filter(category='J')
-#         cakes = Product.objects.filter(category='C')
-#         burgers = Product.objects.filter(category='B')
-#         pizzas = Product.objects.filter(category='P')
+# def addtocart(request,prod_id):
+#     product_id=request.GET.get('prod_id')
+#     product=Product.objects.get(id=product_id)
+#     AddCart(product=product).save()
+#     # return redirect('showcart')
+#     return render(request,'products/addtocart.html') 
 
-#         juices_paginator = Paginator(juices, 8)  # Show 8 juices per page
-#         cakes_paginator = Paginator(cakes, 8)    # Show 8 cakes per page
-#         burgers_paginator = Paginator(burgers, 8)  # Show 8 burgers per page
-#         pizzas_paginator = Paginator(pizzas, 8)  # Show 8 pizzas per page
 
-#         juices_page_number = request.GET.get('juices_page')
-#         cakes_page_number = request.GET.get('cakes_page')
-#         burgers_page_number = request.GET.get('burgers_page')
-#         pizzas_page_number = request.GET.get('pizzas_page')
+def addtocart(request, prod_id):
+    # Retrieve the product object with the given ID or return a 404 error page if not found
+    product = get_object_or_404(Product, id=prod_id)
 
-#         context = {
-#             'juices': juices_paginator.get_page(juices_page_number),
-#             'cakes': cakes_paginator.get_page(cakes_page_number),
-#             'burgers': burgers_paginator.get_page(burgers_page_number),
-#             'pizzas': pizzas_paginator.get_page(pizzas_page_number),
-#         }
-#         return render(request, 'app/home.html', context)        
+    # Get the cart from the session, or create a new cart if it doesn't exist
+    cart = request.session.get('cart', {})
+
+    # Add the product to the cart or increment the quantity if it already exists in the cart
+    if str(prod_id) in cart:
+        cart[str(prod_id)]['quantity'] += 1
+    else:
+        cart[str(prod_id)] = {'product_id': prod_id, 'quantity': 1, 'price': product.price, 'title': product.title, 'image_url': product.image.url}
+
+    # Save the updated cart back to the session
+    request.session['cart'] = cart
+
+    # Optionally, you can redirect the user to another page after adding to cart
+    # return redirect('showcart')
+
+    # Render a template to confirm that the product has been added to the cart
+    return render(request, 'products/addtocart.html', {'product': product, 'cart': cart})
+
+
+
+def order(request):
+    return render(request,'products/order.html')
+
+from django import forms
+
+class ContactForm(forms.Form):
+    name = forms.CharField(
+        max_length=100,
+        required=True,
+        label='Your Name',
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    phone = forms.CharField(
+        max_length=15,
+        required=True,
+        label='Phone Number',
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    address = forms.CharField(
+        required=True,
+        label='Address',
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4})
+    )
+
+def contact_view(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Process the data in form.cleaned_data
+            name = form.cleaned_data['name']
+            phone = form.cleaned_data['phone']
+            address = form.cleaned_data['address']
+            
+            # Here you can handle the data, e.g., save it to the database, send an email, etc.
+            
+            return HttpResponse(f"Thank you {name}, we have received your contact details.")
+    else:
+        form = ContactForm()
+
+    return render(request, 'products/contact.html', {'form': form})

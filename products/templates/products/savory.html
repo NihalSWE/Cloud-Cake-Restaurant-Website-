@@ -29,7 +29,7 @@ Savory items
               {% for savorie in savories %}
 
               <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                <div class="card card-span h-100 rounded-3"><img class="img-fluid rounded-3 h-100" style="height: 300px; width: 300px;" src="{{savorie.image.url}}" alt="..." />
+                <div class="card card-span h-100 rounded-3" style="height:300px !important; width:250px !important"><img class="img-fluid rounded-3 h-100" style="height: 300px; width: 300px;" src="{{savorie.image.url}}" alt="..." />
                   <div class="card-body ps-0">
                     <h5 class="fw-bold text-1000 text-truncate mb-1">{{savorie.title}}</h5>
                     <div><span class="text-warning me-2"></div><span class="text-1000 fw-bold">Tk.{{savorie.price}}</span>

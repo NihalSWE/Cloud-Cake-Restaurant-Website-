@@ -17,7 +17,7 @@
       <p class="lead">Price: Tk. {{ product.price }}</p>
       
       <div class="mt-4">
-        <a href="#" class="btn btn-primary btn-lg shadow me-3">Add to Cart</a>
+        <a href="{% url 'addtocart' product.id %}" class="btn btn-primary btn-lg shadow me-3">Add to Cart</a>
         <a href="#" class="btn btn-danger btn-lg shadow">Buy Now</a>
       </div>
     </div>

@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse,get_object_or_404
+from django.shortcuts import render,HttpResponse,get_object_or_404,redirect
 from django.views import View
 from .models import Product,AddCart
 from django.core.paginator import Paginator
@@ -92,27 +92,45 @@ class ProductDetailView(View):
 
 
 def addtocart(request, prod_id):
-    # Retrieve the product object with the given ID or return a 404 error page if not found
     product = get_object_or_404(Product, id=prod_id)
-
-    # Get the cart from the session, or create a new cart if it doesn't exist
     cart = request.session.get('cart', {})
 
-    # Add the product to the cart or increment the quantity if it already exists in the cart
     if str(prod_id) in cart:
         cart[str(prod_id)]['quantity'] += 1
     else:
         cart[str(prod_id)] = {'product_id': prod_id, 'quantity': 1, 'price': product.price, 'title': product.title, 'image_url': product.image.url}
 
-    # Save the updated cart back to the session
     request.session['cart'] = cart
+    return redirect('showcart')
 
-    # Optionally, you can redirect the user to another page after adding to cart
-    # return redirect('showcart')
+def remove_item(request, prod_id):
+    cart = request.session.get('cart', {})
 
-    # Render a template to confirm that the product has been added to the cart
-    return render(request, 'products/addtocart.html', {'product': product, 'cart': cart})
+    if str(prod_id) in cart:
+        del cart[str(prod_id)]
+        request.session['cart'] = cart
 
+    return redirect('showcart')
+
+def update_quantity(request, prod_id, action):
+    cart = request.session.get('cart', {})
+
+    if str(prod_id) in cart:
+        if action == 'increase':
+            cart[str(prod_id)]['quantity'] += 1
+        elif action == 'decrease' and cart[str(prod_id)]['quantity'] > 1:
+            cart[str(prod_id)]['quantity'] -= 1
+
+        request.session['cart'] = cart
+
+    return redirect('showcart')
+
+def showcart(request):
+    cart = request.session.get('cart', {})
+    total_amount = sum(item['quantity'] * item['price'] for item in cart.values())
+    shipping = 70.00  # Example shipping cost
+    total_with_shipping = total_amount + shipping
+    return render(request, 'products/showcart.html', {'cart': cart, 'total_amount': total_amount, 'shipping': shipping, 'total_with_shipping': total_with_shipping})
 
 
 def order(request):

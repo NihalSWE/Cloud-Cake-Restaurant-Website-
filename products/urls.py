@@ -15,7 +15,12 @@ urlpatterns = [
     path('bread/',views.BreadView.as_view(),name="bread"),
 
 
-    path('addtocart/<int:prod_id>',views.addtocart,name="addtocart"),
+    path('addtocart/<int:prod_id>/', views.addtocart, name='addtocart'),
+    path('remove_item/<int:prod_id>/', views.remove_item, name='remove_item'),
+    path('update_quantity/<int:prod_id>/<str:action>/', views.update_quantity, name='update_quantity'),
+    path('showcart/', views.showcart, name='showcart'),
+
+
     path('contact/',views.contact_view,name="contact"),
     path('order/',views.order,name="order")
 ]

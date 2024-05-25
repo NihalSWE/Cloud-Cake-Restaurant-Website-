@@ -1,52 +1,53 @@
-{% extends "products/base.html" %}
-
-{% block title %} 
-
-Contact
-
-{% endblock %}
-
-{% block body %}
-
-<div class="container my-5">
-    <h2>Contact Us</h2>
-    <form method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
-            {{ form.name }}
-            {% if form.name.errors %}
-                <div class="text-danger">
-                    {% for error in form.name.errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
+<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="contactModalLabel">Contact Us</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <div class="form-group">
-            <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
-            {{ form.phone }}
-            {% if form.phone.errors %}
-                <div class="text-danger">
-                    {% for error in form.phone.errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
+        <div class="modal-body">
+          <form method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                  <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                  {{ form.name }}
+                  {% if form.name.errors %}
+                      <div class="text-danger">
+                          {% for error in form.name.errors %}
+                              <p>{{ error }}</p>
+                          {% endfor %}
+                      </div>
+                  {% endif %}
+              </div>
+              <div class="form-group">
+                  <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+                  {{ form.phone }}
+                  {% if form.phone.errors %}
+                      <div class="text-danger">
+                          {% for error in form.phone.errors %}
+                              <p>{{ error }}</p>
+                          {% endfor %}
+                      </div>
+                  {% endif %}
+              </div>
+              <div class="form-group">
+                  <label for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
+                  {{ form.address }}
+                  {% if form.address.errors %}
+                      <div class="text-danger">
+                          {% for error in form.address.errors %}
+                              <p>{{ error }}</p>
+                          {% endfor %}
+                      </div>
+                  {% endif %}
+              </div>
+              <div class="text-center mt-2">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+          </form>
         </div>
-        <div class="form-group">
-            <label for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
-            {{ form.address }}
-            {% if form.address.errors %}
-                <div class="text-danger">
-                    {% for error in form.address.errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </div>
-        <div class="text-center mt-2"><a type="submit" href="{% url 'order' %}" class="btn btn-primary text-center">Order</a></div>
-    </form>
-</div>
-
-{% endblock %}
+      </div>
+    </div>
+  </div>

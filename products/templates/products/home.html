@@ -52,7 +52,7 @@
       <div class="col-sm-6 col-lg-3 mb-3 mb-md-0 h-100 pb-4">
         <div class="card card-span h-100">
           <div class="position-relative">
-            <img class="img-fluid rounded-3 w-100" src="{% static 'assets/img/gallery/discount-item-1.png'%}" alt="..." />
+            <img class="img-fluid rounded-3 w-100"  src="{% static 'assets/img/gallery/discount-item-1.png'%}" alt="..." />
             <div class="card-actions">
               <div class="badge badge-foodwagon p-4">
                 <div class="d-flex flex-between-center">
@@ -141,7 +141,7 @@
                 {% for cake in cakes %}
                 <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
                   <div class="card card-span h-100 rounded-3">
-                    <img class="img-fluid rounded-3 card-img-top" src="{{cake.image.url}}" alt="..." />
+                    <img class="img-fluid rounded-3 card-img-top" style="height:250px !important" src="{{cake.image.url}}" alt="..." />
                     <div class="card-body ps-0 text-center">
                       <h5 class="fw-bold text-1000 text-truncate mb-1">{{cake.title}}</h5>
                       <div>
@@ -155,7 +155,7 @@
                     </div>
                   </div>
                   <div class="d-grid gap-2 mt-2">
-                    <a class="btn btn-lg btn-primary" onclick="addToCart('{{cake.id}}')">Add to Cart</a>
+                    <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ cake.id }}">Add to Cart</button>
                     <a class="btn btn-lg btn-danger" href="{% url 'product-detail' cake.id %}" role="button">Quick View</a>
                   </div>
                 </div>
@@ -167,7 +167,7 @@
                 {% for bread in breads %}
                 <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
                   <div class="card card-span h-100 rounded-3">
-                    <img class="img-fluid rounded-3 card-img-top" src="{{bread.image.url}}" alt="..." />
+                    <img class="img-fluid rounded-3 card-img-top"  style="height:250px !important" src="{{bread.image.url}}" alt="..." />
                     <div class="card-body ps-0 text-center">
                       <h5 class="fw-bold text-1000 text-truncate mb-1">{{bread.title}}</h5>
                       <div>
@@ -181,7 +181,7 @@
                     </div>
                   </div>
                   <div class="d-grid gap-2 mt-2">
-                    <button class="btn btn-lg btn-primary" onclick="addToCart('{{bread.id}}')">Add to Cart</button>
+                    <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ bread.id }}">Add to Cart</button>
                     <a class="btn btn-lg btn-danger" href="{% url 'product-detail' bread.id %}" role="button">Quick View</a>
                   </div>
                 </div>
@@ -193,7 +193,7 @@
                 {% for savorie in savories %}
                 <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
                   <div class="card card-span h-100 rounded-3">
-                    <img class="img-fluid rounded-3 card-img-top" src="{{savorie.image.url}}" alt="..." />
+                    <img class="img-fluid rounded-3 card-img-top" style="height:250px !important" src="{{savorie.image.url}}" alt="..." />
                     <div class="card-body ps-0 text-center">
                       <h5 class="fw-bold text-1000 text-truncate mb-1">{{savorie.title}}</h5>
                       <div>
@@ -207,7 +207,8 @@
                     </div>
                   </div>
                   <div class="d-grid gap-2 mt-2">
-                    <button class="btn btn-lg btn-primary" onclick="addToCart('{{savorie.id}}')">Add to Cart</button>
+                    <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ savorie.id }}">Add to Cart</button>
+
                     <a class="btn btn-lg btn-danger" href="{% url 'product-detail' savorie.id %}" role="button">Quick View</a>
                   </div>
                 </div>
@@ -219,7 +220,7 @@
                 {% for frozen in frozens %}
                 <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
                   <div class="card card-span h-100 rounded-3">
-                    <img class="img-fluid rounded-3 card-img-top" src="{{frozen.image.url}}" alt="..." />
+                    <img class="img-fluid rounded-3 card-img-top" style="height:250px !important" src="{{frozen.image.url}}" alt="..." />
                     <div class="card-body ps-0 text-center">
                       <h5 class="fw-bold text-1000 text-truncate mb-1">{{frozen.title}}</h5>
                       <div>
@@ -233,7 +234,9 @@
                     </div>
                   </div>
                   <div class="d-grid gap-2 mt-2">
-                    <button class="btn btn-lg btn-primary" onclick="addToCart('{{frozen.id}}')">Add to Cart</button>
+
+
+                <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ frozen.id }}">Add to Cart</button>
                     <a class="btn btn-lg btn-danger" href="{% url 'product-detail' frozen.id %}" role="button">Quick View</a>
                   </div>
                 </div>
@@ -260,32 +263,32 @@
               <div class="carousel-item active" data-bs-interval="10000">
                 <div class="row h-100 align-items-center">
                   <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                    <div class="card card-span h-100 rounded-circle">
-                      <img class="img-fluid rounded-circle h-100" src="{% static 'assets/img/gallery/Cake1.png'%}" alt="..." />
+                    <div class="card card-span h-100 rounded-circle" style="height:250px !important;width: 250px !important;">
+                      <img class="img-fluid rounded-circle h-100"  src="{% static 'assets/img/gallery/Cake1.png'%}" alt="..." />
                       <div class="card-body ps-0 text-center">
                         <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'cake' %}">Cakes</a>
                       </div>
                     </div>
                   </div>
                   <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                    <div class="card card-span h-100 rounded-circle">
-                      <img class="img-fluid rounded-circle h-100" src="{% static 'assets/img/gallery/b2.png'%}" alt="..." />
+                    <div class="card card-span h-100 rounded-circle" style="height:250px !important;width: 250px !important;">
+                      <img class="img-fluid rounded-circle h-100"  src="{% static 'assets/img/gallery/b2.png'%}" alt="..." />
                       <div class="card-body ps-0 text-center">
                         <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'bread' %}">Bread & Cookies</a>
                       </div>
                     </div>
                   </div>
                   <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                    <div class="card card-span h-100 rounded-circle">
-                      <img class="img-fluid rounded-circle h-100" src="{% static 'assets/img/gallery/s1.png'%}" alt="..." />
+                    <div class="card card-span h-100 rounded-circle" style="height:250px !important;width: 250px !important;">
+                      <img class="img-fluid rounded-circle h-100"  src="{% static 'assets/img/gallery/s1.png'%}" alt="..." />
                       <div class="card-body ps-0 text-center">
                         <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'savory' %}">Savory</a>
                       </div>
                     </div>
                   </div>
                   <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                    <div class="card card-span h-100 rounded-circle">
-                      <img class="img-fluid rounded-circle h-100" src="{% static 'assets/img/gallery/f2.png'%}" alt="..." />
+                    <div class="card card-span h-100 rounded-circle" style="height:250px !important;width: 250px !important;">
+                      <img class="img-fluid rounded-circle h-100"  src="{% static 'assets/img/gallery/f2.png'%}" alt="..." />
                       <div class="card-body ps-0 text-center">
                         <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'frozen' %}">Frozen</a>
                       </div>
@@ -303,39 +306,53 @@
 <!-- <section> close ============================-->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    $(document).ready(function() {
-        function addToCart(productId) {
-            // Make an AJAX request to add the product to the cart
-            $.ajax({
-                type: 'POST',
-                url: '/add-to-cart/',  // Replace this with your actual backend endpoint URL
-                data: {
-                    'product_id': productId,
-                    'quantity': 1  // You can pass the quantity if needed
-                },
-                success: function(data) {
-                    // Handle success response
-                    console.log('Product added to cart successfully!');
-                    // Optionally, you can redirect the user to the cart page or show a success message
-                },
-                error: function(xhr, textStatus, errorThrown) {
-                    // Handle error response
-                    console.log('Error:', errorThrown);
-                    // Optionally, you can show an error message to the user
-                }
-            });
-        }
-
-        // Attach click event handler to the "Add to Cart" buttons
-        $('.add-to-cart-btn').click(function(event) {
-            event.preventDefault(); // Prevent the default form submission behavior
-
-            // Get the product ID from the data-product-id attribute
-            var productId = $(this).data('product-id');
-
-            // Call the addToCart function with the product ID
-            addToCart(productId);
-        });
-    });
-</script>
+      jQuery(document).ready(function($) {
+          function getCookie(name) {
+              let cookieValue = null;
+              if (document.cookie && document.cookie !== '') {
+                  const cookies = document.cookie.split(';');
+                  for (let i = 0; i < cookies.length; i++) {
+                      const cookie = cookies[i].trim();
+                      // Does this cookie string begin with the name we want?
+                      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                          break;
+                      }
+                  }
+              }
+              return cookieValue;
+          }
+  
+          $('.add-to-cart-btn').click(function(event) {
+              event.preventDefault(); // Prevent the default form submission behavior
+  
+              // Get the product ID from the data-product-id attribute
+              var productId = $(this).data('product-id');
+              var csrftoken = getCookie('csrftoken');
+  
+              // Make an AJAX request to add the product to the cart
+              $.ajax({
+                  type: 'POST',
+                  url: '/addtocart/' + productId + '/',  // Update the URL pattern here
+                  data: {
+                      'product_id': productId,
+                      'quantity': 1  // You can pass the quantity if needed
+                  },
+                  headers: {
+                      'X-CSRFToken': csrftoken
+                  },
+                  success: function(data) {
+                      // Handle success response
+                      console.log('Product added to cart successfully!');
+                      // Optionally, you can redirect the user to the cart page or show a success message
+                  },
+                  error: function(xhr, textStatus, errorThrown) {
+                      // Handle error response
+                      console.log('Error:', errorThrown);
+                      // Optionally, you can show an error message to the user
+                  }
+              });
+          });
+      });
+  </script>
 {% endblock %}

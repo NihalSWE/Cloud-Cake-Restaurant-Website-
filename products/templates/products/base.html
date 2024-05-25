@@ -26,6 +26,7 @@
     <meta name="msapplication-TileImage" content="{% static 'assets/img/favicons/mstile-150x150.png'%}">
     <meta name="theme-color" content="#ffffff">
 
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- ===============================================-->
     <!--    Stylesheets-->
@@ -72,16 +73,20 @@
             <!-- Cart Icon -->
             <div class="nav-item dropdown">
               <a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdownCart" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-shopping-cart"></i> Cart <span class="badge bg-danger">3</span>
+                  <i class="fas fa-shopping-cart"></i> Cart <span class="badge bg-danger">{{ total_items }}</span>
               </a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownCart">
-                <li><a class="dropdown-item" href="#">Item 1</a></li>
-                <li><a class="dropdown-item" href="#">Item 2</a></li>
-                <li><a class="dropdown-item" href="#">Item 3</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{% url 'showcart' %}">View Cart</a></li>
+                  {% if cart_items %}
+                      {% for item in cart_items %}
+                          <li><a class="dropdown-item" href="#">{{ item.product.title }} - {{ item.quantity }}</a></li>
+                      {% endfor %}
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="{% url 'showcart' %}">View Cart</a></li>
+                  {% else %}
+                      <li><a class="dropdown-item" href="#">Your cart is empty</a></li>
+                  {% endif %}
               </ul>
-            </div>
+          </div>
           </div>
         </div>
       </nav>
@@ -145,9 +150,13 @@
     <script src="{% static 'vendors/fontawesome/all.min.js'%}"></script>
     <script src="{% static 'assets/js/theme.js'%}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&amp;display=swap" rel="stylesheet">
+
   </body>
 
 </html>

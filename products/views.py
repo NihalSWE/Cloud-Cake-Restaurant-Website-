@@ -130,6 +130,7 @@ def update_quantity(request, prod_id, action):
 
 def showcart(request):
     cart = request.session.get('cart', {})
+    print("Cart Contents:", cart)
     total_amount = 0
     for item in cart.values():
         if 'discount_price' in item:
@@ -139,7 +140,29 @@ def showcart(request):
 
     shipping = 70.00  # Example shipping cost
     total_with_shipping = total_amount + shipping
-    return render(request, 'products/showcart.html', {'cart': cart, 'total_amount': total_amount, 'shipping': shipping, 'total_with_shipping': total_with_shipping})
+    
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Process the data in form.cleaned_data
+            name = form.cleaned_data['name']
+            phone = form.cleaned_data['phone']
+            address = form.cleaned_data['address']
+            
+          
+            return HttpResponse(f"Thank you {name}, we have received your contact details.")
+    else:
+        form = ContactForm()
+
+    context = {
+        'cart': cart,
+        'total_amount': total_amount,
+        'shipping': shipping,
+        'total_with_shipping': total_with_shipping,
+        'form': form,
+    }
+
+    return render(request, 'products/showcart.html', context)
 
 
 

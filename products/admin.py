@@ -5,7 +5,7 @@ from .models import Product,AddCart,Contact
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'price','category', 'image']
+    list_display = ['id', 'title', 'price','discount_price','detail','category', 'image']
 
 
 @admin.register(AddCart)

@@ -47,31 +47,45 @@
     <main class="main" id="top">
       <nav class="navbar navbar-expand-lg navbar-custom" style="background-color: #ef3e26;">
         <div class="container">
-            <a class="navbar-brand" href="/">
-                <img src="{% static 'assets/img/gallery/ccf.png' %}" alt="FoodShop Logo" class="img-fluid">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" aria-current="page" href="{% url 'home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Outlets</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Contact Us</a>
-                    </li>
-                </ul>
+          <a class="navbar-brand" href="/">
+            <img src="{% static 'assets/img/gallery/ccf.png' %}" alt="FoodShop Logo" class="img-fluid">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link text-white" aria-current="page" href="{% url 'home' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" href="#">Outlets</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" href="#">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" href="#">Contact Us</a>
+              </li>
+            </ul>
+            <!-- Cart Icon -->
+            <div class="nav-item dropdown">
+              <a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdownCart" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-shopping-cart"></i> Cart <span class="badge bg-danger">3</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownCart">
+                <li><a class="dropdown-item" href="#">Item 1</a></li>
+                <li><a class="dropdown-item" href="#">Item 2</a></li>
+                <li><a class="dropdown-item" href="#">Item 3</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'showcart' %}">View Cart</a></li>
+              </ul>
             </div>
+          </div>
         </div>
-    </nav>
+      </nav>
+      
     {% block banner %}
  
 
@@ -80,8 +94,23 @@
     {% block body %}
 
     {% endblock %}
+{% comment %} 
+    <script>
+      $(document).ready(function() {
+          $('.add-to-cart-btn').click(function(e) {
+              e.preventDefault();
+              var prod_id = $(this).data('id');
 
-
+              $.ajax({
+                  url: '/addtocart/' + prod_id + '/',
+                  method: 'GET',
+                  success: function(response) {
+                      $('#cart-count').text(response.cart_count);
+                  }
+              });
+          });
+      });
+  </script> {% endcomment %}
       <!-- ============================================-->
       <!-- ============================================-->
       <!-- <section> begin ============================-->
@@ -115,6 +144,8 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
     <script src="{% static 'vendors/fontawesome/all.min.js'%}"></script>
     <script src="{% static 'assets/js/theme.js'%}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&amp;display=swap" rel="stylesheet">
   </body>

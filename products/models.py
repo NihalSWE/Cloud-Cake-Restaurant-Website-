@@ -11,6 +11,8 @@ CATEGORY_CHOICES=(
 class Product(models.Model):
     title=models.CharField(max_length=100)
     price=models.FloatField()
+    discount_price=models.FloatField(blank=True,null=True)
+    detail=models.TextField(max_length=200,null=True)
     category=models.CharField(choices=CATEGORY_CHOICES,default='J',max_length=2)
     image=models.ImageField(upload_to="product_img")
 

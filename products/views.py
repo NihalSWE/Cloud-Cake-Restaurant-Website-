@@ -83,22 +83,25 @@ class ProductDetailView(View):
 
 
 
-# def addtocart(request,prod_id):
-#     product_id=request.GET.get('prod_id')
-#     product=Product.objects.get(id=product_id)
-#     AddCart(product=product).save()
-#     # return redirect('showcart')
-#     return render(request,'products/addtocart.html') 
-
-
 def addtocart(request, prod_id):
     product = get_object_or_404(Product, id=prod_id)
     cart = request.session.get('cart', {})
 
+    product_data = {
+        'product_id': prod_id,
+        'quantity': 1,
+        'price': product.price,
+        'title': product.title,
+        'image_url': product.image.url
+    }
+    
+    if product.discount_price:
+        product_data['discount_price'] = product.discount_price
+
     if str(prod_id) in cart:
         cart[str(prod_id)]['quantity'] += 1
     else:
-        cart[str(prod_id)] = {'product_id': prod_id, 'quantity': 1, 'price': product.price, 'title': product.title, 'image_url': product.image.url}
+        cart[str(prod_id)] = product_data
 
     request.session['cart'] = cart
     return redirect('showcart')
@@ -127,10 +130,17 @@ def update_quantity(request, prod_id, action):
 
 def showcart(request):
     cart = request.session.get('cart', {})
-    total_amount = sum(item['quantity'] * item['price'] for item in cart.values())
+    total_amount = 0
+    for item in cart.values():
+        if 'discount_price' in item:
+            total_amount += item['quantity'] * item['discount_price']
+        else:
+            total_amount += item['quantity'] * item['price']
+
     shipping = 70.00  # Example shipping cost
     total_with_shipping = total_amount + shipping
     return render(request, 'products/showcart.html', {'cart': cart, 'total_amount': total_amount, 'shipping': shipping, 'total_with_shipping': total_with_shipping})
+
 
 
 def order(request):

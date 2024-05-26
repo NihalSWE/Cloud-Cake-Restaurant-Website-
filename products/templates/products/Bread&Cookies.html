@@ -1,56 +1,45 @@
 {% extends "products/base.html" %}
 
 {% block title %}
-Bread & Cookies
+    Bread & Cookies
 {% endblock %}
-
-<style>
-  /* Add your custom styles here if needed */
-</style>
 
 {% block body %}
 {% load static %}
 
-<section class="py-0 overflow-hidden">
+<section class="py-5">
   <div class="container">
-    <div class="row h-100">
-      <div class="col-lg-7 mx-auto text-center mt-4 mb-5">
-        <h5 class="fw-bold fs-3 fs-lg-5 lh-sm">Bread & Cookies Items</h5>
-        <hr>
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center mb-5">
+        <h2 class="fw-bold fs-3 fs-lg-5 lh-sm">Bread & Cookies Items</h2>
+        <hr class="divider" />
       </div>
-      <div class="col-12">
-        <div class="carousel slide" id="carouselPopularItems" data-bs-touch="false" data-bs-interval="false">
-          <div class="carousel-inner">
-            <div class="row gx-3 h-100 align-items-center">
-              {% for bread in breads %}
-              <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                <div class="card card-span h-100 rounded-3" style="height: 300px !important; width: 250px !important">
-                  <img class="img-fluid rounded-3 h-100" style="height: 300px; width: 300px;" src="{{ bread.image.url }}" alt="Bread Image" />
-                  <div class="card-body ps-0">
-                    <h5 class="fw-bold text-1000 text-truncate mb-1">{{ bread.title }}</h5>
-                    {% if bread.discount_price %}
-                    <div>
-                      <span class="text-danger fw-bold">Discount Price: Tk.{{ bread.discount_price }}</span>
-                      <br>
-                      <span class="text-muted text-decoration-line-through">Tk.{{ bread.price }}</span>
-                    </div>
-                    {% else %}
-                    <div>
-                      <span class="text-1000 fw-bold">Price: Tk.{{ bread.price }}</span>
-                    </div>
-                    {% endif %}
-                  </div>
-                </div>
-                <div class="d-grid gap-2">
-                  <a class="btn btn-lg btn-danger" href="{% url 'product-detail' bread.id %}" role="button">Quick View</a>
-                </div>
-              </div>
-              {% endfor %}
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for bread in breads %}
+      <div class="col">
+        <div class="card h-100 border-0">
+          <img src="{{ bread.image.url }}" class="card-img-top" alt="Bread Image">
+          <div class="card-body">
+            <h5 class="card-title fw-bold text-1000">{{ bread.title }}</h5>
+            {% if bread.discount_price %}
+            <span class="card-text"><small class="text-muted">Tk.{{ bread.price }}</small></span>
+            <span class="card-text text-danger fw-bold">Discount Price: Tk.{{ bread.discount_price }}</span>
+            
+            {% else %}
+            <span class="card-text text-1000 fw-bold">Price: Tk.{{ bread.price }}</span>
+            {% endif %}
+            <div class="btn-group">
+              <a href="{% url 'product-detail' bread.id %}" class="btn btn-danger">Quick View</a>
+              <button class="btn btn-primary" type="submit">Add to Cart</button>
             </div>
           </div>
         </div>
       </div>
+      {% endfor %}
     </div>
+
   </div>
 </section>
 

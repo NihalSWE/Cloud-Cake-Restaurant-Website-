@@ -7,10 +7,10 @@ def cart(request):
 
     if 'cart' in request.session:
         cart = request.session['cart']
-        cart_item_ids = cart.keys()
-        cart_items = AddCart.objects.filter(id__in=cart_item_ids)
-        total_items = sum(item.quantity for item in cart_items)
-        total_amount = sum(item.quantity * item.product.price for item in cart_items)
+        product_ids = [item['product_id'] for item in cart.values()]
+        cart_items = AddCart.objects.filter(product_id__in=product_ids)
+        total_items = sum(item['quantity'] for item in cart.values())
+        total_amount = sum(item['quantity'] * item['price'] for item in cart.values())
 
     return {
         'cart_items': cart_items,

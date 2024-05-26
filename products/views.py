@@ -2,6 +2,7 @@ from django.shortcuts import render,HttpResponse,get_object_or_404,redirect
 from django.views import View
 from .models import Product,AddCart
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 # Create your views here.
 
 
@@ -11,13 +12,15 @@ def base(request):
 class CakeView(View):
     def get(self, request):
         cakes = Product.objects.filter(category='C')
-        cakes_paginator = Paginator(cakes, 8)    # Show 8 cakes per page
-        cakes_page_number = request.GET.get('cakes_page')
+        paginator = Paginator(cakes, 4)  # Display 4 cakes per page
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
         context = {
-            'cakes': cakes_paginator.get_page(cakes_page_number),
-            
+            'cakes': page_obj,
         }
-        return render(request,'products/cake.html', context)
+        return render(request, 'products/cake.html', context)
 
 
 class SavoryView(View):
@@ -87,24 +90,27 @@ def addtocart(request, prod_id):
     product = get_object_or_404(Product, id=prod_id)
     cart = request.session.get('cart', {})
 
-    product_data = {
-        'product_id': prod_id,
-        'quantity': 1,
-        'price': product.price,
-        'title': product.title,
-        'image_url': product.image.url
-    }
-    
-    if product.discount_price:
-        product_data['discount_price'] = product.discount_price
-
     if str(prod_id) in cart:
         cart[str(prod_id)]['quantity'] += 1
     else:
+        product_data = {
+            'product_id': prod_id,
+            'quantity': 1,
+            'price': product.price,
+            'title': product.title,
+            'image_url': product.image.url
+        }
+        if product.discount_price:
+            product_data['discount_price'] = product.discount_price
         cart[str(prod_id)] = product_data
 
     request.session['cart'] = cart
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse({'message': 'Product added to cart successfully!'})
+
     return redirect('showcart')
+
 
 def remove_item(request, prod_id):
     cart = request.session.get('cart', {})

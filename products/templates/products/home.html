@@ -126,233 +126,229 @@
 </section>
 
 <!-- <section> begin ============================-->
-<section class="py-0 overflow-hidden">
-  <div class="container">
-    <div class="row h-100">
-      <div class="col-lg-7 mx-auto text-center mt-4 mb-5">
-        <h5 class="fw-bold fs-3 fs-lg-5 lh-sm">Popular items</h5>
-      </div>
-      <div class="col-12">
-        <div class="carousel slide" id="carouselPopularItems" data-bs-touch="false" data-bs-interval="false">
-          <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="10000">
-              {% comment %} ##-------Cakes--------- {% endcomment %}
-              <div class="row gx-3 h-100 align-items-center">
-                {% for cake in cakes %}
-                <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                  <div class="card card-span h-100 rounded-3">
-                    <img class="img-fluid rounded-3 card-img-top" style="height:250px !important" src="{{cake.image.url}}" alt="..." />
-                    <div class="card-body ps-0 text-center">
-                      <h5 class="fw-bold text-1000 text-truncate mb-1">{{cake.title}}</h5>
-                      <div>
-                        {% if cake.discount_price %}
-                          <span class="text-muted"><del>Tk. {{cake.price}}</del></span>
-                          <span class="text-danger fw-bold"> Tk. {{cake.discount_price}}</span>
-                        {% else %}
-                          <span class="text-1000 fw-bold">Tk. {{cake.price}}</span>
-                        {% endif %}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="d-grid gap-2 mt-2">
-                    <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ cake.id }}">Add to Cart</button>
-                    <a class="btn btn-lg btn-danger" href="{% url 'product-detail' cake.id %}" role="button">Quick View</a>
-                  </div>
-                </div>
-                {% endfor %}
-              </div>
-
-              {% comment %} ##----Breads----- {% endcomment %}
-              <div class="row gx-3 h-100 align-items-center">
-                {% for bread in breads %}
-                <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                  <div class="card card-span h-100 rounded-3">
-                    <img class="img-fluid rounded-3 card-img-top"  style="height:250px !important" src="{{bread.image.url}}" alt="..." />
-                    <div class="card-body ps-0 text-center">
-                      <h5 class="fw-bold text-1000 text-truncate mb-1">{{bread.title}}</h5>
-                      <div>
-                        {% if bread.discount_price %}
-                          <span class="text-muted"><del>Tk. {{bread.price}}</del></span>
-                          <span class="text-danger fw-bold"> Tk. {{bread.discount_price}}</span>
-                        {% else %}
-                          <span class="text-1000 fw-bold">Tk. {{bread.price}}</span>
-                        {% endif %}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="d-grid gap-2 mt-2">
-                    <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ bread.id }}">Add to Cart</button>
-                    <a class="btn btn-lg btn-danger" href="{% url 'product-detail' bread.id %}" role="button">Quick View</a>
-                  </div>
-                </div>
-                {% endfor %}
-              </div>
-
-              {% comment %} ##-----Savory------- {% endcomment %}
-              <div class="row gx-3 h-100 align-items-center">
-                {% for savorie in savories %}
-                <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                  <div class="card card-span h-100 rounded-3">
-                    <img class="img-fluid rounded-3 card-img-top" style="height:250px !important" src="{{savorie.image.url}}" alt="..." />
-                    <div class="card-body ps-0 text-center">
-                      <h5 class="fw-bold text-1000 text-truncate mb-1">{{savorie.title}}</h5>
-                      <div>
-                        {% if savorie.discount_price %}
-                          <span class="text-muted"><del>Tk. {{savorie.price}}</del></span>
-                          <span class="text-danger fw-bold"> Tk. {{savorie.discount_price}}</span>
-                        {% else %}
-                          <span class="text-1000 fw-bold">Tk. {{savorie.price}}</span>
-                        {% endif %}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="d-grid gap-2 mt-2">
-                    <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ savorie.id }}">Add to Cart</button>
-
-                    <a class="btn btn-lg btn-danger" href="{% url 'product-detail' savorie.id %}" role="button">Quick View</a>
-                  </div>
-                </div>
-                {% endfor %}
-              </div>
-
-              {% comment %} ##-----Frozen-------- {% endcomment %}
-              <div class="row gx-3 h-100 align-items-center">
-                {% for frozen in frozens %}
-                <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                  <div class="card card-span h-100 rounded-3">
-                    <img class="img-fluid rounded-3 card-img-top" style="height:250px !important" src="{{frozen.image.url}}" alt="..." />
-                    <div class="card-body ps-0 text-center">
-                      <h5 class="fw-bold text-1000 text-truncate mb-1">{{frozen.title}}</h5>
-                      <div>
-                        {% if frozen.discount_price %}
-                          <span class="text-muted"><del>Tk. {{frozen.price}}</del></span>
-                          <span class="text-danger fw-bold"> Tk. {{frozen.discount_price}}</span>
-                        {% else %}
-                          <span class="text-1000 fw-bold">Tk. {{frozen.price}}</span>
-                        {% endif %}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="d-grid gap-2 mt-2">
-
-
-                <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ frozen.id }}">Add to Cart</button>
-                    <a class="btn btn-lg btn-danger" href="{% url 'product-detail' frozen.id %}" role="button">Quick View</a>
-                  </div>
-                </div>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
+  <section class="py-0 overflow-hidden">
+    <div class="container">
+      <div class="row h-100">
+        <div class="col-lg-7 mx-auto text-center mt-4 mb-5">
+          <h5 class="fw-bold fs-3 fs-lg-5 lh-sm">Popular items</h5>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- <section> begin ============================-->
-<section class="py-5 overflow-hidden">
-  <h1 class="text-center mb-2">Food Category</h1>
-  <hr>
-  <div class="container">
-    <div class="row flex-center mb-6">
-      <div class="row flex-center">
         <div class="col-12">
-          <div class="carousel slide" id="carouselSearchByFood" data-bs-touch="false" data-bs-interval="false">
+          <div class="carousel slide" id="carouselPopularItems" data-bs-touch="false" data-bs-interval="false">
             <div class="carousel-inner">
               <div class="carousel-item active" data-bs-interval="10000">
-                <div class="row h-100 align-items-center">
+                {% comment %} ##-------Cakes--------- {% endcomment %}
+                <div class="row gx-3 h-100 align-items-center">
+                  {% for cake in cakes %}
                   <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                    <div class="card card-span h-100 rounded-circle" style="height:250px !important;width: 250px !important;">
-                      <img class="img-fluid rounded-circle h-100"  src="{% static 'assets/img/gallery/Cake1.png'%}" alt="..." />
+                    <div class="card card-span h-100 rounded-3">
+                      <img class="img-fluid rounded-3 card-img-top" style="height:250px !important" src="{{cake.image.url}}" alt="..." />
                       <div class="card-body ps-0 text-center">
-                        <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'cake' %}">Cakes</a>
+                        <h5 class="fw-bold text-1000 text-truncate mb-1">{{cake.title}}</h5>
+                        <div>
+                          {% if cake.discount_price %}
+                            <span class="text-muted"><del>Tk. {{cake.price}}</del></span>
+                            <span class="text-danger fw-bold"> Tk. {{cake.discount_price}}</span>
+                          {% else %}
+                            <span class="text-1000 fw-bold">Tk. {{cake.price}}</span>
+                          {% endif %}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                    <div class="card card-span h-100 rounded-circle" style="height:250px !important;width: 250px !important;">
-                      <img class="img-fluid rounded-circle h-100"  src="{% static 'assets/img/gallery/b2.png'%}" alt="..." />
-                      <div class="card-body ps-0 text-center">
-                        <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'bread' %}">Bread & Cookies</a>
-                      </div>
+                    <div class="d-grid gap-2 mt-2">
+                      <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ cake.id }}">Add to Cart</button>
+                      <a class="btn btn-lg btn-danger" href="{% url 'product-detail' cake.id %}" role="button">Quick View</a>
                     </div>
                   </div>
-                  <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                    <div class="card card-span h-100 rounded-circle" style="height:250px !important;width: 250px !important;">
-                      <img class="img-fluid rounded-circle h-100"  src="{% static 'assets/img/gallery/s1.png'%}" alt="..." />
-                      <div class="card-body ps-0 text-center">
-                        <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'savory' %}">Savory</a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                    <div class="card card-span h-100 rounded-circle" style="height:250px !important;width: 250px !important;">
-                      <img class="img-fluid rounded-circle h-100"  src="{% static 'assets/img/gallery/f2.png'%}" alt="..." />
-                      <div class="card-body ps-0 text-center">
-                        <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'frozen' %}">Frozen</a>
-                      </div>
-                    </div>
-                  </div>
+                  {% endfor %}
                 </div>
-              </div>  
+  
+                {% comment %} ##----Breads----- {% endcomment %}
+                <div class="row gx-3 h-100 align-items-center">
+                  {% for bread in breads %}
+                  <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
+                    <div class="card card-span h-100 rounded-3">
+                      <img class="img-fluid rounded-3 card-img-top"  style="height:250px !important" src="{{bread.image.url}}" alt="..." />
+                      <div class="card-body ps-0 text-center">
+                        <h5 class="fw-bold text-1000 text-truncate mb-1">{{bread.title}}</h5>
+                        <div>
+                          {% if bread.discount_price %}
+                            <span class="text-muted"><del>Tk. {{bread.price}}</del></span>
+                            <span class="text-danger fw-bold"> Tk. {{bread.discount_price}}</span>
+                          {% else %}
+                            <span class="text-1000 fw-bold">Tk. {{bread.price}}</span>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-grid gap-2 mt-2">
+                      <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ bread.id }}">Add to Cart</button>
+                      <a class="btn btn-lg btn-danger" href="{% url 'product-detail' bread.id %}" role="button">Quick View</a>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+  
+                {% comment %} ##-----Savory------- {% endcomment %}
+                <div class="row gx-3 h-100 align-items-center">
+                  {% for savorie in savories %}
+                  <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
+                    <div class="card card-span h-100 rounded-3">
+                      <img class="img-fluid rounded-3 card-img-top" style="height:250px !important" src="{{savorie.image.url}}" alt="..." />
+                      <div class="card-body ps-0 text-center">
+                        <h5 class="fw-bold text-1000 text-truncate mb-1">{{savorie.title}}</h5>
+                        <div>
+                          {% if savorie.discount_price %}
+                            <span class="text-muted"><del>Tk. {{savorie.price}}</del></span>
+                            <span class="text-danger fw-bold"> Tk. {{savorie.discount_price}}</span>
+                          {% else %}
+                            <span class="text-1000 fw-bold">Tk. {{savorie.price}}</span>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-grid gap-2 mt-2">
+                      <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ savorie.id }}">Add to Cart</button>
+  
+                      <a class="btn btn-lg btn-danger" href="{% url 'product-detail' savorie.id %}" role="button">Quick View</a>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+  
+                {% comment %} ##-----Frozen-------- {% endcomment %}
+                <div class="row gx-3 h-100 align-items-center">
+                  {% for frozen in frozens %}
+                  <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
+                    <div class="card card-span h-100 rounded-3">
+                      <img class="img-fluid rounded-3 card-img-top" style="height:250px !important" src="{{frozen.image.url}}" alt="..." />
+                      <div class="card-body ps-0 text-center">
+                        <h5 class="fw-bold text-1000 text-truncate mb-1">{{frozen.title}}</h5>
+                        <div>
+                          {% if frozen.discount_price %}
+                            <span class="text-muted"><del>Tk. {{frozen.price}}</del></span>
+                            <span class="text-danger fw-bold"> Tk. {{frozen.discount_price}}</span>
+                          {% else %}
+                            <span class="text-1000 fw-bold">Tk. {{frozen.price}}</span>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-grid gap-2 mt-2">
+                      <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ frozen.id }}">Add to Cart</button>
+                      <a class="btn btn-lg btn-danger" href="{% url 'product-detail' frozen.id %}" role="button">Quick View</a>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div><!-- end of .container-->
+  </section>
+
+<!-- <section> begin ============================-->
+  <section class="py-5 overflow-hidden">
+    <h1 class="text-center mb-2">Food Category</h1>
+    <hr>
+    <div class="container">
+        <div class="row flex-center mb-6">
+            <div class="col-12">
+                <div class="carousel slide" id="carouselSearchByFood" data-bs-touch="false" data-bs-interval="false">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" data-bs-interval="10000">
+                            <div class="row h-100 align-items-center justify-content-center">
+                                <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
+                                    <div class="card card-span h-100 rounded-circle" style="height: 200px; width: 200px;">
+                                        <img class="img-fluid rounded-circle h-100" src="{% static 'assets/img/gallery/Cake1.png' %}" alt="Cakes" />
+                                        <div class="card-body ps-0 text-center">
+                                            <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'cake' %}">Cakes</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
+                                    <div class="card card-span h-100 rounded-circle" style="height: 200px; width: 200px;">
+                                        <img class="img-fluid rounded-circle h-100" src="{% static 'assets/img/gallery/b2.png' %}" alt="Bread & Cookies" />
+                                        <div class="card-body ps-0 text-center">
+                                            <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'bread' %}">Bread & Cookies</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
+                                    <div class="card card-span h-100 rounded-circle" style="height: 200px; width: 200px;">
+                                        <img class="img-fluid rounded-circle h-100" src="{% static 'assets/img/gallery/s1.png' %}" alt="Savory" />
+                                        <div class="card-body ps-0 text-center">
+                                            <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'savory' %}">Savory</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
+                                    <div class="card card-span h-100 rounded-circle" style="height: 200px; width: 200px;">
+                                        <img class="img-fluid rounded-circle h-100" src="{% static 'assets/img/gallery/f2.png' %}" alt="Frozen" />
+                                        <div class="card-body ps-0 text-center">
+                                            <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'frozen' %}">Frozen</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- end of .container-->
 </section>
+
+  <!-- <section> close ============================-->
+  
 <!-- <section> close ============================-->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-      jQuery(document).ready(function($) {
-          function getCookie(name) {
-              let cookieValue = null;
-              if (document.cookie && document.cookie !== '') {
-                  const cookies = document.cookie.split(';');
-                  for (let i = 0; i < cookies.length; i++) {
-                      const cookie = cookies[i].trim();
-                      // Does this cookie string begin with the name we want?
-                      if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                          break;
-                      }
-                  }
-              }
-              return cookieValue;
+    jQuery(document).ready(function($) {
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
           }
+        }
+        return cookieValue;
+      }
   
-          $('.add-to-cart-btn').click(function(event) {
-              event.preventDefault(); // Prevent the default form submission behavior
+      $('.add-to-cart-btn').click(function(event) {
+        event.preventDefault();
   
-              // Get the product ID from the data-product-id attribute
-              var productId = $(this).data('product-id');
-              var csrftoken = getCookie('csrftoken');
+        var productId = $(this).data('product-id');
+        var csrftoken = getCookie('csrftoken');
   
-              // Make an AJAX request to add the product to the cart
-              $.ajax({
-                  type: 'POST',
-                  url: '/addtocart/' + productId + '/',  // Update the URL pattern here
-                  data: {
-                      'product_id': productId,
-                      'quantity': 1  // You can pass the quantity if needed
-                  },
-                  headers: {
-                      'X-CSRFToken': csrftoken
-                  },
-                  success: function(data) {
-                      // Handle success response
-                      console.log('Product added to cart successfully!');
-                      // Optionally, you can redirect the user to the cart page or show a success message
-                  },
-                  error: function(xhr, textStatus, errorThrown) {
-                      // Handle error response
-                      console.log('Error:', errorThrown);
-                      // Optionally, you can show an error message to the user
-                  }
-              });
-          });
+        $.ajax({
+          type: 'POST',
+          url: '/addtocart/' + productId + '/',  // Ensure the URL matches your URL patterns
+          data: {
+            'product_id': productId,
+            'quantity': 1
+          },
+          headers: {
+            'X-CSRFToken': csrftoken
+          },
+          success: function(data) {
+            console.log('Product added to cart successfully!');
+            $('#navbarDropdownCart .badge').text(data.total_items);
+            $('#success-message').show().delay(2000).fadeOut();
+          },
+          error: function(xhr, textStatus, errorThrown) {
+            console.log('Error:', errorThrown);
+            alert('There was an error adding the product to the cart. Please try again.');
+          }
+        });
       });
+    });
   </script>
+  
 {% endblock %}

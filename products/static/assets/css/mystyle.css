@@ -1,0 +1,24 @@
+.cart-dropdown {
+    min-width: 250px;
+    /* Set a minimum width for the dropdown */
+}
+
+.cart-item {
+    padding: 10px;
+}
+
+.cart-item:hover {
+    background-color: #f8f9fa;
+    /* Change background color on hover */
+}
+
+.empty-cart {
+    padding: 10px;
+    color: #999;
+    /* Lighter color for empty cart message */
+}
+
+.dropdown-divider {
+    margin: 0;
+    /* Remove margin for better alignment */
+}

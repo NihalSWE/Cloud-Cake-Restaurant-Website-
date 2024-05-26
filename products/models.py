@@ -31,11 +31,15 @@ class AddCart(models.Model):
 def total_cost(self):
     return self.quantity * self.product.price
 
+
+
+from django.contrib.postgres.fields import JSONField
 class Contact(models.Model):
     name=models.CharField(max_length=100)
     number=models.CharField(max_length=100)
     address=models.TextField()
     product=models.ForeignKey(Product,on_delete=models.CASCADE,null=True)
+    cart_items = models.JSONField(null=True, blank=True)
     
 
     def __str__(self):

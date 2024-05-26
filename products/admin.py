@@ -14,4 +14,4 @@ class AddCartModelAdmin(admin.ModelAdmin):
 
 @admin.register(Contact)
 class ContactModelAdmin(admin.ModelAdmin):
-    list_display=['id','name','number','address']
+    list_display=['id','name','number','address','cart_items']

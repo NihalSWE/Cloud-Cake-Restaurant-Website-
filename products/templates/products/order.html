@@ -1,63 +1,28 @@
 {% extends "products/base.html" %}
 
 {% block title %}
-Order
+Order Confirmation
 {% endblock %}
 
 {% block body %}
-<div class="container my-5">
-    <div class="row">
-    <h3>Order <strong> List </strong></h3>
-     <div class="col-sm-2 border-end">
-      <ul class="list-unstyled">
-       <li class="d-grid"><a href="#" class="btn btn-primary">Orders</a></li>
-      </ul>
-     </div>
-     <div class="col-sm-9 offset-sm-1">
-         
-    {% for op in order_placed %}     
-      <div class="row shadow-sm mb-3">
-       <div class="col-sm-2"><img src="{{op.product.product_image.url}}" alt="" srcset="" class="img-fluid" height="150" width="150"></div>
-
-       <div class="col-sm-7">
-           <p>Product: {{op.product.title}}</p>
-           <p>Quantity: {{op.quantity}}</p>
-           <!-- <p>Price: {{op.total_cost}}</p> -->
-       </div>
-       <div class="col-sm-3 fw-bold">
-           <p>Order Status:{{op.status}}</p>
-           
-           {% if op.status == 'Accepted' %}
-             <div class="progress">
-               <div class="progress-bar bg-primary" role="progressbar" style="width: 100%;"
-                   aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-           </div>
-               
-           {% endif %}
-            
-           
-           {% if op.status == 'Delivered' %}
-            <div class="progress">
-                <div class="progress-bar bg-success" role="progressbar" style="width: 100%;"
-                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>     
-
-           {% endif %}
-               
-           
-           {% if op.status == 'Canceled' %}
-            
-            <div class="progress">
-                <div class="progress-bar bg-danger" role="progressbar" style="width:100;"
-                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+{% load static %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-lg p-4">
+                <h1 class="display-5 text-center mb-4 text-primary">Order Confirmed</h1>
+                <div class="text-center">
+                    <img src="{% static 'assets/img/gallery/R1.png' %}" alt="Thank You Image" class="img-fluid mb-3" style="max-width: 200px;">
+                    <p class="lead mb-3">Thank you for your order!</p>
+                    <p class="lead mb-3">Your order has been successfully placed.</p>
+                    <p class="lead mb-3">Our representative will be in touch with you shortly.</p>
+                </div>
+                <hr>
+                <div class="text-center">
+                    <a href="{% url 'home' %}" class="btn btn-primary btn-lg">Continue Shopping</a>
+                </div>
             </div>
-               
-           {% endif %}
-       </div>
-      </div>
-      {% endfor %}
-     </div>
+        </div>
     </div>
-   </div>
-
-{% endblock body %}
+</div>
+{% endblock %}

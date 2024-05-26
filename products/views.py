@@ -156,7 +156,7 @@ def showcart(request):
             address = form.cleaned_data['address']
             
           
-            return HttpResponse(f"Thank you {name}, we have received your contact details.")
+            return redirect("order")
     else:
         form = ContactForm()
 
@@ -195,20 +195,35 @@ class ContactForm(forms.Form):
         label='Address',
         widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4})
     )
+    cart_items = forms.CharField(
+        widget=forms.HiddenInput(),  # Hidden field to store the cart items
+        required=False  # Not required because it's hidden and populated in the view
+    )
+
+
+import json
+
+from .models import Contact
 
 def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            # Process the data in form.cleaned_data
             name = form.cleaned_data['name']
             phone = form.cleaned_data['phone']
             address = form.cleaned_data['address']
+            cart_items = form.cleaned_data['cart_items']
             
-            # Here you can handle the data, e.g., save it to the database, send an email, etc.
+            # Create and save the Contact object
+            contact = Contact(name=name, phone=phone, address=address, cart_items=cart_items)
+            contact.save()
             
-            return HttpResponse(f"Thank you {name}, we have received your contact details.")
+            # Redirect to a success page or do whatever you need
+            return redirect('success_page')  # Replace 'success_page' with the name of your success page URL pattern
     else:
-        form = ContactForm()
+        # Populate cart items into a JSON string and pass it to the form
+        cart = request.session.get('cart', {})
+        cart_items_json = json.dumps(cart)
+        form = ContactForm(initial={'cart_items': cart_items_json})
 
     return render(request, 'products/contact.html', {'form': form})

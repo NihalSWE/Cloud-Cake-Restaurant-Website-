@@ -161,6 +161,9 @@ def showcart(request):
             order = Order(name=name, number=phone, address=address, cart_items=cart_items)
             order.save()
             
+            # Clear the cart after placing the order
+            request.session['cart'] = {}
+            
             return redirect("order_conferm")
     else:
         form = OrderForm()

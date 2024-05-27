@@ -23,5 +23,18 @@
     /* Remove margin for better alignment */
 }
 
+.custom-bg {
+    background-image: url("../img/gallery/Cloud-Lounge-Cover.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff;
+    /* Ensure text is visible against the background image */
+    padding: 100px 0; /* Adjust padding as necessary */
+}
 
-
+@media (max-width: 768px) {
+    .custom-bg {
+        padding: 70px 0; /* Adjust padding as necessary */
+    }
+}

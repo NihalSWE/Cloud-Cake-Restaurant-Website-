@@ -9,10 +9,13 @@ from django.http import JsonResponse
 def base(request):
     return render(request, 'products/base.html')
 
+def navbar(request):
+    return render(request, 'products/navbar.html')
+
 class CakeView(View):
     def get(self, request):
         cakes = Product.objects.filter(category='C')
-        paginator = Paginator(cakes, 4)  # Display 4 cakes per page
+        paginator = Paginator(cakes, 8)  # Display 4 cakes per page
 
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -154,8 +157,17 @@ def showcart(request):
             name = form.cleaned_data['name']
             phone = form.cleaned_data['phone']
             address = form.cleaned_data['address']
+            cart_items = form.cleaned_data['cart_items']
             
-          
+            # Save the data to the Contact model
+            contact = Contact(
+                name=name,
+                number=phone,
+                address=address,
+                cart_items=cart_items
+            )
+            contact.save()
+            
             return redirect("order")
     else:
         form = ContactForm()
@@ -168,7 +180,7 @@ def showcart(request):
         'form': form,
     }
 
-    return render(request, 'products/showcart.html', context)
+    return render(request, 'products/showcart.html',context)
 
 
 

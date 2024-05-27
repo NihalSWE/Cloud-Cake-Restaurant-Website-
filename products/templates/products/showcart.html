@@ -7,30 +7,28 @@ Shopping Cart
 <style>
   .remove-item-section {
     padding: 10px;
-    border-bottom: 1px solid #e3e3e3; /* Add a border line between items */
-}
+    border-bottom: 1px solid #e3e3e3;
+  }
 
-.remove-item {
-
+  .remove-item {
     font-size: 20px;
     transition: color 0.3s ease;
-}
+  }
 
-.remove-item:hover {
-    color: #cc0000; /* Darker red color on hover */
-}
+  .remove-item:hover {
+    color: #cc0000;
+  }
 
-.remove-icon {
-    color: #ff4c4c; /* Red color for the cross icon */
+  .remove-icon {
+    color: #ff4c4c;
     vertical-align: middle;
-    margin-right: 10px; /* Add some space between the cross icon and the text */
-}
+    margin-right: 10px;
+  }
 
-.original-price {
-    margin-top: 5px; /* Add some space between the original price and the discounted price */
-    color: #666; /* Darker color for the original price */
-}
-
+  .original-price {
+    margin-top: 5px;
+    color: #666;
+  }
 </style>
 
 {% block head %}
@@ -64,27 +62,22 @@ Shopping Cart
                         <a href="{% url 'update_quantity' item.product_id 'decrease' %}" class="minus-cart btn btn-light"><i class="fas fa-minus-square" style="color: #3498db;"></i></a>
                         <span id="quantity" class="btn btn-light" style="color: #3498db;">{{ item.quantity }}</span>
                         <a href="{% url 'update_quantity' item.product_id 'increase' %}" class="plus-cart btn btn-light"><i class="fas fa-plus-square" style="color: #3498db;"></i></a>
-                    </div>
-                    
+                      </div>
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center remove-item-section">
                       <a href="{% url 'remove_item' item.product_id %}" class="remove-item" style="color:red;">
-                          <i class="fas fa-times remove-icon"></i>
+                        <i class="fas fa-times remove-icon"></i>
                       </a>
                       <div>
-                          {% if 'discount_price' in item %}
-                              <p class="mb-0"><strong>Discounted Price:</strong> Tk.{{ item.discount_price }}</p>
-                              <p class="original-price">Original Price: <del>Tk.{{ item.price }}</del></p>
-                          {% else %}
-                              <p class="mb-0"><strong>Price:</strong> Tk.{{ item.price }}</p>
-                          {% endif %}
+                        {% if 'discount_price' in item %}
+                          <p class="mb-0"><strong>Discounted Price:</strong> Tk.{{ item.discount_price }}</p>
+                          <p class="original-price">Original Price: <del>Tk.{{ item.price }}</del></p>
+                        {% else %}
+                          <p class="mb-0"><strong>Price:</strong> Tk.{{ item.price }}</p>
+                        {% endif %}
                       </div>
-                  </div>
-                  
-                  
-
-
+                    </div>
                   </div>
                 </div>
               </div>
@@ -118,8 +111,8 @@ Shopping Cart
             </li>
           </ul>
           <div class="d-grid">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#contactModal">
-                Contact For Order
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#contactModal" onclick="populateModalData()">
+              Contact For Order
             </button>
           </div>
         </div>
@@ -140,61 +133,62 @@ Shopping Cart
       </div>
       <div class="modal-body">
         <form method="post" action="{% url 'showcart' %}">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
-                {{ form.name }}
-                {% if form.name.errors %}
-                    <div class="text-danger">
-                        {% for error in form.name.errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-            <div class="form-group">
-                <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
-                {{ form.phone }}
-                {% if form.phone.errors %}
-                    <div class="text-danger">
-                        {% for error in form.phone.errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-            <div class="form-group">
-                <label for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
-                {{ form.address }}
-                {% if form.address.errors %}
-                    <div class="text-danger">
-                        {% for error in form.address.errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-            {{ form.cart_items }}
-            <div class="text-center mt-2">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+              <div class="text-danger">
+                {% for error in form.name.errors %}
+                  <p>{{ error }}</p>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+            {{ form.phone }}
+            {% if form.phone.errors %}
+              <div class="text-danger">
+                {% for error in form.phone.errors %}
+                  <p>{{ error }}</p>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
+            {{ form.address }}
+            {% if form.address.errors %}
+              <div class="text-danger">
+                {% for error in form.address.errors %}
+                  <p>{{ error }}</p>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div> 
+          {{ form.cart_items }}
+          <div class="text-center mt-2">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
         </form>
       </div>
     </div>
   </div>
 </div>
 
-{% endblock %}
-
 <script>
+  function populateModalData() {
+    var cart = {{ cart|safe }};
+    var cartItems = JSON.stringify(cart);
+    document.getElementById('id_cart_items').value = cartItems;
+  }
+
   $(document).ready(function() {
-      $('#contactModal').on('show.bs.modal', function(event) {
-          var cart = {{ cart|safe }};
-          var cartItems = JSON.stringify(cart);
-          $('#id_cart_items').val(cartItems);
-      });
+    $('#contactModal').on('show.bs.modal', function(event) {
+      populateModalData();
+    });
   });
 </script>
 
-
-
+{% endblock %}

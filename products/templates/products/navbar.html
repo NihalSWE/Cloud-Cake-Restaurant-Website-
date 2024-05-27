@@ -1,0 +1,68 @@
+<!-- templates/products/navbar.html -->
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-custom" style="background-color: #ef3e26;">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="{% static 'assets/img/gallery/ccf.png' %}" alt="FoodShop Logo" class="img-fluid">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon">
+                <i class="fas fa-bars" style="color: #fff; font-size: 1.5rem;"></i>
+            </span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link text-white" aria-current="page" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Outlets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Contact Us</a>
+                </li>
+            </ul>
+            <div class="nav-item dropdown">
+                <a class="nav-link text-white dropdown-toggle" href="{% url 'showcart' %}" id="navbarDropdownCart" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-shopping-cart"></i> Cart <span class="badge bg-danger">{{ total_items }}</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end cart-dropdown" aria-labelledby="navbarDropdownCart">
+                    {% if cart_items %}
+                        {% for item in cart_items %}
+                            <li>
+                                <div class="dropdown-item cart-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-0"><strong>{{ item.product.title }}</strong></h6>
+                                            <small class="text-muted">Quantity: {{ item.quantity }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'showcart' %}">
+                                View Cart <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a class="dropdown-item empty-cart" href="#">
+                                Your cart is empty
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

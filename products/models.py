@@ -34,13 +34,12 @@ def total_cost(self):
 
 
 from django.contrib.postgres.fields import JSONField
-class Contact(models.Model):
-    name=models.CharField(max_length=100)
-    number=models.CharField(max_length=100)
-    address=models.TextField()
-    product=models.ForeignKey(Product,on_delete=models.CASCADE,null=True)
-    cart_items = models.JSONField(null=True, blank=True)
+class Order(models.Model):
+    name = models.CharField(max_length=100)
+    number = models.CharField(max_length=100)
+    address = models.TextField()
+    cart_items = models.JSONField(null=True,blank=True)
     
 
     def __str__(self):
-        return self.Name
+        return self.name

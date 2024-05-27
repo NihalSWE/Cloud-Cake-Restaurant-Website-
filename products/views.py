@@ -58,18 +58,16 @@ class BreadView(View):
         return render(request,'products/Bread&Cookies.html',context)
 
 class ProductView(View):
-    def get(self, request):
-        cakes = Product.objects.filter(category='C')
-        savories = Product.objects.filter(category='S')
-        frozens=Product.objects.filter(category='F')
-        breads=Product.objects.filter(category='B')
+     def get(self, request):
+        cakes = Product.objects.filter(category='C').order_by('id')
+        savories = Product.objects.filter(category='S').order_by('id')
+        frozens = Product.objects.filter(category='F').order_by('id')
+        breads = Product.objects.filter(category='B').order_by('id')
 
-
-        cakes_paginator = Paginator(cakes, 4)    # Show 8 cakes per page
-        savories_paginator = Paginator(savories, 4)    # Show 8 savories per page
-        frozens_paginator = Paginator(frozens, 4)    # Show 8 frozens per page
-        breads_paginator = Paginator(breads, 4)    # Show 8 beards per page
-
+        cakes_paginator = Paginator(cakes, 4)    # Show 4 cakes per page
+        savories_paginator = Paginator(savories, 4)    # Show 4 savories per page
+        frozens_paginator = Paginator(frozens, 4)    # Show 4 frozens per page
+        breads_paginator = Paginator(breads, 4)    # Show 4 breads per page
 
         context = {
             'cakes': cakes_paginator.get_page(1),
@@ -78,8 +76,7 @@ class ProductView(View):
             'breads': breads_paginator.get_page(1),
         }
 
-        return render (request,'products/home.html',context)
-
+        return render(request, 'products/home.html', context)
 
 class ProductDetailView(View):
  def get(self, request, pk):
@@ -140,6 +137,7 @@ def update_quantity(request, prod_id, action):
 def showcart(request):
     cart = request.session.get('cart', {})
     print("Cart Contents:", cart)
+    
     total_amount = 0
     for item in cart.values():
         if 'discount_price' in item:
@@ -151,26 +149,21 @@ def showcart(request):
     total_with_shipping = total_amount + shipping
     
     if request.method == 'POST':
-        form = ContactForm(request.POST)
+        form = OrderForm(request.POST)
         if form.is_valid():
-            # Process the data in form.cleaned_data
             name = form.cleaned_data['name']
             phone = form.cleaned_data['phone']
             address = form.cleaned_data['address']
-            cart_items = form.cleaned_data['cart_items']
             
-            # Save the data to the Contact model
-            contact = Contact(
-                name=name,
-                number=phone,
-                address=address,
-                cart_items=cart_items
-            )
-            contact.save()
+            # Serialize cart items to JSON
+            cart_items = json.dumps(list(cart.values()))
             
-            return redirect("order")
+            order = Order(name=name, number=phone, address=address, cart_items=cart_items)
+            order.save()
+            
+            return redirect("order_conferm")
     else:
-        form = ContactForm()
+        form = OrderForm()
 
     context = {
         'cart': cart,
@@ -180,16 +173,30 @@ def showcart(request):
         'form': form,
     }
 
-    return render(request, 'products/showcart.html',context)
+    return render(request, 'products/showcart.html', context)
 
 
 
-def order(request):
-    return render(request,'products/order.html')
+def order_conferm(request):
+    return render(request,'products/order_conferm.html')
 
 from django import forms
+import json
 
-class ContactForm(forms.Form):
+class ReadableCartItemsWidget(forms.Textarea):
+    def format_value(self, value):
+        if value:
+            try:
+                # Deserialize JSON string to Python object
+                cart_items = json.loads(value)
+                # Convert the list of dictionaries to a formatted string
+                formatted_items = '\n'.join([f"Product: {item['title']}, Quantity: {item['quantity']}, Price: {item['price']}" for item in cart_items])
+                return formatted_items
+            except json.JSONDecodeError:
+                return value
+        return value
+
+class OrderForm(forms.Form):
     name = forms.CharField(
         max_length=100,
         required=True,
@@ -208,27 +215,35 @@ class ContactForm(forms.Form):
         widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4})
     )
     cart_items = forms.CharField(
-        widget=forms.HiddenInput(),  # Hidden field to store the cart items
-        required=False  # Not required because it's hidden and populated in the view
+        widget=ReadableCartItemsWidget(),  # Use the custom widget
+        required=False  # Not required because it's populated in the view
     )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Ensure that cart items are properly formatted when the form is initialized
+        if 'initial' in kwargs and 'cart_items' in kwargs['initial']:
+            self.fields['cart_items'].initial = kwargs['initial']['cart_items']
 
 import json
 
-from .models import Contact
+from .models import Order
 
-def contact_view(request):
+def order_view(request):
     if request.method == 'POST':
-        form = ContactForm(request.POST)
+        form = OrderForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
             phone = form.cleaned_data['phone']
             address = form.cleaned_data['address']
-            cart_items = form.cleaned_data['cart_items']
             
-            # Create and save the Contact object
-            contact = Contact(name=name, phone=phone, address=address, cart_items=cart_items)
-            contact.save()
+            # Deserialize JSON string to Python object for cart items
+            cart_items_json = form.cleaned_data['cart_items']
+            cart_items = json.loads(cart_items_json)
+            
+            # Create and save the Order object
+            order = Order(name=name, phone=phone, address=address, cart_items=cart_items)
+            order.save()
             
             # Redirect to a success page or do whatever you need
             return redirect('success_page')  # Replace 'success_page' with the name of your success page URL pattern
@@ -236,6 +251,6 @@ def contact_view(request):
         # Populate cart items into a JSON string and pass it to the form
         cart = request.session.get('cart', {})
         cart_items_json = json.dumps(cart)
-        form = ContactForm(initial={'cart_items': cart_items_json})
+        form = OrderForm(initial={'cart_items': cart_items_json})
 
-    return render(request, 'products/contact.html', {'form': form})
+    return render(request, 'products/order.html', {'form': form})

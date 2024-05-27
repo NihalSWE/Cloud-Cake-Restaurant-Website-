@@ -21,6 +21,6 @@ urlpatterns = [
     path('showcart/', views.showcart, name='showcart'),
 
 
-    path('contact/',views.contact_view,name="contact"),
-    path('order/',views.order,name="order")
+    path('order_view/',views.order_view,name="order_view"),
+    path('order_conferm/',views.order_conferm,name="order_conferm")
 ]

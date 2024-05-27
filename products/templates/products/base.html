@@ -51,12 +51,13 @@
     <!-- ===============================================-->
     <main class="main" id="top">
         {% include 'products/navbar.html' %}
+        <div id="success-message" class="alert alert-success" role="alert" style="display: none;">
+          Product added to cart successfully!
+        </div>
     {% block banner %}
  
     {% endblock %}
-    <div id="success-message" class="alert alert-success" role="alert" style="display: none;">
-        Product added to cart successfully!
-      </div>
+   
      
     {% block body %}
 
@@ -76,24 +77,48 @@
 </section>
       <!-- <section> close ============================-->
       <!-- ============================================-->
-      {% block scripts %}
-    <script>
-        // Ensure dropdowns work
-        document.addEventListener('DOMContentLoaded', function() {
-            var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
-            var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
-                return new bootstrap.Dropdown(dropdownToggleEl)
-            })
-        });
-    </script>
-    {% endblock %}
-
+      
     </main>
     <!-- ===============================================-->
     <!--    End of Main Content-->
     <!-- ===============================================-->
 
-
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+          addToCartButtons.forEach(button => {
+              button.addEventListener('click', function() {
+                  const productId = this.getAttribute('data-product-id');
+                  addToCart(productId);
+                  this.disabled = true; // Disable the button after the first click
+              });
+          });
+      
+          function addToCart(productId) {
+              fetch(`/addtocart/${productId}/`, {
+                  method: 'GET',
+                  headers: {
+                      'X-Requested-With': 'XMLHttpRequest',
+                      'Content-Type': 'application/json',
+                      // Add any other headers if required
+                  }
+              })
+              .then(response => response.json())
+              .then(data => {
+                  // Handle the response data
+                  console.log(data);
+                  // Optionally, update the cart icon or display a success message
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+              });
+          }
+      });
+      </script>
+      
+      
+      
+      
 
 
     <!-- ===============================================-->

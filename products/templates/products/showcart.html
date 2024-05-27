@@ -166,8 +166,7 @@ Shopping Cart
                 {% endfor %}
               </div>
             {% endif %}
-          </div> 
-          {{ form.cart_items }}
+          </div>
           <div class="text-center mt-2">
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
@@ -179,9 +178,7 @@ Shopping Cart
 
 <script>
   function populateModalData() {
-    var cart = {{ cart|safe }};
-    var cartItems = JSON.stringify(cart);
-    document.getElementById('id_cart_items').value = cartItems;
+    // You can populate modal data here if needed
   }
 
   $(document).ready(function() {
@@ -190,5 +187,6 @@ Shopping Cart
     });
   });
 </script>
+
 
 {% endblock %}

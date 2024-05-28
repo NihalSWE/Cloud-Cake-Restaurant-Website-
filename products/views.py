@@ -14,7 +14,7 @@ def navbar(request):
 
 class CakeView(View):
     def get(self, request):
-        cakes = Product.objects.filter(category='C')
+        cakes = Product.objects.filter(category='C').order_by('id')
         paginator = Paginator(cakes, 8)  # Display 4 cakes per page
 
         page_number = request.GET.get('page')
@@ -28,7 +28,7 @@ class CakeView(View):
 
 class SavoryView(View):
     def get(self, request):
-        savories = Product.objects.filter(category='S')
+        savories = Product.objects.filter(category='S').order_by('id')
         savories_paginator = Paginator(savories, 8)    # Show 8 savories per page
         savories_page_number = request.GET.get('savories_page')
         context = {
@@ -38,7 +38,7 @@ class SavoryView(View):
 
 class FrozenView(View):
     def get(self,request):
-        frozens=Product.objects.filter(category='F')
+        frozens=Product.objects.filter(category='F').order_by('id')
         frozens_paginator = Paginator(frozens, 8)    # Show 8 frozens per page
         frozens_page_number = request.GET.get('frozens_page')
         context = {
@@ -49,7 +49,7 @@ class FrozenView(View):
 
 class BreadView(View):
     def get(self,request):
-        breads=Product.objects.filter(category='B')
+        breads=Product.objects.filter(category='B').order_by('id')
         breads_paginator = Paginator(breads, 8)    # Show 8 beards per page
         breads_page_number = request.GET.get('beards_page')
         context = {

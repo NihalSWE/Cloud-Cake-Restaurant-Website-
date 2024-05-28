@@ -20,6 +20,8 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <!--    Favicons-->
     <!-- ===============================================-->
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/img/favicons/apple-touch-icon.png'%}">
@@ -66,15 +68,31 @@
       <!-- ============================================-->
       <!-- ============================================-->
       <!-- <section> begin ============================-->
-      <section class="py-0 pt-2 bg-1000 mb-2">
-          <hr class="border border-800" />
-          <div class="row flex-center pb-3">
-            <div class="col-md-6 order-0">
-              <p class="text-200  text-md-start">All rights Reserved &copy; Your Company, 2024</p>
-            </div>
+        <footer class="bg-red-700 py-4">
+          <div class="container mx-auto flex justify-between items-center">
+            <hr class="border border-red-700 w-full mb-4" />
+            <p class="text-sm text-gray-300">&copy; CloudCake Food, 2024. All rights reserved.</p>
           </div>
-          <!-- end of .container-->
-</section>
+        </footer>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
       <!-- <section> close ============================-->
       <!-- ============================================-->
       
@@ -124,7 +142,7 @@
     <!-- ===============================================-->
     <!--    JavaScripts-->
     <!-- ===============================================-->
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js" defer></script>
     <script src="{%  static 'vendors/@popperjs/popper.min.js'%}"></script>
     <script src="{% static 'vendors/bootstrap/bootstrap.min.js'%}"></script>
     <script src="{% static 'vendors/is/is.min.js'%}"></script>

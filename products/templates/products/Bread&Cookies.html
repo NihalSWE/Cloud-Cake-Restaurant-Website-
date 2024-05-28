@@ -6,41 +6,112 @@
 
 {% block body %}
 {% load static %}
+<section class="py-12">
+  <div class="container mx-auto">
+    <h2 class="text-3xl font-extrabold text-center mb-6 text-black-900">Bread & Cookies Items</h2>
+    <hr class="border-t-3 border-gray-300 my-4">
 
-<section class="py-5">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8 text-center mb-5">
-        <h2 class="fw-bold fs-3 fs-lg-5 lh-sm">Bread & Cookies Items</h2>
-        <hr class="divider" />
-      </div>
-    </div>
-
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {% for bread in breads %}
-      <div class="col">
-        <div class="card h-100 border-0">
-          <img src="{{ bread.image.url }}" class="card-img-top" alt="Bread Image">
-          <div class="card-body">
-            <h5 class="card-title fw-bold text-1000">{{ bread.title }}</h5>
-            {% if bread.discount_price %}
-            <span class="card-text"><small class="text-muted">Tk.{{ bread.price }}</small></span>
-            <span class="card-text text-danger fw-bold">Discount Price: Tk.{{ bread.discount_price }}</span>
-            
-            {% else %}
-            <span class="card-text text-1000 fw-bold">Price: Tk.{{ bread.price }}</span>
-            {% endif %}
-            <div class="btn-group">
-              <a href="{% url 'product-detail' bread.id %}" class="btn btn-danger">Quick View</a>
-              <button class="btn btn-primary" type="submit">Add to Cart</button>
+      <div class="overflow-hidden rounded-lg shadow-lg">
+        <div class="aspect-w-1 aspect-h-1">
+          <img class="object-cover object-center w-full h-full hover:scale-105 transition duration-300" src="{{ bread.image.url }}" alt="{{ bread.title }}">
+        </div>
+
+        <div class="p-3 flex flex-col justify-between">
+          <div class="mb-2">
+            <h3 class="text-xl font-semibold mb-2 text-center">{{ bread.title }}</h3>
+            <div class="flex justify-center items-center mb-2">
+              {% if bread.discount_price %}
+              <span class="text-gray-500 line-through">Tk. {{ bread.price }}</span>
+              <span class="text-red-500 font-bold ml-2">Tk. {{ bread.discount_price }}</span>
+              {% else %}
+              <span class="text-gray-700 font-bold">Tk. {{ bread.price }}</span>
+              {% endif %}
             </div>
+          </div>
+          <div class="d-grid gap-2 mt-2">
+            <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ bread.id }}">Add to Cart</button>
+            <a class="btn btn-lg btn-danger" href="{% url 'product-detail' bread.id %}" role="button">Quick View</a>
           </div>
         </div>
       </div>
       {% endfor %}
     </div>
-
   </div>
 </section>
+
+
+
+
+
+<!-- Pagination Controls -->
+{% if breads.has_other_pages %}
+<div class="container mx-auto mt-8">
+  <nav class="flex justify-center" aria-label="Page navigation">
+    <ul class="inline-flex items-center -space-x-px">
+      {% if breads.has_previous %}
+      <li>
+        <a href="?page=1" class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">&laquo;</a>
+      </li>
+      {% endif %}
+      {% for num in breads.paginator.page_range %}
+      <li>
+        <a href="?page={{ num }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 {% if num == breads.number %}bg-blue-500 text-white{% endif %}">{{ num }}</a>
+      </li>
+      {% endfor %}
+      {% if breads.has_next %}
+      <li>
+        <a href="?page={{ breads.paginator.num_pages }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">&raquo;</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+{% endif %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  jQuery(document).ready(function($) {
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    $('.add-to-cart-btn').click(function(event) {
+      event.preventDefault();
+      var productId = $(this).data('product-id');
+      var csrftoken = getCookie('csrftoken');
+
+      $.ajax({
+        type: 'POST',
+        url: '/addtocart/' + productId + '/',
+        data: {
+          'product_id': productId,
+          'quantity': 1
+        },
+        headers: {
+          'X-CSRFToken': csrftoken
+        },
+        success: function(data) {
+          console.log('Product added to cart successfully!');
+        },
+        error: function(xhr, textStatus, errorThrown) {
+          console.log('Error:', errorThrown);
+        }
+      });
+    });
+  });
+</script>
 
 {% endblock %}

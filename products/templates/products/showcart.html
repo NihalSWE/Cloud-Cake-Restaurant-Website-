@@ -4,189 +4,162 @@
 Shopping Cart
 {% endblock %}
 
-<style>
-  .remove-item-section {
-    padding: 10px;
-    border-bottom: 1px solid #e3e3e3;
-  }
-
-  .remove-item {
-    font-size: 20px;
-    transition: color 0.3s ease;
-  }
-
-  .remove-item:hover {
-    color: #cc0000;
-  }
-
-  .remove-icon {
-    color: #ff4c4c;
-    vertical-align: middle;
-    margin-right: 10px;
-  }
-
-  .original-price {
-    margin-top: 5px;
-    color: #666;
-  }
-</style>
-
 {% block head %}
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js" defer></script>
 {% endblock %}
 
 {% block body %}
 {% load static %}
-<div class="container my-5">
-  <h1 class="text-center mb-5">Shopping Cart</h1>
-  <div class="row">
-    <div class="col-lg-8">
-      <div class="card">
-        <div class="card-body">
-          <h3>Cart</h3>
-          {% if cart %}
-            {% for item in cart.values %}
-              <div class="row mb-4">
-                <div class="col-md-4 text-center">
-                  <img src="{{ item.image_url }}" alt="{{ item.title }}" class="img-fluid img-thumbnail shadow-sm" height="150" width="150">
-                </div>
-                <div class="col-md-8">
-                  <div>
-                    <h5>{{ item.title }}</h5>
-                    <div class="my-3 d-flex align-items-center">
-                      <label for="quantity" class="me-3">Quantity:</label>
-                      <div class="btn-group" role="group">
-                        <a href="{% url 'update_quantity' item.product_id 'decrease' %}" class="minus-cart btn btn-light"><i class="fas fa-minus-square" style="color: #3498db;"></i></a>
-                        <span id="quantity" class="btn btn-light" style="color: #3498db;">{{ item.quantity }}</span>
-                        <a href="{% url 'update_quantity' item.product_id 'increase' %}" class="plus-cart btn btn-light"><i class="fas fa-plus-square" style="color: #3498db;"></i></a>
-                      </div>
-                    </div>
+<div class="container mx-auto py-12 max-w-7xl">
+  <h1 class="text-4xl font-bold text-center mb-4 text-black-800">Shopping Cart</h1>
+  <hr class="border-t-2 border-blue-400 mb-4">
 
-                    <div class="d-flex justify-content-between align-items-center remove-item-section">
-                      <a href="{% url 'remove_item' item.product_id %}" class="remove-item" style="color:red;">
-                        <i class="fas fa-times remove-icon"></i>
-                      </a>
-                      <div>
-                        {% if 'discount_price' in item %}
-                          <p class="mb-0"><strong>Discounted Price:</strong> Tk.{{ item.discount_price }}</p>
-                          <p class="original-price">Original Price: <del>Tk.{{ item.price }}</del></p>
-                        {% else %}
-                          <p class="mb-0"><strong>Price:</strong> Tk.{{ item.price }}</p>
-                        {% endif %}
-                      </div>
-                    </div>
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+    <div class="lg:col-span-2">
+      <div class="bg-white shadow-md rounded-lg p-6">
+        <h3 class="text-2xl font-semibold mb-4">Cart</h3>
+        {% if cart %}
+          {% for item in cart.values %}
+            <div class="flex flex-col md:flex-row mb-6 border-b pb-6">
+              <div class="flex-shrink-0 w-full md:w-1/3 text-center mb-4 md:mb-0">
+                <img src="{{ item.image_url }}" alt="{{ item.title }}" class="w-full h-auto object-cover rounded-lg shadow-md">
+              </div>
+              <div class="md:ml-6 flex-1">
+                <h5 class="text-xl font-semibold">{{ item.title }}</h5>
+                <div class="my-4 flex items-center space-x-4">
+                  <label for="quantity" class="text-sm font-medium">Quantity:</label>
+                  <div class="flex items-center space-x-2">
+                    <a href="{% url 'update_quantity' item.product_id 'decrease' %}" class="text-gray-500 hover:text-blue-500">
+                      <i class="fas fa-minus-square text-xl"></i>
+                    </a>
+                    <span id="quantity" class="text-lg">{{ item.quantity }}</span>
+                    <a href="{% url 'update_quantity' item.product_id 'increase' %}" class="text-gray-500 hover:text-blue-500">
+                      <i class="fas fa-plus-square text-xl"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="flex justify-between items-center">
+                  <a href="{% url 'remove_item' item.product_id %}" class="text-red-500 hover:text-red-700">
+                    <i class="fas fa-times text-2xl"></i>
+                  </a>
+                  <div class="text-right">
+                    {% if 'discount_price' in item %}
+                      <p class="text-lg font-semibold text-green-600">Tk. {{ item.discount_price }}</p>
+                      <p class="text-sm line-through text-gray-500">Tk. {{ item.price }}</p>
+                    {% else %}
+                      <p class="text-lg font-semibold">Tk. {{ item.price }}</p>
+                    {% endif %}
                   </div>
                 </div>
               </div>
-              <hr>
-            {% endfor %}
-          {% else %}
-            <p>Your cart is empty.</p>
-          {% endif %}
-        </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p class="text-center text-gray-500">Your cart is empty.</p>
+        {% endif %}
       </div>
     </div>
-    <div class="col-lg-4 mt-4 mt-lg-0">
-      <div class="card">
-        <div class="card-body">
-          <h3>The Total Amount of</h3>
-          <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-              Amount
-              <span>Tk. {{ total_amount }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-              Shipping
-              <span>Tk. {{ shipping }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-              <div>
-                <strong>Total</strong>
-                <small>(including VAT)</small>
-              </div>
-              <span><strong>Tk. {{ total_with_shipping }}</strong></span>
-            </li>
-          </ul>
-          <div class="d-grid">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#contactModal" onclick="populateModalData()">
-              Contact For Order
-            </button>
-          </div>
-        </div>
+    <div>
+      <div class="bg-white shadow-md rounded-lg p-3">
+        <h3 class="text-2xl font-semibold mb-4">Total Amount</h3>
+        <ul class="divide-y divide-gray-200">
+          <li class="flex justify-between py-4 text-lg">
+            <span>Amount</span>
+            <span>Tk. {{ total_amount }}</span>
+          </li>
+          <li class="flex justify-between py-4 text-lg">
+            <span>Shipping</span>
+            <span>Tk. {{ shipping }}</span>
+          </li>
+          <li class="flex justify-between py-4 text-xl font-bold">
+            <div>
+              <span>Total</span>
+              <small class="block text-gray-500">(including VAT)</small>
+            </div>
+            <span>Tk. {{ total_with_shipping }}</span>
+          </li>
+        </ul>
+        <button type="button" class="mt-6 w-full max-w-md bg-gradient-to-r from-red-500 via-yellow-500 to-red-500 text-white py-3 rounded-lg shadow-lg hover:bg-gradient-to-br hover:from-red-600 hover:via-yellow-600 hover:to-red-600 transform hover:scale-105 transition-transform duration-300" onclick="openModal()">
+          <span class="relative">
+            <span class="absolute inset-0 bg-red-700 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+            <span class="relative z-10">Contact For Order</span>
+          </span>
+        </button>
+        
+        
+        
+        
       </div>
     </div>
   </div>
 </div>
 
 <!-- Contact Form Modal -->
-<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="contactModalLabel">Contact Us</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form method="post" action="{% url 'showcart' %}">
-          {% csrf_token %}
-          <div class="form-group">
-            <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
-            {{ form.name }}
-            {% if form.name.errors %}
-              <div class="text-danger">
-                {% for error in form.name.errors %}
-                  <p>{{ error }}</p>
-                {% endfor %}
-              </div>
-            {% endif %}
-          </div>
-          <div class="form-group">
-            <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
-            {{ form.phone }}
-            {% if form.phone.errors %}
-              <div class="text-danger">
-                {% for error in form.phone.errors %}
-                  <p>{{ error }}</p>
-                {% endfor %}
-              </div>
-            {% endif %}
-          </div>
-          <div class="form-group">
-            <label for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
-            {{ form.address }}
-            {% if form.address.errors %}
-              <div class="text-danger">
-                {% for error in form.address.errors %}
-                  <p>{{ error }}</p>
-                {% endfor %}
-              </div>
-            {% endif %}
-          </div>
-          <div class="text-center mt-2">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </form>
-      </div>
+<div class="fixed inset-0 z-50 flex items-center justify-center hidden" id="contactModal">
+  <div class="fixed inset-0 bg-black bg-opacity-50"></div>
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-lg relative z-50"> <!-- Increased z-index to display modal in front -->
+    <div class="px-6 py-4 flex justify-between items-center border-b">
+      <h5 class="text-xl font-semibold">Contact Us</h5>
+      <button type="button" class="text-gray-500 hover:text-gray-700" aria-label="Close" onclick="closeModal()">
+        <i class="fas fa-times text-2xl"></i>
+      </button>
+    </div>
+    <div class="p-6">
+      <form method="post" action="{% url 'showcart' %}">
+        {% csrf_token %}
+        <div class="mb-4">
+          <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700">Name:</label>
+          <input type="text" name="{{ form.name.html_name }}" id="{{ form.name.id_for_label }}" placeholder="Enter Your Name" value="{{ form.name.value }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+          {% if form.name.errors %}
+            <div class="text-red-500 text-sm mt-1">
+              {% for error in form.name.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+        <div class="mb-4">
+          <label for="{{ form.phone.id_for_label }}" class="block text-sm font-medium text-gray-700">Number:</label>
+          <input type="text" name="{{ form.phone.html_name }}" id="{{ form.phone.id_for_label }}" placeholder="Enter Your Number" value="{{ form.phone.value }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+          {% if form.phone.errors %}
+            <div class="text-red-500 text-sm mt-1">
+              {% for error in form.phone.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+        <div class="mb-4">
+          <label for="{{ form.address.id_for_label }}" class="block text-sm font-medium text-gray-700">Address:</label>
+          <input type="text" name="{{ form.address.html_name }}" id="{{ form.address.id_for_label }}" placeholder="Enter Your Address" value="{{ form.address.value }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+          {% if form.address.errors %}
+            <div class="text-red-500 text-sm mt-1">
+              {% for error in form.address.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+        <div class="text-center mt-4">
+          <button type="submit" class="w-full bg-gradient-to-r from-red-500 to-yellow-500 text-white py-2 rounded-lg shadow-lg hover:from-red-600 hover:to-yellow-600">
+            Submit
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
 
 <script>
-  function populateModalData() {
-    // You can populate modal data here if needed
+  function openModal() {
+    document.getElementById('contactModal').classList.remove('hidden');
   }
 
-  $(document).ready(function() {
-    $('#contactModal').on('show.bs.modal', function(event) {
-      populateModalData();
-    });
-  });
+  function closeModal() {
+    document.getElementById('contactModal').classList.add('hidden');
+  }
 </script>
 
 
-{% endblock %}
+{% endblock %}

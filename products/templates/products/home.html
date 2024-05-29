@@ -305,52 +305,83 @@
   <!-- <section> close ============================-->
   
 <!-- <section> close ============================-->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    jQuery(document).ready(function($) {
-      function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-          const cookies = document.cookie.split(';');
-          for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-              break;
-            }
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  jQuery(document).ready(function($) {
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
           }
         }
-        return cookieValue;
       }
-  
-      $('.add-to-cart-btn').click(function(event) {
-        event.preventDefault();
-  
-        var productId = $(this).data('product-id');
-        var csrftoken = getCookie('csrftoken');
-  
-        $.ajax({
-          type: 'POST',
-          url: '/addtocart/' + productId + '/',  // Ensure the URL matches your URL patterns
-          data: {
-            'product_id': productId,
-            'quantity': 1
-          },
-          headers: {
-            'X-CSRFToken': csrftoken
-          },
-          success: function(data) {
-            console.log('Product added to cart successfully!');
-            $('#navbarDropdownCart .badge').text(data.total_items);
-            $('#success-message').show().delay(2000).fadeOut();
-          },
-          error: function(xhr, textStatus, errorThrown) {
-            console.log('Error:', errorThrown);
-            alert('There was an error adding the product to the cart. Please try again.');
+      return cookieValue;
+    }
+
+    $('.add-to-cart-btn').click(function(event) {
+      event.preventDefault();
+
+      var button = $(this);
+      var productId = button.data('product-id');
+      var csrftoken = getCookie('csrftoken');
+
+      // Disable the button to prevent multiple clicks
+      button.prop('disabled', true);
+
+      $.ajax({
+        type: 'POST',
+        url: '/addtocart/' + productId + '/',
+        data: {
+          'product_id': productId,
+          'quantity': 1
+        },
+        headers: {
+          'X-CSRFToken': csrftoken
+        },
+        success: function(data) {
+          console.log('Product added to cart successfully!');
+          $('#navbarDropdownCart .badge').text(data.total_items);
+
+          // Update the offcanvas cart content
+          var cartOffcanvasBody = $('#cartOffcanvas .offcanvas-body');
+          cartOffcanvasBody.empty();
+
+          if (data.cart_items.length > 0) {
+            data.cart_items.forEach(function(item) {
+              var cartItemHtml = `
+                <div class="dropdown-item cart-item">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <h6 class="mb-0"><strong>${item.product.title}</strong></h6>
+                      <small class="text-muted">Quantity: ${item.quantity}</small>
+                    </div>
+                  </div>
+                </div>`;
+              cartOffcanvasBody.append(cartItemHtml);
+            });
+
+            cartOffcanvasBody.append('<hr class="dropdown-divider">');
+            cartOffcanvasBody.append('<a class="dropdown-item" href="{% url 'showcart' %}">View Cart <i class="fas fa-chevron-right"></i></a>');
+          } else {
+            cartOffcanvasBody.append('<div class="dropdown-item empty-cart">Your cart is empty</div>');
           }
-        });
+
+          button.prop('disabled', false);  // Re-enable the button on success
+        },
+        error: function(xhr, textStatus, errorThrown) {
+          console.log('Error:', errorThrown);
+          alert('There was an error adding the product to the cart. Please try again.');
+          button.prop('disabled', false);  // Re-enable the button on error
+        }
       });
     });
-  </script>
-  
+  });
+</script>
+
+
 {% endblock %}

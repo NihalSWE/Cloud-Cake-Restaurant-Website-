@@ -26,49 +26,111 @@ Savory items
 {% block body %}
 {% load static %}
 
-<section class="py-0 overflow-hidden">
-  <div class="container">
-    <div class="row h-100">
-      <div class="col-lg-7 mx-auto text-center mt-4 mb-5">
-        <h5 class="fw-bold fs-3 fs-lg-5 lh-sm">Savory items</h5><hr>
-      </div>
-      <div class="col-12">
-        <div class="carousel slide" id="carouselPopularItems" data-bs-touch="false" data-bs-interval="false">
-          <div class="carousel-inner">
+<section class="py-12">
+  <div class="container mx-auto">
+    <h2 class="text-3xl font-extrabold text-center mb-6 text-black-900">Savory Items</h2>
+    <hr class="border-t-3 border-gray-300 my-4">
 
-            {% comment %} ##-----Savory------- {% endcomment %}
-            <div class="row gx-3 h-100 align-items-center">
-              {% for savorie in savories %}
-              <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                <div class="card card-span h-100 rounded-3">
-                  <img class="card-img-top img-fluid rounded-3" src="{{savorie.image.url}}" alt="{{savorie.title}}" />
-                  <div class="card-body ps-0">
-                    <h5 class="fw-bold text-1000 text-truncate mb-1">{{savorie.title}}</h5>
-                    {% if savorie.discount_price %}
-                    <div>
-                      <span class="text-danger fw-bold">Discount Price: Tk.{{savorie.discount_price}}</span>
-                      <br>
-                      <span class="text-muted text-decoration-line-through">Tk.{{savorie.price}}</span>
-                    </div>
-                    {% else %}
-                    <div>
-                      <span class="text-1000 fw-bold">Tk.{{savorie.price}}</span>
-                    </div>
-                    {% endif %}
-                  </div>
-                  <div class="d-grid gap-2">
-                    <a class="btn btn-lg btn-danger" href="{% url 'product-detail' savorie.id %}" role="button">Quick View</a>
-                  </div>
-                </div>
-              </div>
-              {% endfor %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {% for savorie in savories %}
+      <div class="overflow-hidden rounded-lg shadow-lg">
+        <div class="aspect-w-1 aspect-h-1">
+          <img class="object-cover object-center w-full h-full hover:scale-105 transition duration-300" src="{{ savorie.image.url }}" alt="{{ savorie.title }}">
+        </div>
+
+        <div class="p-3 flex flex-col justify-between">
+          <div class="mb-2">
+            <h3 class="text-xl font-semibold mb-2 text-center">{{ savorie.title }}</h3>
+            <div class="flex justify-center items-center mb-2">
+              {% if savorie.discount_price %}
+              <span class="text-gray-500 line-through">Tk. {{ savorie.price }}</span>
+              <span class="text-red-500 font-bold ml-2">Tk. {{ savorie.discount_price }}</span>
+              {% else %}
+              <span class="text-gray-700 font-bold">Tk. {{ savorie.price }}</span>
+              {% endif %}
             </div>
-
+          </div>
+          <div class="d-grid gap-2 mt-2">
+            <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ savorie.id }}">Add to Cart</button>
+            <a class="btn btn-lg btn-danger" href="{% url 'product-detail' savorie.id %}" role="button">Quick View</a>
           </div>
         </div>
       </div>
+      {% endfor %}
     </div>
-  </div><!-- end of .container-->
+  </div>
 </section>
 
+
+
+
+
+<!-- Pagination Controls -->
+{% if savories.has_other_pages %}
+<div class="container mx-auto mt-8">
+  <nav class="flex justify-center" aria-label="Page navigation">
+    <ul class="inline-flex items-center -space-x-px">
+      {% if savories.has_previous %}
+      <li>
+        <a href="?page=1" class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">&laquo;</a>
+      </li>
+      {% endif %}
+      {% for num in savories.paginator.page_range %}
+      <li>
+        <a href="?page={{ num }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 {% if num == savories.number %}bg-blue-500 text-white{% endif %}">{{ num }}</a>
+      </li>
+      {% endfor %}
+      {% if savories.has_next %}
+      <li>
+        <a href="?page={{ savories.paginator.num_pages }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">&raquo;</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+{% endif %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  jQuery(document).ready(function($) {
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    $('.add-to-cart-btn').click(function(event) {
+      event.preventDefault();
+      var productId = $(this).data('product-id');
+      var csrftoken = getCookie('csrftoken');
+
+      $.ajax({
+        type: 'POST',
+        url: '/addtocart/' + productId + '/',
+        data: {
+          'product_id': productId,
+          'quantity': 1
+        },
+        headers: {
+          'X-CSRFToken': csrftoken
+        },
+        success: function(data) {
+          console.log('Product added to cart successfully!');
+        },
+        error: function(xhr, textStatus, errorThrown) {
+          console.log('Error:', errorThrown);
+        }
+      });
+    });
+  });
+</script>
 {% endblock %}

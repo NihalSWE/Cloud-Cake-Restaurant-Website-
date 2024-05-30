@@ -30,7 +30,7 @@
             <div class="nav-item dropdown">
                 <a class="nav-link text-white dropdown-toggle" href="{% url 'showcart' %}" id="navbarDropdownCart" role="button"
                    data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 1.2rem;">
-                    <i class="fas fa-shopping-cart"></i> Cart <span class="badge bg-danger">{{ total_items }}</span>
+                   <i class="fas fa-shopping-cart"></i> Cart <span id="total-cart-quantity" class="badge bg-danger">{{ total_items }}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end cart-dropdown" aria-labelledby="navbarDropdownCart">
                     {% if cart_items %}
@@ -66,3 +66,6 @@
         </div>
     </div>
 </nav>
+
+
+

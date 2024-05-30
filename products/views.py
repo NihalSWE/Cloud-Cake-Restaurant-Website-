@@ -12,6 +12,12 @@ def base(request):
 def navbar(request):
     return render(request, 'products/navbar.html')
 
+def about(request):
+    return render(request,'products/about.html')
+
+def contactus(request):
+    return render(request,'products/ContactUs.html')
+
 class CakeView(View):
     def get(self, request):
         cakes = Product.objects.filter(category='C').order_by('id')

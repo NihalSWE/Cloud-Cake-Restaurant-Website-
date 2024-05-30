@@ -1,0 +1,38 @@
+{% extends "products/base.html" %}
+
+{% block title %}
+About Us
+{% endblock %}
+
+{% block body %}
+<div class="bg-gray-100 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900">About Us</h1>
+            <p class="mt-4 text-lg leading-6 text-gray-600">
+                Welcome to Cloud Cake & Foods, your number one source for all things related to delicious cakes and foods. We're dedicated to providing you the very best of cakes, with an emphasis on quality, customer service, and uniqueness.
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                <img class="w-full h-48 object-cover" src="https://via.placeholder.com/400x200" alt="Our Story">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Our Story</h2>
+                    <p class="mt-4 text-gray-600">
+                        Founded in 2021 by Jane Doe, Cloud Cake & Foods has come a long way from its beginnings in a home kitchen. When Jane first started out, her passion for baking drove her to start her own business.
+                    </p>
+                </div>
+            </div>
+            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                <img class="w-full h-48 object-cover" src="https://via.placeholder.com/400x200" alt="Our Mission">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Our Mission</h2>
+                    <p class="mt-4 text-gray-600">
+                        Our mission is to provide high-quality cakes and food items that bring joy to our customers. We strive to create delicious, beautiful, and unique products that satisfy both the eye and the palate.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

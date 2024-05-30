@@ -103,8 +103,6 @@ def addtocart(request, prod_id):
     product = get_object_or_404(Product, id=prod_id)
     cart = request.session.get('cart', {})
 
-    print('cart: ', cart)
-
     if str(prod_id) in cart:
         cart[str(prod_id)]['quantity'] += 1
     else:
@@ -119,12 +117,11 @@ def addtocart(request, prod_id):
             product_data['discount_price'] = product.discount_price
         cart[str(prod_id)] = product_data
 
-    print('cart 2: ', cart)
     total_cart_quantity = sum(item['quantity'] for item in cart.values())
     request.session['cart'] = cart
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        return JsonResponse({'success': True, 'total_cart_quantity': total_cart_quantity})
+        return JsonResponse({'success': True, 'total_cart_quantity': total_cart_quantity, 'cart': cart})
 
     return redirect('showcart')
 

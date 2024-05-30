@@ -154,15 +154,17 @@
     <script>
       document.addEventListener('DOMContentLoaded', function() {
           const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
-          addToCartButtons.forEach(button => {
-              button.addEventListener('click', function() {
+          //addToCartButtons.forEach(button => {
+              $('.add-to-cart-btn').click(function(event) {
+                  event.preventDefault();
+                  var button = $(this);
                   const productId = this.getAttribute('data-product-id');
-                  addToCart(productId);
-                  this.disabled = true; // Disable the button after the first click
+                  addToCart(productId, button);
+                  //this.disabled = true; // Disable the button after the first click
               });
-          });
-      
-          function addToCart(productId) {
+          //});
+    
+          function addToCart(productId, button) {
               fetch(`/addtocart/${productId}/`, {
                   method: 'GET',
                   headers: {
@@ -174,19 +176,49 @@
               .then(response => response.json())
               .then(data => {
                   // Handle the response data
-                  console.log(data.total_cart_quantity);
                   $("#total-cart-quantity").text(data.total_cart_quantity);
-                  // Optionally, update the cart icon or display a success message
+
+                  // Add items to the cart-dropdown
+                  let cart = data.cart;
+                  // Update the offcanvas cart content
+                  var cartOffcanvasBody = $('#cart-dropdown');
+                  cartOffcanvasBody.empty();
+
+                  // Check if the cart is empty
+                  if (Object.keys(cart).length === 0) {
+                      cartOffcanvasBody.append('<div class="dropdown-item empty-cart">Your cart is empty</div>');
+                  }
+                  else{
+                      for (let key in cart) {
+                          if (cart.hasOwnProperty(key)) {
+                              let product = cart[key];
+                              let title = product.title;
+                              let quantity = product.quantity;
+                              
+                              // Append the elements after cartOffcanvasBody
+                              var cartItemHtml = `
+                                  <div class="dropdown-item cart-item">
+                                  <div class="d-flex justify-content-between align-items-center">
+                                      <div>
+                                      <h6 class="mb-0"><strong>${title}</strong></h6>
+                                      <small class="text-muted">Quantity: ${quantity}</small>
+                                      </div>
+                                  </div>
+                                  </div>`;
+                              cartOffcanvasBody.append(cartItemHtml);
+                          }
+                      }
+                      cartOffcanvasBody.append('<hr class="dropdown-divider">');
+                      cartOffcanvasBody.append('<a class="dropdown-item" href="{% url 'showcart' %}">View Cart <i class="fas fa-chevron-right"></i></a>');
+                  }
+                  button.prop('disabled', false);
               })
               .catch(error => {
                   console.error('Error:', error);
               });
           }
       });
-      </script>
-      
-      
-      
+  </script>
       
 
 

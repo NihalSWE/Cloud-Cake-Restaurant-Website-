@@ -248,36 +248,6 @@
       return cookieValue;
     }
 
-    $('.add-to-cart-btn').click(function(event) {
-      event.preventDefault();
-      var productId = $(this).data('product-id');
-      var csrftoken = getCookie('csrftoken');
-
-      $.ajax({
-        type: 'POST',
-        url: '/addtocart/' + productId + '/',
-        data: {
-          'product_id': productId,
-          'quantity': 1
-        },
-        headers: {
-          'X-CSRFToken': csrftoken
-        },
-        success: function(data) {
-          console.log('Product added to cart successfully!');
-        },
-        error: function(xhr, textStatus, errorThrown) {
-          console.log('Error:', errorThrown);
-        }
-      });
-    });
-
-    $('.quick-view-btn').click(function(event) {
-      event.preventDefault();
-      var productId = $(this).data('product-id');
-      // Implement the quick view functionality here
-      console.log('Quick view clicked for product ID:', productId);
-    });
   });
 </script>
 

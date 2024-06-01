@@ -6,34 +6,196 @@ Frozen Items
 
 {% block body %}
 {% load static %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+
+  .section-hr {
+    border: 0;
+    border-top: 3px solid #ccc;
+    margin: 1.5rem 0;
+  }
+
+  .frozen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .frozen-card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+
+  .frozen-card:hover {
+    transform: scale(1.05);
+  }
+
+  .frozen-image-container {
+    position: relative;
+    padding-top: 85%;
+  }
+
+  .frozen-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .frozen-content {
+    padding: 1rem;
+  }
+
+  .frozen-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .frozen-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .frozen-price span {
+    font-size: 1rem;
+  }
+
+  .frozen-price .original-price {
+    text-decoration: line-through;
+    color: #999;
+  }
+
+  .frozen-price .discounted-price {
+    color: green;
+    font-weight: 700;
+  }
+
+  .frozen-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .frozen-actions button,
+  .frozen-actions a {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+
+  .frozen-actions .btn-primary {
+    background-color: primary;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .frozen-actions .btn-primary:hover {
+    background-color: primary;
+    transform: translateY(-2px);
+  }
+
+  .frozen-actions .btn-danger {
+    background-color: danger;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .frozen-actions .btn-danger:hover {
+    background-color: danger;
+    transform: translateY(-2px);
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .pagination ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+  }
+
+  .pagination li {
+    margin: 0 0.25rem;
+  }
+
+  .pagination a {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    background-color: #f0f0f0;
+    color: #333;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+
+  .pagination a:hover {
+    background-color: #e0e0e0;
+  }
+
+  .pagination a.active {
+    background-color: #007bff;
+    color: #fff;
+  }
+</style>
 
 <section class="py-12">
-  <div class="container mx-auto">
-    <h2 class="text-3xl font-extrabold text-center mb-6 text-black-900">Frozen Items</h2>
-    <hr class="border-t-3 border-gray-300 my-4">
+  <div class="container">
+    <h2 class="section-title">Discover Delicious Frozen Items</h2>
+    <hr class="section-hr">
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div class="frozen-grid">
       {% for frozen in frozens %}
-      <div class="overflow-hidden rounded-lg shadow-lg">
-        <div class="aspect-w-1 aspect-h-1">
-          <img class="object-cover object-center w-full h-full hover:scale-105 transition duration-300" src="{{ frozen.image.url }}" alt="{{ frozen.title }}">
+      <div class="frozen-card">
+        <div class="frozen-image-container">
+          <a href="{% url 'product-detail' frozen.id %}">
+            <img class="frozen-image" src="{{ frozen.image.url }}" alt="{{ frozen.title }}">
+          </a>
         </div>
-
-        <div class="p-3 flex flex-col justify-between">
-          <div class="mb-2">
-            <h3 class="text-xl font-semibold mb-2 text-center">{{ frozen.title }}</h3>
-            <div class="flex justify-center items-center mb-2">
-              {% if frozen.discount_price %}
-              <span class="text-gray-500 line-through">Tk. {{ frozen.price }}</span>
-              <span class="text-red-500 font-bold ml-2">Tk. {{ frozen.discount_price }}</span>
-              {% else %}
-              <span class="text-gray-700 font-bold">Tk. {{ frozen.price }}</span>
-              {% endif %}
-            </div>
+        <div class="frozen-content">
+          <h3 class="frozen-title text-center">{{ frozen.title }}</h3>
+          <div class="frozen-price">
+            {% if frozen.discount_price %}
+            <span class="original-price">Tk. {{ frozen.price }}</span>
+            <span class="discounted-price">Tk. {{ frozen.discount_price }}</span>
+            {% else %}
+            <span class="price">Tk. {{ frozen.price }}</span>
+            {% endif %}
           </div>
-          <div class="d-grid gap-2 mt-2">
+          <div class="frozen-actions d-grid gap-2 mt-2">
             <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ frozen.id }}">Add to Cart</button>
-            <a class="btn btn-lg btn-danger" href="{% url 'product-detail' frozen.id %}" role="button">Quick View</a>
+            <a class="btn btn-lg btn-danger quick-view-btn" data-product-id="{{ frozen.id }}" href="#" role="button">Quick View</a>
           </div>
         </div>
       </div>
@@ -42,28 +204,23 @@ Frozen Items
   </div>
 </section>
 
-
-
-
-
-<!-- Pagination Controls -->
 {% if frozens.has_other_pages %}
-<div class="container mx-auto mt-8">
-  <nav class="flex justify-center" aria-label="Page navigation">
-    <ul class="inline-flex items-center -space-x-px">
+<div class="container">
+  <nav class="pagination" aria-label="Page navigation">
+    <ul>
       {% if frozens.has_previous %}
       <li>
-        <a href="?page=1" class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">&laquo;</a>
+        <a href="?page=1" class="">&laquo;</a>
       </li>
       {% endif %}
       {% for num in frozens.paginator.page_range %}
       <li>
-        <a href="?page={{ num }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 {% if num == frozens.number %}bg-blue-500 text-white{% endif %}">{{ num }}</a>
+        <a href="?page={{ num }}" class="{% if num == frozens.number %}active{% endif %}">{{ num }}</a>
       </li>
       {% endfor %}
       {% if frozens.has_next %}
       <li>
-        <a href="?page={{ frozens.paginator.num_pages }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">&raquo;</a>
+        <a href="?page={{ frozens.paginator.num_pages }}">&raquo;</a>
       </li>
       {% endif %}
     </ul>
@@ -111,6 +268,13 @@ Frozen Items
           console.log('Error:', errorThrown);
         }
       });
+    });
+
+    $('.quick-view-btn').click(function(event) {
+      event.preventDefault();
+      var productId = $(this).data('product-id');
+      // Implement the quick view functionality here
+      console.log('Quick view clicked for product ID:', productId);
     });
   });
 </script>

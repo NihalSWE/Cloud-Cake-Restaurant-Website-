@@ -302,79 +302,10 @@
     </div><!-- end of .container-->
 </section>
 
-  <!-- <section> close ============================-->
-    {% comment %} <div class="modal fade" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="quickViewModalLabel">Product Details</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <!-- Product details will be loaded here via AJAX -->
-            <div id="quickViewContent"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-<!---Create Product Modal--> {% endcomment %}
-
 
 <!-- <Product details modal js  > ============================-->
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  {% comment %} <script>
-    $(document).ready(function() {
-      $('.quick-view-btn').click(function(event) {
-        event.preventDefault();
-  
-        var productId = $(this).data('product-id');
-        var csrftoken = getCookie('csrftoken');
-  
-        // Adjust the URL to match your Django URL pattern
-        var url = '/product-detail/' + productId;
-  
-        fetch(url, {
-          method: 'GET',
-          headers: {
-            'X-CSRFToken': csrftoken
-          }
-        })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.text();
-        })
-        .then(data => {
-          $('#quickViewContent').html(data);
-          $('#quickViewModal').modal('show');
-        })
-        .catch(error => {
-          console.error('There was a problem with the fetch operation:', error);
-          alert('There was an error loading the product details. Please try again.');
-        });
-      });
-  
-      function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-          const cookies = document.cookie.split(';');
-          for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-              break;
-            }
-          }
-        }
-        return cookieValue;
-      }
-    });
-  </script> {% endcomment %}
-
-
-
 
 
 <script>

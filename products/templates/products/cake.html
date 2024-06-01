@@ -6,39 +6,199 @@
 
 {% block body %}
 {% load static %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+
+  .section-hr {
+    border: 0;
+    border-top: 3px solid #ccc;
+    margin: 1.5rem 0;
+  }
+
+  .cake-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .cake-card {
+    {% comment %} background-color: #fff; {% endcomment %}
+    border-radius: 10px;
+    overflow: hidden;
+    {% comment %} box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); {% endcomment %}
+    transition: transform 0.3s;
+  }
+
+  .cake-card:hover {
+    transform: scale(1.05);
+  }
+
+  .cake-image-container {
+    position: relative;
+    padding-top: 85%;
+  }
+
+  .cake-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .cake-content {
+    padding: 1rem;
+  }
+
+  .cake-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .cake-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .cake-price span {
+    font-size: 1rem;
+  }
+
+  .cake-price .original-price {
+    text-decoration: line-through;
+    color: #999;
+  }
+
+  .cake-price .discounted-price {
+    color: green;
+    font-weight: 700;
+  }
+
+  .cake-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .cake-actions button,
+  .cake-actions a {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+
+  .cake-actions .btn-primary {
+    background-color: primary;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .cake-actions .btn-primary:hover {
+    background-color: primary;
+    transform: translateY(-2px);
+  }
+
+  .cake-actions .btn-danger {
+    background-color: danger;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .cake-actions .btn-danger:hover {
+    background-color: danger;
+    transform: translateY(-2px);
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .pagination ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+  }
+
+  .pagination li {
+    margin: 0 0.25rem;
+  }
+
+  .pagination a {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    background-color: #f0f0f0;
+    color: #333;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+
+  .pagination a:hover {
+    background-color: #e0e0e0;
+  }
+
+  .pagination a.active {
+    background-color: #007bff;
+    color: #fff;
+  }
+</style>
+
 <section class="py-12">
-  <div class="container mx-auto">
-    <h2 class="text-3xl font-extrabold text-center mb-6 text-black-900">Discover Delicious Cakes</h2>
-    <hr class="border-t-3 border-gray-300 my-4">
+  <div class="container">
+    <h2 class="section-title">Discover Delicious Cakes</h2>
+    <hr class="section-hr">
 
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-
+    <div class="cake-grid">
       {% for cake in cakes %}
-      <div class="overflow-hidden shadow-lg rounded-lg">
-        <div class="aspect-w-1 aspect-h-1">
-          <img class="object-cover object-center w-full h-full" href="{% url 'product-detail' cake.id %}" src="{{ cake.image.url }}" alt="{{ cake.title }}">
+      <div class="cake-card">
+        <div class="cake-image-container">
+          <a href="{% url 'product-detail' cake.id %}">
+            <img class="cake-image" src="{{ cake.image.url }}" alt="{{ cake.title }}">
+          </a>
         </div>
-
-        <div class="p-4">
-          <h3 class="text-xl font-semibold mb-2">{{ cake.title }}</h3>
-          <div class="flex justify-between items-center mb-4">
+        <div class="cake-content">
+          <h3 class="cake-title text-center">{{ cake.title }}</h3>
+          <div class="cake-price">
             {% if cake.discount_price %}
-            <span class="text-gray-500 line-through">Tk. {{ cake.price }}</span>
-            <span class="text-red-500 font-bold">Tk. {{ cake.discount_price }}</span>
+            <span class="original-price">Tk. {{ cake.price }}</span>
+            <span class="discounted-price">Tk. {{ cake.discount_price }}</span>
             {% else %}
-            <span class="text-gray-700 font-bold">Tk. {{ cake.price }}</span>
+            <span class="price">Tk. {{ cake.price }}</span>
             {% endif %}
           </div>
-          <div class="d-grid gap-2 mt-2">
+          <div class="cake-actions d-grid gap-2 mt-2">
             <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ cake.id }}">Add to Cart</button>
-            <a class="btn btn-lg btn-danger" href="{% url 'product-detail' cake.id %}" role="button">Quick View</a>
+            <a class="btn btn-lg btn-danger quick-view-btn" data-product-id="{{ cake.id }}" href="#" role="button">Quick View</a>
           </div>
-          
-          
-          
-          
-          
         </div>
       </div>
       {% endfor %}
@@ -46,25 +206,23 @@
   </div>
 </section>
 
-
-<!-- Pagination Controls -->
 {% if cakes.has_other_pages %}
-<div class="container mx-auto">
-  <nav class="flex justify-center mt-8" aria-label="Page navigation">
-    <ul class="flex">
+<div class="container">
+  <nav class="pagination" aria-label="Page navigation">
+    <ul>
       {% if cakes.has_previous %}
       <li>
-        <a href="?page=1" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md mr-2 hover:bg-gray-300 transition duration-300">&laquo;</a>
+        <a href="?page=1" class="">&laquo;</a>
       </li>
       {% endif %}
       {% for num in cakes.paginator.page_range %}
       <li>
-        <a href="?page={{ num }}" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md mr-2 hover:bg-gray-300 transition duration-300 {% if num == cakes.number %}bg-blue-500 text-white{% endif %}">{{ num }}</a>
+        <a href="?page={{ num }}" class="{% if num == cakes.number %}active{% endif %}">{{ num }}</a>
       </li>
       {% endfor %}
       {% if cakes.has_next %}
       <li>
-        <a href="?page={{ cakes.paginator.num_pages }}" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition duration-300">&raquo;</a>
+        <a href="?page={{ cakes.paginator.num_pages }}">&raquo;</a>
       </li>
       {% endif %}
     </ul>
@@ -112,6 +270,13 @@
           console.log('Error:', errorThrown);
         }
       });
+    });
+
+    $('.quick-view-btn').click(function(event) {
+      event.preventDefault();
+      var productId = $(this).data('product-id');
+      // Implement the quick view functionality here
+      console.log('Quick view clicked for product ID:', productId);
     });
   });
 </script>

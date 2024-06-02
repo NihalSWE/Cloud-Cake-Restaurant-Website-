@@ -54,9 +54,9 @@
   /* Details section */
   .details-section {
     padding: 1rem;
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px #616161;
   }
   
   .product-title {
@@ -96,31 +96,52 @@
     color: #555;
   }
   
-  .add-to-cart-container {
+  .addd-to-cart-container {
     text-align: center;
     margin-top: 2rem;
   }
   
-  .add-to-cart-btn {
+  .addd-to-cart-btn {
     display: inline-block;
     padding: 0.75rem 1.5rem;
-    background: primary;
-    color: #fff;
+    background: #fb0909;
     font-size: 1rem;
     font-weight: bold;
     border: none;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 5px 7px #dc3545;;
     text-align: center;
-    text-decoration: none;
+    text-decoration: blink;
     transition: background 0.3s, transform 0.3s;
   }
   
-  .add-to-cart-btn:hover {
-    background: primary;
+  .addd-to-cart-btn:hover {
+    background: #fb0909;;
     transform: scale(1.05);
   }
   
+  .share-container {
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .share-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #4267B2; /* Facebook blue */
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.3s;
+  }
+
+  .share-btn:hover {
+    background: #365899;
+    transform: scale(1.05);
+  }
 
 </style>
 
@@ -143,8 +164,11 @@
         <p class="price">Tk. {{ product.price }}</p>
       {% endif %}
       <p class="product-detail">{{ product.detail }}</p>
-      <div class="add-to-cart-container">
-        <a href="{% url 'addtocart' product.id %}" class="add-to-cart-btn text-black">Add to Cart</a>
+      <div class="addd-to-cart-container">
+        <a href="{% url 'addtocart' product.id %}" class="addd-to-cart-btn text-black">Add to Cart</a>
+        <div class="share-container">
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="share-btn" target="_blank">Share on Facebook</a>
+        </div>
       </div>
     </div>
   </div>

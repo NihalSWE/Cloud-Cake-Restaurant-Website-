@@ -147,6 +147,14 @@ def update_quantity(request, prod_id, action):
 
     return redirect('showcart')
 
+
+import sys
+import json
+
+
+# Ensure the environment is using UTF-8
+sys.stdout.reconfigure(encoding='utf-8')
+
 def showcart(request):
     cart = request.session.get('cart', {})
     print("Cart Contents:", cart)

@@ -56,7 +56,7 @@
     padding: 1rem;
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 4px 8px #616161;
+    {% comment %} box-shadow: 0 4px 8px #616161; {% endcomment %}
   }
   
   .product-title {
@@ -97,54 +97,53 @@
   }
   
   .addd-to-cart-container {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 2rem;
+    gap: 1rem; /* Adding gap between buttons */
   }
   
   .addd-to-cart-btn {
     display: inline-block;
     padding: 0.75rem 1.5rem;
-    background: #fb0909;
+    background: #ef3e26;
     font-size: 1rem;
     font-weight: bold;
     border: none;
-    border-radius: 15px;
-    box-shadow: 0 5px 7px #dc3545;;
+    border-radius: 8px;
+    box-shadow: 0 5px 7px #ef3e26;
     text-align: center;
-    text-decoration: blink;
+    text-decoration: none;
     transition: background 0.3s, transform 0.3s;
+    margin-right: 2rem; /* Ensure spacing */
   }
   
   .addd-to-cart-btn:hover {
-    background: #fb0909;;
+    background: #ef3e26;
     transform: scale(1.05);
   }
   
-  .share-container {
-    text-align: center;
-    margin-top: 1rem;
-  }
-
   .share-btn {
     display: inline-block;
     padding: 0.75rem 1.5rem;
     background: #4267B2; /* Facebook blue */
     font-size: 1rem;
     font-weight: bold;
+    box-shadow: 0 4px 6px #4267B2;
     border: none;
-    border-radius: 15px;
+    border-radius: 8px;
     color: #fff;
     text-decoration: none;
     transition: background 0.3s, transform 0.3s;
   }
 
   .share-btn:hover {
-    background: #365899;
+    background: #4267B2;
     transform: scale(1.05);
   }
 
 </style>
-
 
 <div class="container my-5">
   <div class="grid-container">
@@ -165,12 +164,9 @@
       {% endif %}
       <p class="product-detail">{{ product.detail }}</p>
       <div class="addd-to-cart-container">
-        <a href="{% url 'addtocart' product.id %}" class="addd-to-cart-btn text-black">Add to Cart</a>
-        <div class="share-container">
-          <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="share-btn" target="_blank">Share on Facebook</a>
-        </div>
+        <a href="{% url 'addtocart' product.id %}" class="addd-to-cart-btn text-white">Add to Cart</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="share-btn text-white" target="_blank">Share</a>
       </div>
     </div>
   </div>
 </div>
-

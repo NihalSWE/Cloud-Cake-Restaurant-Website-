@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponse,get_object_or_404,redirect
 from django.views import View
-from .models import Product,AddCart
+from .models import Product,AddCart,Banner
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 # Create your views here.
@@ -63,8 +63,17 @@ class BreadView(View):
             }
         return render(request,'products/Bread&Cookies.html',context)
 
+
+
 class ProductView(View):
+     
      def get(self, request):
+        # Get the latest banner
+        latest_banner = Banner.objects.latest('id')
+
+        # Delete all previous banners except the latest one
+        Banner.objects.exclude(id=latest_banner.id).delete()
+
         cakes = Product.objects.filter(category='C').order_by('-id')
         savories = Product.objects.filter(category='S').order_by('-id')
         frozens = Product.objects.filter(category='F').order_by('-id')
@@ -76,6 +85,7 @@ class ProductView(View):
         breads_paginator = Paginator(breads, 4)    # Show 4 breads per page
 
         context = {
+            'banner': latest_banner,
             'cakes': cakes_paginator.get_page(1),
             'savories': savories_paginator.get_page(1),
             'frozens': frozens_paginator.get_page(1),

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product,AddCart,Order
+from .models import Product,AddCart,Order,Banner
 # Register your models here.
 
 
@@ -50,3 +50,17 @@ class OrderModelAdmin(admin.ModelAdmin):
             return 'No items'
 
     display_cart_items.short_description = 'Cart Items and Total Cost'  # Set column header
+
+
+@admin.register(Banner)
+class BannerAdmin(admin.ModelAdmin):
+    list_display = ('id', 'image')  # Display the ID and a preview of the image in the admin list view
+
+    def image(self, obj):
+        if obj.image:
+            return f'<img src="{obj.image.url}" style="max-height: 100px; max-width: 200px;" />'
+        else:
+            return 'No Image'
+    
+    image.allow_tags = True  # Allows HTML content in the method's return value
+    image.short_description = 'Image Preview'  # Sets the column header text in the admin list view

@@ -43,3 +43,9 @@ class Order(models.Model):
 
     def __str__(self):
         return self.name
+
+class Banner(models.Model):
+    image = models.ImageField(upload_to='banners')  # Assuming the banner image is stored as an ImageField
+
+    def __str__(self):
+        return f'Banner {self.id}'  # Display the banner ID in the admin panel

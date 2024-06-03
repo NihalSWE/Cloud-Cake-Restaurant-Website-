@@ -5,10 +5,8 @@
 {% endblock %}
 
 <style>
-  {% load static %}
-  .custom-bg {
-    background-image: url("{% static 'assets/img/gallery/Cloud-Lounge-Cover.png' %}") !important;
-  }
+
+
   .card-span {
     height: 100%;
     display: flex;
@@ -29,19 +27,23 @@
   }
 </style>
 
-{% block banner %}
+
 {% load static %}
-<section class="py-5 overflow-hidden bg-primary custom-bg" id="home">
+{% block banner %}
+<section class="custom-bg" id="home" style="background-image: url('{% if banner %}{{ banner.image.url }}{% else %}{% static 'assets/img/gallery/Cloud-Lounge-Cover.png' %}{% endif %}');">
   <div class="container">
-    <div class="row justify-content-center align-items-center">
-      <div class="col-md-7 col-lg-6 py-8 text-md-start text-center">
-          <!-- Your banner content goes here -->
+    <div class="row align-items-center">
+      <div class="col-12 text-center">
+          <!-- Dynamic banner content goes here -->
       </div>
-  </div>
-  
+    </div>
   </div>
 </section>
 {% endblock %}
+
+
+
+
 
 
 {% block body %}

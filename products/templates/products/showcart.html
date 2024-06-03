@@ -9,6 +9,24 @@ Shopping Cart
 <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js" defer></script>
 {% endblock %}
 
+
+<style>
+  .animate-slide-in {
+    animation: slide-in 0.3s ease-out;
+  }
+
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(-10%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
 {% block body %}
 {% load static %}
 <div class="container mx-auto py-12 max-w-7xl">
@@ -97,8 +115,8 @@ Shopping Cart
 
 <!-- Contact Form Modal -->
 <div class="fixed inset-0 z-50 flex items-center justify-center hidden" id="contactModal">
-  <div class="fixed inset-0  bg-opacity-100" style=" background-color: rgba(0, 0, 0, 0.25) !important;"></div>
-  <div class="bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-lg relative z-50"> <!-- Increased z-index to display modal in front -->
+  <div class="fixed inset-0 bg-opacity-75 bg-gray-900"></div>
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-lg relative z-50 animate-slide-in">
     <div class="px-6 py-4 flex justify-between items-center border-b">
       <h5 class="text-xl font-semibold">Contact Us</h5>
       <button type="button" class="text-gray-500 hover:text-gray-700" aria-label="Close" onclick="closeModal()">
@@ -110,7 +128,7 @@ Shopping Cart
         {% csrf_token %}
         <div class="mb-4">
           <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700">Name:</label>
-          <input type="text" name="{{ form.name.html_name }}" id="{{ form.name.id_for_label }}" placeholder="Enter Your Name" value="{{ form.name.value }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+          <input type="text" name="{{ form.name.html_name }}" id="{{ form.name.id_for_label }}" placeholder="Enter Your Name" value="{{ form.name.value|default_if_none:'' }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
           {% if form.name.errors %}
             <div class="text-red-500 text-sm mt-1">
               {% for error in form.name.errors %}
@@ -121,7 +139,7 @@ Shopping Cart
         </div>
         <div class="mb-4">
           <label for="{{ form.phone.id_for_label }}" class="block text-sm font-medium text-gray-700">Number:</label>
-          <input type="text" name="{{ form.phone.html_name }}" id="{{ form.phone.id_for_label }}" placeholder="Enter Your Number" value="{{ form.phone.value }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+          <input type="text" name="{{ form.phone.html_name }}" id="{{ form.phone.id_for_label }}" placeholder="Enter Your Number" value="{{ form.phone.value|default_if_none:'' }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
           {% if form.phone.errors %}
             <div class="text-red-500 text-sm mt-1">
               {% for error in form.phone.errors %}
@@ -132,7 +150,7 @@ Shopping Cart
         </div>
         <div class="mb-4">
           <label for="{{ form.address.id_for_label }}" class="block text-sm font-medium text-gray-700">Address:</label>
-          <input type="text" name="{{ form.address.html_name }}" id="{{ form.address.id_for_label }}" placeholder="Enter Your Address" value="{{ form.address.value }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+          <input type="text" name="{{ form.address.html_name }}" id="{{ form.address.id_for_label }}" placeholder="Enter Your Address" value="{{ form.address.value|default_if_none:'' }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
           {% if form.address.errors %}
             <div class="text-red-500 text-sm mt-1">
               {% for error in form.address.errors %}
@@ -142,7 +160,7 @@ Shopping Cart
           {% endif %}
         </div>
         <div class="text-center mt-4">
-          <button type="submit" class="w-full bg-gradient-to-r from-red-500 to-yellow-500 text-white py-2 rounded-lg shadow-lg hover:from-red-600 hover:to-yellow-600">
+          <button type="submit" class="w-full  from-#ef3e26 to-#ef3e26 text-white py-2 rounded-lg shadow-lg hover:from-#ef3e26 hover:to-#ef3e26 transition duration-300 transform hover:scale-105" style="background-color:#ef3e26;">
             Submit
           </button>
         </div>
@@ -150,7 +168,6 @@ Shopping Cart
     </div>
   </div>
 </div>
-
 <script>
   function openModal() {
     document.getElementById('contactModal').classList.remove('hidden');

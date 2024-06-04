@@ -25,6 +25,32 @@
     display: flex;
     flex-wrap: wrap;
   }
+  .fixed-dimension {
+    width: 250px !important;
+    height: 250px !important;
+    object-fit: cover;
+  }
+
+  .card-span {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+  }
+  .card-span:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .card-img-top {
+    object-fit: cover;
+    width: 100%;
+    height: 200px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .card-body {
+    padding: 15px;
+  }
 </style>
 
 
@@ -50,93 +76,63 @@
 {% load static %}
 <!-- ============================================-->
 <!-- <section> begin ============================-->
-<section class="py-0">
-  <div class="container">
-    <div class="row h-100 gx-2 mt-7">
-      <div class="col-sm-6 col-lg-3 mb-3 mb-md-0 h-100 pb-4">
-        <div class="card card-span h-100">
-          <div class="position-relative">
-            <img class="img-fluid rounded-3 w-100"  src="{% static 'assets/img/gallery/discount-item-1.png'%}" alt="..." />
-            <div class="card-actions">
-              <div class="badge badge-foodwagon p-4">
-                <div class="d-flex flex-between-center">
+  <section class="py-5 overflow-hidden" style="margin-bottom: -80px">
+    <div class="container">
+      <div class="row flex-center mb-6">
+        <div class="col-12">
+          <div class="carousel slide" id="carouselSearchByFood" data-bs-touch="false" data-bs-interval="false">
+            <div class="carousel-inner">
+              <div class="carousel-item active" data-bs-interval="10000">
+                <div class="row h-100 align-items-center justify-content-center">
+                  <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
+                    <a href="{% url 'cake' %}" class="card card-span h-100 text-decoration-none text-dark">
+                      <img class="img-fluid card-img-top" style="border-radius: 10px;" src="{% static 'assets/img/gallery/Cake1.png' %}" alt="Cakes" />
+                      <div class="card-body text-center">
+                        <span class="fw-bold text-1000 text-truncate mb-2">Cakes</span>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
+                    <a href="{% url 'bread' %}" class="card card-span h-100 text-decoration-none text-dark">
+                      <img class="img-fluid card-img-top" style="border-radius: 10px;" src="{% static 'assets/img/gallery/b2.png' %}" alt="Bread & Cookies" />
+                      <div class="card-body text-center">
+                        <span class="fw-bold text-1000 text-truncate mb-2">Bread & Cookies</span>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
+                    <a href="{% url 'savory' %}" class="card card-span h-100 text-decoration-none text-dark">
+                      <img class="img-fluid card-img-top" style="border-radius: 10px;" src="{% static 'assets/img/gallery/s1.png' %}" alt="Savory" />
+                      <div class="card-body text-center">
+                        <span class="fw-bold text-1000 text-truncate mb-2">Savory</span>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
+                    <a href="{% url 'frozen' %}" class="card card-span h-100 text-decoration-none text-dark">
+                      <img class="img-fluid card-img-top" style="border-radius: 10px;" src="{% static 'assets/img/gallery/f2.png' %}" alt="Frozen" />
+                      <div class="card-body text-center">
+                        <span class="fw-bold text-1000 text-truncate mb-2">Frozen</span>
+                      </div>
+                    </a>
+                  </div>
                 </div>
-              </div>
+              </div>  
             </div>
           </div>
-          <div class="card-body px-0 text-center">
-            <h5 class="fw-bold text-1000 text-truncate">Flat Hill Slingback</h5>
-            <span class="badge bg-soft-danger py-2 px-3"><span class="fs-1 text-danger">6 days Remaining</span></span>
-          </div>
-          <a class="stretched-link" href="#"></a>
         </div>
       </div>
-      <div class="col-sm-6 col-lg-3 mb-3 mb-md-0 h-100 pb-4">
-        <div class="card card-span h-100">
-          <div class="position-relative">
-            <img class="img-fluid rounded-3 w-100" src="{% static 'assets/img/gallery/discount-item-2.png'%}" alt="..." />
-            <div class="card-actions">
-              <div class="badge badge-foodwagon p-4">
-                <div class="d-flex flex-between-center">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card-body px-0 text-center">
-            <h5 class="fw-bold text-1000 text-truncate">Ocean Blue Ring</h5>
-            <span class="badge bg-soft-danger py-2 px-3"><span class="fs-1 text-danger">6 days Remaining</span></span>
-          </div>
-          <a class="stretched-link" href="#"></a>
-        </div>
-      </div>
-      <div class="col-sm-6 col-lg-3 mb-3 mb-md-0 h-100 pb-4">
-        <div class="card card-span h-100">
-          <div class="position-relative">
-            <img class="img-fluid rounded-3 w-100" src="{% static 'assets/img/gallery/discount-item-3.png'%}" alt="..." />
-            <div class="card-actions">
-              <div class="badge badge-foodwagon p-4">
-                <div class="d-flex flex-between-center">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card-body px-0 text-center">
-            <h5 class="fw-bold text-1000 text-truncate">Brown Leathered Wallet</h5>
-            <span class="badge bg-soft-danger py-2 px-3"><span class="fs-1 text-danger">6 days Remaining</span></span>
-          </div>
-          <a class="stretched-link" href="#"></a>
-        </div>
-      </div>
-      <div class="col-sm-6 col-lg-3 mb-3 mb-md-0 h-100 pb-4">
-        <div class="card card-span h-100">
-          <div class="position-relative">
-            <img class="img-fluid rounded-3 w-100" src="{% static 'assets/img/gallery/discount-item-4.png'%}" alt="..." />
-            <div class="card-actions">
-              <div class="badge badge-foodwagon p-4">
-                <div class="d-flex flex-between-center">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card-body px-0 text-center">
-            <h5 class="fw-bold text-1000 text-truncate">Silverside Wristwatch</h5>
-            <span class="badge bg-soft-danger py-2 px-3"><span class="fs-1 text-danger">6 days Remaining</span></span>
-          </div>
-          <a class="stretched-link" href="#"></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </div><!-- end of .container-->
+  </section>
+  
+
 
 <!-- <section> begin ============================-->
-  <section class="py-0 overflow-hidden">
+  <section class="py-0 overflow-hidden" style="">
     <div class="container">
       <div class="row h-100">
         <div class="col-lg-7 mx-auto text-center mt-4 mb-5">
-          <h5 class="fw-bold fs-3 fs-lg-5 lh-sm" style="
-          font-size: xx-large !important;
-          text-transform: uppercase;" >Popular items</h5>
+          <h5 class="fw-bold fs-3 fs-lg-5 lh-sm" style="font-size: xx-large !important; text-transform: uppercase;">Popular items</h5>
         </div>
         <div class="col-12">
           <div class="carousel slide" id="carouselPopularItems" data-bs-touch="false" data-bs-interval="false">
@@ -147,7 +143,7 @@
                   {% for cake in cakes %}
                   <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
                     <div class="card card-span h-100 rounded-3">
-                      <img class="img-fluid rounded-3 card-img-top" style="height:250px !important" src="{{cake.image.url}}" alt="..." />
+                      <img class="img-fluid rounded-3 card-img-top fixed-dimension" src="{{cake.image.url}}" alt="..." />
                       <div class="card-body ps-0 text-center">
                         <h5 class="fw-bold text-1000 text-truncate mb-1">{{cake.title}}</h5>
                         <div>
@@ -162,7 +158,7 @@
                     </div>
                     <div class="d-grid gap-2 mt-2">
                       <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ cake.id }}">Add to Cart</button>
-                   <a class="btn btn-lg btn-danger quick-view-btn" data-product-id="{{ cake.id }}" href="#" role="button">Quick View</a>
+                      <a class="btn btn-lg btn-danger quick-view-btn" data-product-id="{{ cake.id }}" href="#" role="button">Quick View</a>
                     </div>
                   </div>
                   {% endfor %}
@@ -173,7 +169,7 @@
                   {% for bread in breads %}
                   <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
                     <div class="card card-span h-100 rounded-3">
-                      <img class="img-fluid rounded-3 card-img-top"  style="height:250px !important" src="{{bread.image.url}}" alt="..." />
+                      <img class="img-fluid rounded-3 card-img-top fixed-dimension" src="{{bread.image.url}}" alt="..." />
                       <div class="card-body ps-0 text-center">
                         <h5 class="fw-bold text-1000 text-truncate mb-1">{{bread.title}}</h5>
                         <div>
@@ -199,7 +195,7 @@
                   {% for savorie in savories %}
                   <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
                     <div class="card card-span h-100 rounded-3">
-                      <img class="img-fluid rounded-3 card-img-top" style="height:250px !important" src="{{savorie.image.url}}" alt="..." />
+                      <img class="img-fluid rounded-3 card-img-top fixed-dimension" src="{{savorie.image.url}}" alt="..." />
                       <div class="card-body ps-0 text-center">
                         <h5 class="fw-bold text-1000 text-truncate mb-1">{{savorie.title}}</h5>
                         <div>
@@ -214,7 +210,6 @@
                     </div>
                     <div class="d-grid gap-2 mt-2">
                       <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ savorie.id }}">Add to Cart</button>
-  
                       <a class="btn btn-lg btn-danger quick-view-btn" data-product-id="{{ savorie.id }}" href="#" role="button">Quick View</a>
                     </div>
                   </div>
@@ -226,7 +221,7 @@
                   {% for frozen in frozens %}
                   <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
                     <div class="card card-span h-100 rounded-3">
-                      <img class="img-fluid rounded-3 card-img-top" style="height:250px !important" src="{{frozen.image.url}}" alt="..." />
+                      <img class="img-fluid rounded-3 card-img-top fixed-dimension" src="{{frozen.image.url}}" alt="..." />
                       <div class="card-body ps-0 text-center">
                         <h5 class="fw-bold text-1000 text-truncate mb-1">{{frozen.title}}</h5>
                         <div>
@@ -253,60 +248,7 @@
       </div>
     </div>
   </section>
-
-<!-- <section> begin ============================-->
-  <section class="py-5 overflow-hidden">
-    <h1 class="text-center mb-2" style="
-    font-size: xx-large;
-    text-transform: uppercase;" >Food Category</h1>
-    <hr>
-    <div class="container">
-        <div class="row flex-center mb-6">
-            <div class="col-12">
-                <div class="carousel slide" id="carouselSearchByFood" data-bs-touch="false" data-bs-interval="false">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active" data-bs-interval="10000">
-                            <div class="row h-100 align-items-center justify-content-center">
-                                <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
-                                    <div class="card card-span h-100 rounded-circle" style="height: 200px; width: 200px;">
-                                        <img class="img-fluid rounded-circle h-100" src="{% static 'assets/img/gallery/Cake1.png' %}" alt="Cakes" />
-                                        <div class="card-body ps-0 text-center">
-                                            <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'cake' %}">Cakes</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
-                                    <div class="card card-span h-100 rounded-circle" style="height: 200px; width: 200px;">
-                                        <img class="img-fluid rounded-circle h-100" src="{% static 'assets/img/gallery/b2.png' %}" alt="Bread & Cookies" />
-                                        <div class="card-body ps-0 text-center">
-                                            <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'bread' %}">Bread & Cookies</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
-                                    <div class="card card-span h-100 rounded-circle" style="height: 200px; width: 200px;">
-                                        <img class="img-fluid rounded-circle h-100" src="{% static 'assets/img/gallery/s1.png' %}" alt="Savory" />
-                                        <div class="card-body ps-0 text-center">
-                                            <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'savory' %}">Savory</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
-                                    <div class="card card-span h-100 rounded-circle" style="height: 200px; width: 200px;">
-                                        <img class="img-fluid rounded-circle h-100" src="{% static 'assets/img/gallery/f2.png' %}" alt="Frozen" />
-                                        <div class="card-body ps-0 text-center">
-                                            <a class="text-center fw-bold text-1000 text-truncate mb-2" href="{% url 'frozen' %}">Frozen</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>  
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!-- end of .container-->
-</section>
+  
 
 
 <!-- <Product details modal js  > ============================-->

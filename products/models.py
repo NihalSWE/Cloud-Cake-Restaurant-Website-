@@ -1,4 +1,5 @@
 from django.db import models
+from PIL import Image
 
 # Create your models here.
 CATEGORY_CHOICES=(
@@ -18,6 +19,18 @@ class Product(models.Model):
 
     def __str__(self):
         return str(self.id)
+    
+    def save(self, *args, **kwargs):
+        super(Product, self).save(*args, **kwargs)
+        if self.image:
+            img = Image.open(self.image.path)
+            # Set the desired image size
+            fixed_width = 250
+            fixed_height = 250
+
+            # Resize the image
+            img = img.resize((fixed_width, fixed_height), Image.LANCZOS)
+            img.save(self.image.path)
     
 
 class AddCart(models.Model):

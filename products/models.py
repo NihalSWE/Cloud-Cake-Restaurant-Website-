@@ -25,8 +25,8 @@ class Product(models.Model):
         if self.image:
             img = Image.open(self.image.path)
             # Set the desired image size
-            fixed_width = 250
-            fixed_height = 250
+            fixed_width = 1080
+            fixed_height = 1080
 
             # Resize the image
             img = img.resize((fixed_width, fixed_height), Image.LANCZOS)

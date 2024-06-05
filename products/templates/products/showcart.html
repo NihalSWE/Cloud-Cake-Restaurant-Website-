@@ -30,7 +30,7 @@ Shopping Cart
 {% block body %}
 {% load static %}
 <div class="container mx-auto py-12 max-w-7xl">
-  <h1 class="text-4xl font-bold text-center mb-4 text-black-800">Shopping Cart</h1>
+  <h1 class="text-4xl font-bold text-center mb-4 text-black-800" style="text-transform: uppercase;">Shopping Cart</h1>
   <hr class="border-t-2 border-blue-400 mb-4">
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -84,32 +84,29 @@ Shopping Cart
         <ul class="divide-y divide-gray-200">
           <li class="flex justify-between py-4 text-lg">
             <span>Amount</span>
-            <span>Tk. {{ total_amount }}</span>
-          </li>
-          <li class="flex justify-between py-4 text-lg">
-            <span>Shipping</span>
-            <span>Tk. {{ shipping }}</span>
+            <span>Tk.&nbsp;{{ total_amount }}</span>
           </li>
           <li class="flex justify-between py-4 text-xl font-bold">
             <div>
-              <span>Total</span>
-              <small class="block text-gray-500">(including VAT)</small>
+              <span>Total:</span> <!-- Added colon for better readability -->
+              <small class="block text-gray-500">(including VAT & excluding shipping fare)</small>
             </div>
-            <span>Tk. {{ total_with_shipping }}</span>
+            <span class="font-bold">Tk.&nbsp;{{ total_amount }}</span> <!-- Added font-bold for emphasis -->
           </li>
         </ul>
-        <button type="button" class="mt-6 w-full max-w-md   text-white py-3 rounded-lg shadow-lg hover:from-#ef3e26 hover:to-#ef3e26 transform hover:scale-105 transition-transform duration-300" style="background-color:#ef3e26;" onclick="openModal()">
+        <button type="button"
+                class="mt-6 w-full max-w-md text-white py-3 rounded-lg shadow-lg hover:from-#ef3e26 hover:to-#ef3e26 transform hover:scale-105 transition-transform duration-300"
+                style="background-color: #ef3e26;" onclick="openModal()">
           <span class="relative">
-            <span class="absolute inset-0  rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+            <span class="absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
             <span class="relative z-10">Contact For Order</span>
           </span>
         </button>
-        
-        
-        
-        
       </div>
     </div>
+    
+    
+    
   </div>
 </div>
 

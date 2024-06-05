@@ -8,31 +8,31 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon">
-                <i class="fas fa-bars" style="color: #fff; font-size: 1.5rem;"></i>
+                <i class="fas fa-bars" style="color: #fff; font-size: 1.5rem; "></i>
             </span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="font-size: 1.2rem;">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="font-size: 1.1rem; font-weight: 10px;">
                 <li class="nav-item">
-                    <a class="nav-link text-white" aria-current="page" href="{% url 'home' %}">Home</a>
+                    <a class="nav-link text-white" aria-current="page" href="{% url 'home' %}">HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Outlets</a>
+                    <a class="nav-link text-white" href="#">OUTLETS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'about' %}">About Us</a>
+                    <a class="nav-link text-white" href="{% url 'about' %}">ABOUT US</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'contactus' %}">Contact Us</a>
+                    <a class="nav-link text-white" href="{% url 'contactus' %}">CONTACT US</a>
                 </li>
             </ul>
             <div class="nav-item dropdown">
                 <a class="nav-link text-white dropdown-toggle" href="{% url 'showcart' %}" id="navbarDropdownCart" role="button"
-                   data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 1.2rem;">
-                   <i class="fas fa-shopping-cart"></i> Cart <span id="total-cart-quantity" class="badge bg-danger">{{ total_items }}</span>
+                   data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 1.1rem; font-weight: bold;">
+                   <i class="fas fa-shopping-cart"></i> CART <span id="total-cart-quantity" class="badge bg-danger">{{ total_items }}</span>
                 </a>
-                <ul id="cart-dropdown"  class="dropdown-menu dropdown-menu-end cart-dropdown" aria-labelledby="navbarDropdownCart">
+                <ul id="cart-dropdown" class="dropdown-menu dropdown-menu-end cart-dropdown" aria-labelledby="navbarDropdownCart">
                     {% if cart_items %}
                         {% for item in cart_items %}
                             <li>
@@ -51,13 +51,13 @@
                         </li>
                         <li>
                             <a class="dropdown-item" href="{% url 'showcart' %}">
-                                View Cart <i class="fas fa-chevron-right"></i>
+                                VIEW CART <i class="fas fa-chevron-right"></i>
                             </a>
                         </li>
                     {% else %}
                         <li>
                             <a class="dropdown-item empty-cart" href="#">
-                                Your cart is empty
+                                YOUR CART IS EMPTY
                             </a>
                         </li>
                     {% endif %}
@@ -66,6 +66,3 @@
         </div>
     </div>
 </nav>
-
-
-

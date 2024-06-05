@@ -176,9 +176,6 @@ def showcart(request):
         else:
             total_amount += item['quantity'] * item['price']
 
-    shipping = 70.00  # Example shipping cost
-    total_with_shipping = total_amount + shipping
-    
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
@@ -201,9 +198,7 @@ def showcart(request):
 
     context = {
         'cart': cart,
-        'total_amount': total_amount,
-        'shipping': shipping,
-        'total_with_shipping': total_with_shipping,
+        'total_amount': total_amount,  # Add total_amount to context
         'form': form,
     }
 

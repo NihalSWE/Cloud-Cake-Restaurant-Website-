@@ -40,17 +40,12 @@ class OrderModelAdmin(admin.ModelAdmin):
                 )
                 total_cost += total_item_cost
             
-            # Adding shipping cost
-            shipping_cost = 70.00
-            total_cost_with_shipping = total_cost + shipping_cost
-            
             # Return the concatenated string of item details and total cost
-            return '\n'.join(item_details) + f'Shipping Cost: Tk. {shipping_cost}\nTotal Cost: Tk. {price} * {quantity} = Tk. {total_cost} + Tk. {shipping_cost} = Tk. {total_cost_with_shipping}'
+            return '\n'.join(item_details) + f'\nTotal Cost: Tk. {total_cost}'
         else:
             return 'No items'
 
     display_cart_items.short_description = 'Cart Items and Total Cost'  # Set column header
-
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):

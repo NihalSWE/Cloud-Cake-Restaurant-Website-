@@ -189,7 +189,8 @@
       {% else %}
         <p class="price">Tk. {{ product.price }}</p>
       {% endif %}
-      <p class="product-detail">{{ product.detail }}</p>
+      <p class="product-detail">{{ product.detail|safe }}</p>
+
       <div class="addd-to-cart-container">
         <a href="{% url 'addtocart' product.id %}" class="addd-to-cart-btn text-white">Add to Cart</a>
         <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}&title={{ product.title }}&description={{ product.detail }}&price={{ product.price }}" class="share-btn text-white" target="_blank">Share</a>

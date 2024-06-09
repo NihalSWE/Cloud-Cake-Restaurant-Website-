@@ -5,7 +5,8 @@ from .models import Product,AddCart,Order,Banner
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'price','discount_price','detail','category', 'image']
+    list_display = ['id', 'title', 'price', 'discount_price', 'detail', 'category', 'image']
+    search_fields = ['title', 'price', 'category']
 
 
 @admin.register(AddCart)
@@ -14,9 +15,24 @@ class AddCartModelAdmin(admin.ModelAdmin):
 
 
 import json
+from import_export.admin import ExportMixin
+from import_export import resources, fields
+# Define a resource class for the Order model
+class OrderResource(resources.ModelResource):
+    created_at = fields.Field(attribute='created_at', column_name='Created At')
+    updated_at = fields.Field(attribute='updated_at', column_name='Updated At')
+
+    class Meta:
+        model = Order
+        fields = ('id', 'name', 'number', 'address', 'created_at', 'updated_at', 'cart_items')
+        export_order = ('id', 'name', 'number', 'address', 'created_at', 'updated_at', 'cart_items')
+
+# Register your models with the admin site using the resource class
 @admin.register(Order)
-class OrderModelAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'number', 'address', 'display_cart_items']
+class OrderModelAdmin(ExportMixin, admin.ModelAdmin):
+    resource_class = OrderResource
+    list_display = ['id', 'name', 'number', 'address', 'display_cart_items', 'created_at', 'updated_at']
+    search_fields = ['name', 'number', 'address']
 
     def display_cart_items(self, obj):
         """
@@ -45,7 +61,7 @@ class OrderModelAdmin(admin.ModelAdmin):
         else:
             return 'No items'
 
-    display_cart_items.short_description = 'Cart Items and Total Cost'  # Set column header
+    display_cart_items.short_description = 'Cart Items and Total Cost'  # Set column header@admin.register(Banner)
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):
@@ -59,3 +75,11 @@ class BannerAdmin(admin.ModelAdmin):
     
     image.allow_tags = True  # Allows HTML content in the method's return value
     image.short_description = 'Image Preview'  # Sets the column header text in the admin list view
+
+
+from .models import ContactMessage
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ('name', 'number', 'email', 'address', 'message', 'timestamp')
+    search_fields = ['name', 'number', 'address']

@@ -3,6 +3,7 @@ from django.views import View
 from .models import Product,AddCart,Banner
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+
 # Create your views here.
 
 
@@ -20,7 +21,7 @@ def contactus(request):
 
 class CakeView(View):
     def get(self, request):
-        cakes = Product.objects.filter(category='C').order_by('-id')
+        cakes = Product.objects.filter(category='C').order_by('id')
         paginator = Paginator(cakes, 8)  # Display 4 cakes per page
 
         page_number = request.GET.get('page')
@@ -34,7 +35,7 @@ class CakeView(View):
 
 class SavoryView(View):
     def get(self, request):
-        savories = Product.objects.filter(category='S').order_by('-id')
+        savories = Product.objects.filter(category='S').order_by('id')
         savories_paginator = Paginator(savories, 8)    # Show 8 savories per page
         savories_page_number = request.GET.get('savories_page')
         context = {
@@ -44,7 +45,7 @@ class SavoryView(View):
 
 class FrozenView(View):
     def get(self,request):
-        frozens=Product.objects.filter(category='F').order_by('-id')
+        frozens=Product.objects.filter(category='F').order_by('id')
         frozens_paginator = Paginator(frozens, 8)    # Show 8 frozens per page
         frozens_page_number = request.GET.get('frozens_page')
         context = {
@@ -55,7 +56,7 @@ class FrozenView(View):
 
 class BreadView(View):
     def get(self,request):
-        breads=Product.objects.filter(category='B').order_by('-id')
+        breads=Product.objects.filter(category='B').order_by('id')
         breads_paginator = Paginator(breads, 8)    # Show 8 beards per page
         breads_page_number = request.GET.get('beards_page')
         context = {
@@ -74,10 +75,10 @@ class ProductView(View):
         # Delete all previous banners except the latest one
         Banner.objects.exclude(id=latest_banner.id).delete()
 
-        cakes = Product.objects.filter(category='C').order_by('-id')
-        savories = Product.objects.filter(category='S').order_by('-id')
-        frozens = Product.objects.filter(category='F').order_by('-id')
-        breads = Product.objects.filter(category='B').order_by('-id')
+        cakes = Product.objects.filter(category='C').order_by('id')
+        savories = Product.objects.filter(category='S').order_by('id')
+        frozens = Product.objects.filter(category='F').order_by('id')
+        breads = Product.objects.filter(category='B').order_by('id')
 
         cakes_paginator = Paginator(cakes, 4)    # Show 4 cakes per page
         savories_paginator = Paginator(savories, 4)    # Show 4 savories per page
@@ -283,3 +284,27 @@ def order_view(request):
         form = OrderForm(initial={'cart_items': cart_items_json})
 
     return render(request, 'products/order.html', {'form': form})
+
+from .models import ContactMessage
+
+def contactus(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        number = request.POST.get('number')
+        email = request.POST.get('email')
+        address = request.POST.get('address')
+        message = request.POST.get('message')
+
+        # Save the form data to the database
+        ContactMessage.objects.create(
+            name=name,
+            number=number,
+            email=email,
+            address=address,
+            message=message
+        )
+
+        # Redirect to a success page after form submission to avoid form resubmission on page reload
+        return redirect('contactus')
+
+    return render(request, 'products/contactus.html')

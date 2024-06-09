@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 from .jazzmin import JAZZMIN_SETTINGS
 
@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'products',
+    'import_export',
+    'django_ckeditor_5',
+    
 ]
 
 MIDDLEWARE = [
@@ -123,6 +126,10 @@ STATIC_URL = 'static/'
 MEDIA_URL='/media/'
 MEDIA_ROOT=BASE_DIR /'media'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'staticfiles'),  # Adjust this as per your project structure
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -130,3 +137,26 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 JAZZMIN_SETTINGS = JAZZMIN_SETTINGS
+
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': {
+            'items': [
+                'heading', '|',
+                'bold', 'italic', 'underline', 'strikethrough', 'subscript', 'superscript', '|',
+                'link', 'imageUpload', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
+                'bulletedList', 'numberedList', 'todoList', '|',
+                'outdent', 'indent', '|',
+                'undo', 'redo', '-',
+                'alignment', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                'removeFormat', '|',
+                'horizontalLine', 'specialCharacters', 'pageBreak', '|',
+                'sourceEditing'
+            ],
+            'shouldNotGroupWhenFull': True
+        },
+        'height': 300,
+        'width': '100%',
+        'resize_enabled': False,
+    },
+}

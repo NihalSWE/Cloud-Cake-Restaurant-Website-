@@ -1,0 +1,71 @@
+{% extends "products/base.html" %}
+
+{% block title %}
+SideBar
+{% endblock %}
+
+<style>
+    /* styles.css */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Initially hidden */
+    width: 300px;
+    height: 100%;
+    background-color: #f4f4f4;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-in-out;
+    z-index: 999;
+}
+
+.sidebar.sidebar-visible {
+    right: 0;
+}
+
+.sidebar-header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-items {
+    padding: 20px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+#close-sidebar-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+</style>
+
+
+
+{% block body %}
+{% load static %}
+
+<!-- sidebar.html -->
+<div id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <h3>Shopping Cart</h3>
+        <button id="close-sidebar-btn">&times;</button>
+    </div>
+    <div id="cart-items" class="cart-items">
+        <!-- Items added to the cart will be displayed here -->
+    </div>
+</div>
+
+
+{% endblock %}

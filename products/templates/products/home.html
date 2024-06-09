@@ -113,6 +113,8 @@
     }
   }
   
+
+  
 </style>
 
 
@@ -208,9 +210,12 @@
                       </div>
                     </div>
                     <div class="d-grid gap-2 mt-2">
-                      <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ cake.id }}">Add to Cart</button>
+                      <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ cake.id }}">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                      </button>
                       <a class="btn btn-lg btn-danger quick-view-btn" data-product-id="{{ cake.id }}" href="#" role="button">Quick View</a>
                     </div>
+                    
                   </div>
                   {% endfor %}
                 </div>

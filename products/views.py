@@ -168,7 +168,6 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 def showcart(request):
     cart = request.session.get('cart', {})
-    print("Cart Contents:", cart)
     
     total_amount = 0
     for item in cart.values():

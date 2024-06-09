@@ -113,11 +113,11 @@ Shopping Cart
 <!-- Contact Form Modal -->
 <div class="fixed inset-0 z-50 flex items-center justify-center hidden" id="contactModal">
   <div class="fixed inset-0 bg-opacity-75 bg-gray-900"></div>
-  <div class="bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-lg relative z-50 animate-slide-in">
+  <div class="bg-white rounded-lg overflow-hidden w-full max-w-lg relative z-50 animate-slide-in"> <!-- Removed shadow-lg class -->
     <div class="px-6 py-4 flex justify-between items-center border-b">
       <h5 class="text-xl font-semibold">Contact Us</h5>
       <button type="button" class="text-gray-500 hover:text-gray-700" aria-label="Close" onclick="closeModal()">
-        <i class="fas fa-times text-2xl"></i>
+        <i class="fas fa-times text-2xl"></i> <!-- Close icon -->
       </button>
     </div>
     <div class="p-6">
@@ -125,7 +125,10 @@ Shopping Cart
         {% csrf_token %}
         <div class="mb-4">
           <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700">Name:</label>
-          <input type="text" name="{{ form.name.html_name }}" id="{{ form.name.id_for_label }}" placeholder="Enter Your Name" value="{{ form.name.value|default_if_none:'' }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+          <div class="flex items-center">
+            <i class="fas fa-user text-gray-400 mr-2"></i> <!-- User icon -->
+            <input type="text" name="{{ form.name.html_name }}" id="{{ form.name.id_for_label }}" placeholder="Enter Your Name" value="{{ form.name.value|default_if_none:'' }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+          </div>
           {% if form.name.errors %}
             <div class="text-red-500 text-sm mt-1">
               {% for error in form.name.errors %}
@@ -136,7 +139,10 @@ Shopping Cart
         </div>
         <div class="mb-4">
           <label for="{{ form.phone.id_for_label }}" class="block text-sm font-medium text-gray-700">Number:</label>
-          <input type="text" name="{{ form.phone.html_name }}" id="{{ form.phone.id_for_label }}" placeholder="Enter Your Number" value="{{ form.phone.value|default_if_none:'' }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+          <div class="flex items-center">
+            <i class="fas fa-phone-alt text-gray-400 mr-2"></i> <!-- Phone icon -->
+            <input type="text" name="{{ form.phone.html_name }}" id="{{ form.phone.id_for_label }}" placeholder="Enter Your Number" value="{{ form.phone.value|default_if_none:'' }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+          </div>
           {% if form.phone.errors %}
             <div class="text-red-500 text-sm mt-1">
               {% for error in form.phone.errors %}
@@ -147,7 +153,10 @@ Shopping Cart
         </div>
         <div class="mb-4">
           <label for="{{ form.address.id_for_label }}" class="block text-sm font-medium text-gray-700">Address:</label>
-          <input type="text" name="{{ form.address.html_name }}" id="{{ form.address.id_for_label }}" placeholder="Enter Your Address" value="{{ form.address.value|default_if_none:'' }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+          <div class="flex items-center">
+            <i class="fas fa-map-marker-alt text-gray-400 mr-2"></i> <!-- Address icon -->
+            <input type="text" name="{{ form.address.html_name }}" id="{{ form.address.id_for_label }}" placeholder="Enter Your Address" value="{{ form.address.value|default_if_none:'' }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+          </div>
           {% if form.address.errors %}
             <div class="text-red-500 text-sm mt-1">
               {% for error in form.address.errors %}
@@ -157,14 +166,19 @@ Shopping Cart
           {% endif %}
         </div>
         <div class="text-center mt-4">
-          <button type="submit" class="w-full  from-#ef3e26 to-#ef3e26 text-white py-2 rounded-lg shadow-lg hover:from-#ef3e26 hover:to-#ef3e26 transition duration-300 transform hover:scale-105" style="background-color:#ef3e26;">
-            Submit
+          <button type="submit" class="w-full from-#ef3e26 to-#ef3e26 text-white py-2 rounded-lg shadow-lg hover:from-#ef3e26 hover:to-#ef3e26 transition duration-300 transform hover:scale-105" style="background-color:#ef3e26;">
+            <span class="flex items-center justify-center">
+              <i class="fas fa-paper-plane mr-2"></i> <!-- Submit icon -->
+              Submit
+            </span>
           </button>
         </div>
       </form>
     </div>
   </div>
 </div>
+
+
 <script>
   function openModal() {
     document.getElementById('contactModal').classList.remove('hidden');

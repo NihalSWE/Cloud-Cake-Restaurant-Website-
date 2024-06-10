@@ -10,7 +10,9 @@ Shopping Cart
 {% endblock %}
 
 
+
 <style>
+  /* Custom Styles */
   .animate-slide-in {
     animation: slide-in 0.3s ease-out;
   }
@@ -25,99 +27,142 @@ Shopping Cart
       transform: translateY(0);
     }
   }
+
+  /* Adjust quantity controls */
+  .quantity-controls {
+    margin-left: -20px; /* Adjust as needed */
+  }
+
+  /* Remove shadow and add border to cart */
+  .cart {
+    border: 2px solid #e5e7eb; /* Add border */
+    border-radius: 10px; /* Add border radius */
+    box-shadow: none; /* Remove shadow */
+  }
+
+  /* Adjust item box size and ensure image fills its container */
+  .item-box {
+    padding-bottom: 60%; /* Set aspect ratio for the container */
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Responsive image size */
+  .item-box img {
+    position: absolute;
+  width: 100%; /* Ensure the image fills its container */
+  height: 100%; /* Ensure the image fills its container */
+  object-fit: cover; /* Cover the entire container */
+  top: 0;
+  left: 0;
+  }
+
+  /* Add border to total amount section */
+  .total-amount {
+    border: 1px solid #e5e7eb; /* Add border */
+    border-radius: 8px; /* Add border radius */
+    padding: 1rem; /* Add padding */
+    box-shadow: none; /* Remove shadow */
+  }
+
+  
 </style>
+
 
 {% block body %}
 {% load static %}
-<div class="container mx-auto py-12 max-w-7xl">
-  <h1 class="text-4xl font-bold text-center mb-4 text-black-800" style="text-transform: uppercase;">Shopping Cart</h1>
-  <hr class="border-t-2 border-blue-400 mb-4">
+<div class="container mx-auto py-8 px-4 max-w-7xl">
+  <div class="p-4 rounded-lg cart">
+    <h1 class="text-2xl mb-8 text-black" style="text-transform: uppercase; margin-top: -125px;">Shopping Cart</h1>
 
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-    <div class="lg:col-span-2">
-      <div class="bg-white shadow-md rounded-lg p-6">
-        <h3 class="text-2xl font-semibold mb-4">Cart</h3>
-        {% if cart %}
-          {% for item in cart.values %}
-            <div class="flex flex-col md:flex-row mb-6 border-b pb-6">
-              <div class="flex-shrink-0 w-full md:w-1/3 text-center mb-4 md:mb-0">
-                <img src="{{ item.image_url }}" alt="{{ item.title }}" class="w-full h-auto object-cover rounded-lg shadow-md">
-              </div>
-              <div class="md:ml-6 flex-1">
-                <h5 class="text-xl font-semibold">{{ item.title }}</h5>
-                <div class="my-4 flex items-center space-x-4">
-                  <label for="quantity" class="text-sm font-medium">Quantity:</label>
-                  <div class="flex items-center space-x-2">
-                    <a href="{% url 'update_quantity' item.product_id 'decrease' %}" class="text-gray-500 hover:text-blue-500">
-                      <i class="fas fa-minus-square text-xl"></i>
-                    </a>
-                    <span id="quantity" class="text-lg">{{ item.quantity }}</span>
-                    <a href="{% url 'update_quantity' item.product_id 'increase' %}" class="text-gray-500 hover:text-blue-500">
-                      <i class="fas fa-plus-square text-xl"></i>
-                    </a>
-                  </div>
-                </div>
-                <div class="flex justify-between items-center">
-                  <a href="{% url 'remove_item' item.product_id %}" class="text-red-500 hover:text-red-700">
-                    <i class="fas fa-times text-2xl"></i>
-                  </a>
-                  <div class="text-right">
-                    {% if 'discount_price' in item %}
-                      <p class="text-lg font-semibold text-green-600">Tk. {{ item.discount_price }}</p>
-                      <p class="text-sm line-through text-gray-500">Tk. {{ item.price }}</p>
-                    {% else %}
-                      <p class="text-lg font-semibold">Tk. {{ item.price }}</p>
-                    {% endif %}
-                  </div>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-        {% else %}
-          <p class="text-center text-gray-500">Your cart is empty.</p>
-        {% endif %}
-      </div>
-    </div>
-    <div>
-      <div class="bg-white shadow-md rounded-lg p-3">
-        <h3 class="text-2xl font-semibold mb-4">Total Amount</h3>
-        <ul class="divide-y divide-gray-200">
-          <li class="flex justify-between py-4 text-lg">
-            <span>Amount</span>
-            <span>Tk.&nbsp;{{ total_amount }}</span>
-          </li>
-          <li class="flex justify-between py-4 text-xl font-bold">
-            <div>
-              <span>Total:</span> <!-- Added colon for better readability -->
-              <small class="block text-gray-500">(including VAT & excluding shipping fare)</small>
-            </div>
-            <span class="font-bold">Tk.&nbsp;{{ total_amount }}</span> <!-- Added font-bold for emphasis -->
-          </li>
-        </ul>
-        <button type="button"
-                class="mt-6 w-full max-w-md text-white py-3 rounded-lg shadow-lg hover:from-#ef3e26 hover:to-#ef3e26 transform hover:scale-105 transition-transform duration-300"
-                style="background-color: #ef3e26;" onclick="openModal()">
-          <span class="relative">
-            <span class="absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-            <span class="relative z-10">Contact For Order</span>
-          </span>
-        </button>
-      </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4" style="margin-top: -90px;">
+      <div class="lg:col-span-3 xl:col-span-2">
+        <div class="bg-white border rounded-lg p-6">
+            <h3 class="text-xl font-semibold mb-4" style="margin-top:-30px;">Cart</h3>
+            {% if cart %}
+                {% for item in cart.values %}
+                    <div class="border p-4 mb-4 rounded-lg item-box">
+                        <div class="flex flex-col sm:flex-row items-center sm:justify-between pb-4 border-b">
+                            <div class="w-full sm:w-1/4 text-center mb-4 sm:mb-0">
+                                <img src="{{ item.image_url }}" alt="{{ item.title }}" class="w-full h-auto object-cover rounded-lg shadow-md">
+                            </div>
+                            <div class="w-full sm:w-1/3 flex-1 sm:ml-4">
+                              <h5 class="text-lg text-center sm:text-left uppercase font-normal">{{ item.title }}</h5>
+                          </div>
+                          
+                          
+                            <div class="w-full sm:w-1/5 flex items-center justify-center sm:justify-between mt-2 sm:mt-0 quantity-controls">
+                                <label for="quantity" class="text-sm font-medium mr-2"></label>
+                                <div class="flex items-center space-x-2">
+                                    <a href="{% url 'update_quantity' item.product_id 'decrease' %}" class="text-gray-500 hover:text-blue-500">
+                                        <i class="fas fa-minus-square text-xl"></i>
+                                    </a>
+                                    <span id="quantity" class="text-lg">{{ item.quantity }}</span>
+                                    <a href="{% url 'update_quantity' item.product_id 'increase' %}" class="text-gray-500 hover:text-blue-500">
+                                        <i class="fas fa-plus-square text-xl"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="w-full sm:w-1/6 text-right mt-2 sm:mt-0">
+                                {% if 'discount_price' in item %}
+                                    <p class="text-lg font-semibold text-green-600">Tk. {{ item.discount_price }}</p>
+                                    <p class="text-sm line-through text-gray-500">Tk. {{ item.price }}</p>
+                                {% else %}
+                                    <p class="text-lg font-semibold">Tk. {{ item.price }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="w-full sm:w-1/12 text-right mt-2 sm:mt-0">
+                                <a href="{% url 'remove_item' item.product_id %}" class="text-red-500 hover:text-red-700">
+                                    <i class="fas fa-times text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-center text-gray-500">Your cart is empty.</p>
+            {% endif %}
+        </div>
     </div>
     
-    
-    
+    <div class="total-amount border rounded-lg xl:col-span-1">
+      <div class="bg-white p-6 h-full">
+          <h3 class="text-xl font-semibold mb-4">CART TOTALS</h3>
+          <ul class="divide-y divide-gray-200">
+              <li class="flex justify-between py-3 text-lg">
+                  <span>Subtotal</span>
+                  <span class="font-bold">Tk.&nbsp;{{ total_amount }}</span>
+              </li>
+              <li class="flex justify-between py-3 text-lg">
+                  <span>Total:</span>
+                  <span class="font-bold">Tk.&nbsp;{{ total_amount }}</span>
+              </li>
+              <li class="flex justify-between py-3 text-sm text-gray-500">
+                  <span>(including VAT & excluding shipping fare)</span>
+              </li>
+          </ul>
+          <button type="button" class="mt-6 w-full max-w-md text-white py-3 rounded-lg bg-red-500 hover:bg-red-600 transition duration-300 transform hover:scale-105" onclick="openModal()">
+            PROCEED TO CHECKOUT
+          </button>
+      </div>
+  </div>
+  
+  
+    </div>
   </div>
 </div>
+
+
+
 
 <!-- Contact Form Modal -->
 <div class="fixed inset-0 z-50 flex items-center justify-center hidden" id="contactModal">
   <div class="fixed inset-0 bg-opacity-75 bg-gray-900"></div>
-  <div class="bg-white rounded-lg overflow-hidden w-full max-w-lg relative z-50 animate-slide-in"> <!-- Removed shadow-lg class -->
+  <div class="bg-white rounded-lg overflow-hidden w-full max-w-lg relative z-50 animate-slide-in">
     <div class="px-6 py-4 flex justify-between items-center border-b">
       <h5 class="text-xl font-semibold">Contact Us</h5>
       <button type="button" class="text-gray-500 hover:text-gray-700" aria-label="Close" onclick="closeModal()">
-        <i class="fas fa-times text-2xl"></i> <!-- Close icon -->
+        <i class="fas fa-times text-2xl"></i>
       </button>
     </div>
     <div class="p-6">
@@ -126,7 +171,7 @@ Shopping Cart
         <div class="mb-4">
           <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700">Name:</label>
           <div class="flex items-center">
-            <i class="fas fa-user text-gray-400 mr-2"></i> <!-- User icon -->
+            <i class="fas fa-user text-gray-400 mr-2"></i>
             <input type="text" name="{{ form.name.html_name }}" id="{{ form.name.id_for_label }}" placeholder="Enter Your Name" value="{{ form.name.value|default_if_none:'' }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
           </div>
           {% if form.name.errors %}
@@ -140,7 +185,7 @@ Shopping Cart
         <div class="mb-4">
           <label for="{{ form.phone.id_for_label }}" class="block text-sm font-medium text-gray-700">Number:</label>
           <div class="flex items-center">
-            <i class="fas fa-phone-alt text-gray-400 mr-2"></i> <!-- Phone icon -->
+            <i class="fas fa-phone-alt text-gray-400 mr-2"></i>
             <input type="text" name="{{ form.phone.html_name }}" id="{{ form.phone.id_for_label }}" placeholder="Enter Your Number" value="{{ form.phone.value|default_if_none:'' }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
           </div>
           {% if form.phone.errors %}
@@ -154,7 +199,7 @@ Shopping Cart
         <div class="mb-4">
           <label for="{{ form.address.id_for_label }}" class="block text-sm font-medium text-gray-700">Address:</label>
           <div class="flex items-center">
-            <i class="fas fa-map-marker-alt text-gray-400 mr-2"></i> <!-- Address icon -->
+            <i class="fas fa-map-marker-alt text-gray-400 mr-2"></i>
             <input type="text" name="{{ form.address.html_name }}" id="{{ form.address.id_for_label }}" placeholder="Enter Your Address" value="{{ form.address.value|default_if_none:'' }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
           </div>
           {% if form.address.errors %}
@@ -166,9 +211,9 @@ Shopping Cart
           {% endif %}
         </div>
         <div class="text-center mt-4">
-          <button type="submit" class="w-full from-#ef3e26 to-#ef3e26 text-white py-2 rounded-lg shadow-lg hover:from-#ef3e26 hover:to-#ef3e26 transition duration-300 transform hover:scale-105" style="background-color:#ef3e26;">
+          <button type="submit" class="w-full bg-red-500 text-white py-2 rounded-lg shadow-lg hover:bg-red-600 transition duration-300 transform hover:scale-105">
             <span class="flex items-center justify-center">
-              <i class="fas fa-paper-plane mr-2"></i> <!-- Submit icon -->
+              <i class="fas fa-paper-plane mr-2"></i>
               Submit
             </span>
           </button>
@@ -177,7 +222,6 @@ Shopping Cart
     </div>
   </div>
 </div>
-
 
 <script>
   function openModal() {
@@ -188,6 +232,5 @@ Shopping Cart
     document.getElementById('contactModal').classList.add('hidden');
   }
 </script>
-
 
 {% endblock %}

@@ -9,9 +9,13 @@ Shopping Cart
 <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js" defer></script>
 {% endblock %}
 
-
-
 <style>
+  :root {
+    --primary-color: #ef4444; /* Red color */
+    --secondary-color: #374151; /* Gray color */
+    --border-color: #e5e7eb; /* Light gray color */
+  }
+
   /* Custom Styles */
   .animate-slide-in {
     animation: slide-in 0.3s ease-out;
@@ -35,7 +39,7 @@ Shopping Cart
 
   /* Remove shadow and add border to cart */
   .cart {
-    border: 2px solid #e5e7eb; /* Add border */
+    border: 2px solid var(--border-color); /* Add border */
     border-radius: 10px; /* Add border radius */
     box-shadow: none; /* Remove shadow */
   }
@@ -50,30 +54,33 @@ Shopping Cart
   /* Responsive image size */
   .item-box img {
     position: absolute;
-  width: 100%; /* Ensure the image fills its container */
-  height: 100%; /* Ensure the image fills its container */
-  object-fit: cover; /* Cover the entire container */
-  top: 0;
-  left: 0;
+    width: 100%; /* Ensure the image fills its container */
+    height: 100%; /* Ensure the image fills its container */
+    object-fit: cover; /* Cover the entire container */
+    top: 0;
+    left: 0;
   }
 
   /* Add border to total amount section */
   .total-amount {
-    border: 1px solid #e5e7eb; /* Add border */
+    border: 1px solid var(--border-color); /* Add border */
     border-radius: 8px; /* Add border radius */
     padding: 1rem; /* Add padding */
     box-shadow: none; /* Remove shadow */
   }
 
-  
+  /* Button hover effect */
+  .hover-transform:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+  }
 </style>
-
 
 {% block body %}
 {% load static %}
 <div class="container mx-auto py-8 px-4 max-w-7xl">
   <div class="p-4 rounded-lg cart">
-    <h1 class="text-2xl mb-8 text-black" style="text-transform: uppercase; margin-top: -125px;">Shopping Cart</h1>
+    <h1 class="text-2xl mb-8 text-black uppercase" style="margin-top: -125px;">Shopping Cart</h1>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4" style="margin-top: -90px;">
       <div class="lg:col-span-3 xl:col-span-2">
@@ -89,7 +96,6 @@ Shopping Cart
                             <div class="w-full sm:w-1/3 flex-1 sm:ml-4">
                               <h5 class="text-lg text-center sm:text-left uppercase font-normal">{{ item.title }}</h5>
                           </div>
-                          
                           
                             <div class="w-full sm:w-1/5 flex items-center justify-center sm:justify-between mt-2 sm:mt-0 quantity-controls">
                                 <label for="quantity" class="text-sm font-medium mr-2"></label>
@@ -141,7 +147,7 @@ Shopping Cart
                   <span>(including VAT & excluding shipping fare)</span>
               </li>
           </ul>
-          <button type="button" class="mt-6 w-full max-w-md text-white py-3 rounded-lg bg-red-500 hover:bg-red-600 transition duration-300 transform hover:scale-105" onclick="openModal()">
+          <button type="button" class="mt-6 w-full max-w-md text-white py-3 rounded-lg bg-red-500 hover:bg-red-600 transition duration-300 hover-transform" onclick="openModal()">
             PROCEED TO CHECKOUT
           </button>
       </div>
@@ -151,9 +157,6 @@ Shopping Cart
     </div>
   </div>
 </div>
-
-
-
 
 <!-- Contact Form Modal -->
 <div class="fixed inset-0 z-50 flex items-center justify-center hidden" id="contactModal">
@@ -211,7 +214,7 @@ Shopping Cart
           {% endif %}
         </div>
         <div class="text-center mt-4">
-          <button type="submit" class="w-full bg-red-500 text-white py-2 rounded-lg shadow-lg hover:bg-red-600 transition duration-300 transform hover:scale-105">
+          <button type="submit" class="w-full bg-red-500 text-white py-2 rounded-lg shadow-lg hover:bg-red-600 transition duration-300 hover-transform">
             <span class="flex items-center justify-center">
               <i class="fas fa-paper-plane mr-2"></i>
               Submit

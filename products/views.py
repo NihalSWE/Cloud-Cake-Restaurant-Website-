@@ -13,6 +13,12 @@ def base(request):
 def navbar(request):
     return render(request, 'products/navbar.html')
 
+# def sidebar(request):
+    return render(request,'products/sidebar.html')
+
+def outlet(request):
+    return render(request,'products/outlets.html')
+
 def about(request):
     return render(request,'products/about.html')
 

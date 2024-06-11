@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product,AddCart,Order,Banner
+from .models import Product,AddCart,Order,Banner,Outlet
 # Register your models here.
 
 
@@ -83,3 +83,9 @@ from .models import ContactMessage
 class ContactMessageAdmin(admin.ModelAdmin):
     list_display = ('name', 'number', 'email', 'address', 'message', 'timestamp')
     search_fields = ['name', 'number', 'address']
+
+
+
+@admin.register(Outlet)
+class OutletAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'address', 'phone_number')

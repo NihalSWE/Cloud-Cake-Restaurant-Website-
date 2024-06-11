@@ -86,3 +86,14 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f'{self.name} - {self.timestamp}'
+    
+
+
+class Outlet(models.Model):
+    title = models.CharField(max_length=100)
+    map_iframe = models.TextField(null=True)  # Store the full iframe HTML here
+    address = models.TextField(null=True)
+    phone_number = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.title

@@ -14,10 +14,14 @@ def navbar(request):
     return render(request, 'products/navbar.html')
 
 # def sidebar(request):
-    return render(request,'products/sidebar.html')
+    # return render(request,'products/sidebar.html')
+
+
+from .models import Outlet
 
 def outlet(request):
-    return render(request,'products/outlets.html')
+    outlets = Outlet.objects.all()
+    return render(request,'products/outlets.html', {'outlets': outlets})
 
 def about(request):
     return render(request,'products/about.html')
@@ -313,3 +317,5 @@ def contactus(request):
         return redirect('contactus')
 
     return render(request, 'products/contactus.html')
+
+

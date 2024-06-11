@@ -7,9 +7,22 @@
 {% block body %}
 {% load static %}
 <style>
+  :root {
+    --primary-color: #007bff;
+    --danger-color: #dc3545;
+    --bg-color: #f9f9f9;
+    --text-color: #333;
+    --text-muted: #999;
+    --card-hover-transform: scale(1.05);
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
   body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
   }
 
   .container {
@@ -21,9 +34,10 @@
   .section-title {
     text-align: center;
     font-size: 2.5rem;
-    font-weight: 700;
+    font-weight: 500;
     margin-bottom: 1.5rem;
-    color: #333;
+    color: var(--text-color);
+    text-transform: uppercase;
   }
 
   .section-hr {
@@ -42,11 +56,11 @@
     border-radius: 10px;
     overflow: hidden;
     transition: transform 0.3s;
-    {% comment %} box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); {% endcomment %}
   }
 
   .savory-card:hover {
-    transform: scale(1.05);
+    transform: var(--card-hover-transform);
+    
   }
 
   .savory-image-container {
@@ -61,7 +75,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius:10px;
   }
 
   .savory-content {
@@ -72,6 +86,7 @@
     font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
+    text-align: center;
   }
 
   .savory-price {
@@ -87,7 +102,7 @@
 
   .savory-price .original-price {
     text-decoration: line-through;
-    color: #999;
+    color: var(--text-muted);
   }
 
   .savory-price .discounted-price {
@@ -111,27 +126,26 @@
     cursor: pointer;
     text-align: center;
     transition: background-color 0.3s, transform 0.2s;
+    color: #fff;
   }
 
   .savory-actions .btn-primary {
-    background-color: primary;
-    color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ef3e26;
+    box-shadow: var(--shadow);
   }
 
   .savory-actions .btn-primary:hover {
-    background-color: primary;
+    background-color: darken(#ef3e26);
     transform: translateY(-2px);
   }
 
   .savory-actions .btn-danger {
-    background-color: danger;
-    color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ef3e26;
+    box-shadow: var(--shadow);
   }
 
   .savory-actions .btn-danger:hover {
-    background-color: danger;
+    background-color: darken(#ef3e26);
     transform: translateY(-2px);
   }
 
@@ -155,7 +169,7 @@
     display: block;
     padding: 0.5rem 0.75rem;
     background-color: #f0f0f0;
-    color: #333;
+    color: var(--text-color);
     border-radius: 5px;
     text-decoration: none;
     transition: background-color 0.3s;
@@ -166,14 +180,14 @@
   }
 
   .pagination a.active {
-    background-color: #007bff;
+    background-color: var(--primary-color);
     color: #fff;
   }
 </style>
 
 <section class="py-12">
   <div class="container">
-    <h2 class="section-title" style="text-transform: uppercase;">Discover Delicious Savories</h2>
+    <h2 class="section-title">Discover Delicious Savories</h2>
     <hr class="section-hr">
 
     <div class="savory-grid">
@@ -185,7 +199,7 @@
           </a>
         </div>
         <div class="savory-content">
-          <h3 class="savory-title text-center">{{ savory.title }}</h3>
+          <h3 class="savory-title">{{ savory.title }}</h3>
           <div class="savory-price">
             {% if savory.discount_price %}
             <span class="original-price">Tk. {{ savory.price }}</span>
@@ -194,9 +208,9 @@
             <span class="price">Tk. {{ savory.price }}</span>
             {% endif %}
           </div>
-          <div class="savory-actions d-grid gap-2 mt-2">
-            <button class="btn btn-lg btn-primary add-to-cart-btn" data-product-id="{{ savory.id }}">Add to Cart</button>
-            <a class="btn btn-lg btn-danger quick-view-btn" data-product-id="{{ savory.id }}" href="#" role="button">Quick View</a>
+          <div class="savory-actions">
+            <button class="btn btn-primary add-to-cart-btn" data-product-id="{{ savory.id }}">Add to Cart</button>
+            <a class="btn btn-danger quick-view-btn" data-product-id="{{ savory.id }}" href="#" role="button">Quick View</a>
           </div>
         </div>
       </div>
@@ -211,7 +225,7 @@
     <ul>
       {% if savories.has_previous %}
       <li>
-        <a href="?page=1" class="">&laquo;</a>
+        <a href="?page=1">&laquo;</a>
       </li>
       {% endif %}
       {% for num in savories.paginator.page_range %}
@@ -247,7 +261,7 @@
       return cookieValue;
     }
 
+    // Add more script logic as needed
   });
 </script>
-
 {% endblock %}

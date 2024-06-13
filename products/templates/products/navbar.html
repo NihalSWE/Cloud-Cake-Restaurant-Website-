@@ -1,6 +1,8 @@
 {% load static %}
 
-<nav class="navbar navbar-expand-lg navbar-custom" style="background-color: #ef3e26;">
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container">
         <a class="navbar-brand" href="/">
             <img src="{% static 'assets/img/gallery/ccf.png' %}" alt="FoodShop Logo" class="img-fluid" style="width: 80px;">
@@ -8,12 +10,12 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon">
-                <i class="fas fa-bars" style="color: #fff; font-size: 1.5rem;"></i>
+                <i class="fas fa-bars"></i>
             </span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="font-size: 1.1rem;">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link text-white" aria-current="page" href="{% url 'home' %}">HOME</a>
                 </li>
@@ -26,10 +28,13 @@
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{% url 'contactus' %}">CONTACT US</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'career' %}">CAREER</a>
+                </li>
             </ul>
             <div class="nav-item dropdown">
                 <a class="nav-link text-white dropdown-toggle" href="{% url 'showcart' %}" id="navbarDropdownCart" role="button"
-                   data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 1.1rem; font-weight: bold;">
+                   data-bs-toggle="dropdown" aria-expanded="false">
                    <i class="fas fa-shopping-cart"></i> CART <span id="total-cart-quantity" class="badge bg-danger">{{ total_items }}</span>
                 </a>
                 <ul id="cart-dropdown" class="dropdown-menu dropdown-menu-end cart-dropdown" aria-labelledby="navbarDropdownCart">
@@ -78,7 +83,7 @@
     }
 
     .navbar-custom {
-        background-color: var(--primary-color);
+        background-color: #ef3e26;
     }
 
     .navbar-nav .nav-link {

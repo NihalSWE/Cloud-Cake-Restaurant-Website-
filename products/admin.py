@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product,AddCart,Order,Banner,Outlet
+from .models import Product,AddCart,Order,Banner,Outlet,Branch, Career
 # Register your models here.
 
 
@@ -89,3 +89,27 @@ class ContactMessageAdmin(admin.ModelAdmin):
 @admin.register(Outlet)
 class OutletAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'address', 'phone_number')
+
+
+@admin.register(Branch)
+class BranchAdmin(admin.ModelAdmin):
+    list_display=('id','name')
+
+
+from django.utils.html import format_html
+from django.utils.http import urlencode
+@admin.register(Career)
+class CareerAdmin(admin.ModelAdmin):
+    list_display = ('name', 'number', 'email', 'address', 'branch', 'cv_link', 'submitted_at')
+    readonly_fields = ('cv_link',)
+    
+
+    def cv_link(self, obj):
+        if obj.cv:
+            cv_filename = obj.cv.name.split('/')[-1]  # Get the filename part of the path
+            if len(cv_filename) > 30:  # Adjust the length as needed
+                cv_filename = '{}...'.format(cv_filename[:27])  # Truncate long filenames
+            return format_html('<a href="{}" download>{}</a>', obj.cv.url, cv_filename)
+        return "No CV"
+
+    cv_link.short_description = 'CV'

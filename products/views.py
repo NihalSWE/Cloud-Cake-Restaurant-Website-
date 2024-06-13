@@ -13,8 +13,6 @@ def base(request):
 def navbar(request):
     return render(request, 'products/navbar.html')
 
-# def sidebar(request):
-    # return render(request,'products/sidebar.html')
 
 
 from .models import Outlet
@@ -28,6 +26,45 @@ def about(request):
 
 def contactus(request):
     return render(request,'products/ContactUs.html')
+
+
+from .models import Branch, Career
+from django.contrib import messages
+
+def career(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        number = request.POST.get('number')
+        email = request.POST.get('email')
+        address = request.POST.get('address')
+        message = request.POST.get('message')
+        branch_id = request.POST.get('branch')
+        cv = request.FILES.get('cv')
+
+        branch = Branch.objects.get(id=branch_id)
+
+        # Save the form data to the database
+        Career.objects.create(
+            name=name,
+            number=number,
+            email=email,
+            address=address,
+            message=message,
+            branch=branch,
+            cv=cv
+        )
+
+        # Add a success message
+        messages.success(request, 'Your career form has been submitted successfully!')
+
+        # Redirect to the career page to avoid form resubmission on page reload
+        return redirect('career')
+
+    branches = Branch.objects.all()
+    return render(request, 'products/career.html', {'branches': branches})
+
+
+
 
 class CakeView(View):
     def get(self, request):

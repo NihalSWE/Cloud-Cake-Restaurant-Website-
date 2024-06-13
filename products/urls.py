@@ -11,6 +11,7 @@ urlpatterns = [
     path('about/',views.about,name="about"),
     path('contactus/',contactus,name="contactus"),
     path('outlet/',views.outlet,name="outlet"),
+    path('career/',views.career,name="career"),
 
     path("cake/",views.CakeView.as_view(),name="cake"),
     path('savory/',views.SavoryView.as_view(),name="savory"),
@@ -25,5 +26,7 @@ urlpatterns = [
 
 
     path('order_view/',views.order_view,name="order_view"),
-    path('order_conferm/',views.order_conferm,name="order_conferm")
+    path('order_conferm/',views.order_conferm,name="order_conferm"),
+
+    
 ]

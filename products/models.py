@@ -97,3 +97,23 @@ class Outlet(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+class Branch(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class Career(models.Model):
+    name = models.CharField(max_length=100)
+    number = models.IntegerField(max_length=15)
+    email = models.EmailField(null=True)
+    address = models.CharField(max_length=255,null=True)
+    message = models.TextField(null=True)
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    cv = models.FileField(upload_to='cv_uploads/%Y/%m/%d/')
+    submitted_at = models.DateTimeField(null=True,auto_now_add=True)
+
+    def __str__(self):
+        return self.name

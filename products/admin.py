@@ -96,19 +96,26 @@ class BranchAdmin(admin.ModelAdmin):
     list_display=('id','name')
 
 
+from .models import Designation
+
+@admin.register(Designation)
+class DesignationAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+
+
 from django.utils.html import format_html
 from django.utils.http import urlencode
 @admin.register(Career)
 class CareerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'number', 'email', 'address', 'branch', 'cv_link', 'submitted_at')
+    list_display = ('name', 'number', 'email', 'address', 'branch', 'designation', 'cv_link', 'submitted_at')
     readonly_fields = ('cv_link',)
-    
 
     def cv_link(self, obj):
         if obj.cv:
-            cv_filename = obj.cv.name.split('/')[-1]  # Get the filename part of the path
-            if len(cv_filename) > 30:  # Adjust the length as needed
-                cv_filename = '{}...'.format(cv_filename[:27])  # Truncate long filenames
+            cv_filename = obj.cv.name.split('/')[-1]
+            if len(cv_filename) > 30:
+                cv_filename = '{}...'.format(cv_filename[:27])
             return format_html('<a href="{}" download>{}</a>', obj.cv.url, cv_filename)
         return "No CV"
 

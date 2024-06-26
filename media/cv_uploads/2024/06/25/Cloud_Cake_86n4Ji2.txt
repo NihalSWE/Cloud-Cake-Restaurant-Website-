@@ -1,0 +1,33 @@
+Cloud Cake
+-----------
+
+
+----Done----
+---------------
+1.Navbar & Navbar menu done
+2.Live Cart function on the navbar done
+3.Dynamic banner done
+4.Food Category images done
+5.Particular pages (Cake,Bread,Savory,Frozen) done
+6.Popular time showing on the home page done
+7.Popular item show (1st to last pattern) done
+8.particular pages item layout styling done
+9.ContuctUs page (Map location , dynamic Contact form) done
+10.dynamic cart done
+11.product details page done
+12.showcart page done
+13.contact form for order done
+14.about page done
+15.footer done
+16. All of this things from admin panel done
+
+----Not Done---
+----------------
+1.Home page style more polished
+2.Product prices and images
+3.About Page information
+4.Outlates page 
+5.Bkash payment gate way
+6.Extra admin panel 
+7.sidebar
+8.order_confirm page redesign 

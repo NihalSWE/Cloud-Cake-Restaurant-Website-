@@ -28,7 +28,8 @@ def contactus(request):
     return render(request,'products/ContactUs.html')
 
 
-from .models import Branch, Career
+from .models import Branch, Career,Designation
+
 from django.contrib import messages
 
 def career(request):
@@ -39,30 +40,29 @@ def career(request):
         address = request.POST.get('address')
         message = request.POST.get('message')
         branch_id = request.POST.get('branch')
+        designation_id = request.POST.get('designation')
         cv = request.FILES.get('cv')
 
         branch = Branch.objects.get(id=branch_id)
+        designation = Designation.objects.get(id=designation_id)
 
-        # Save the form data to the database
-        Career.objects.create(
+        career = Career(
             name=name,
             number=number,
             email=email,
             address=address,
             message=message,
             branch=branch,
+            designation=designation,
             cv=cv
         )
-
-        # Add a success message
-        messages.success(request, 'Your career form has been submitted successfully!')
-
-        # Redirect to the career page to avoid form resubmission on page reload
-        return redirect('career')
+        career.save()
+        messages.success(request, 'Your application has been submitted successfully!')
+        return redirect('career') 
 
     branches = Branch.objects.all()
-    return render(request, 'products/career.html', {'branches': branches})
-
+    designations = Designation.objects.all()
+    return render(request, 'products/career.html', {'branches': branches, 'designations': designations})
 
 
 

@@ -115,7 +115,7 @@ class Designation(models.Model):
 
 class Career(models.Model):
     name = models.CharField(max_length=100)
-    number = models.IntegerField(max_length=15)
+    number = models.IntegerField()
     email = models.EmailField(null=True)
     address = models.CharField(max_length=255, null=True)
     message = models.TextField(null=True)
@@ -126,3 +126,19 @@ class Career(models.Model):
 
     def __str__(self):
         return self.name
+
+
+
+class CategoryImage(models.Model):
+    CATEGORY_CHOICES = [
+        ('cake', 'Cake'),
+        ('bread', 'Bread'),
+        ('savory', 'Savory'),
+        ('frozen', 'Frozen'),
+    ]
+
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, unique=True)
+    image = models.ImageField(upload_to='category_images/')
+
+    def __str__(self):
+        return self.category 

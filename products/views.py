@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponse,get_object_or_404,redirect
 from django.views import View
-from .models import Product,AddCart,Banner
+from .models import Product,AddCart,Banner,CategoryImage
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 
@@ -69,7 +69,7 @@ def career(request):
 class CakeView(View):
     def get(self, request):
         cakes = Product.objects.filter(category='C').order_by('id')
-        paginator = Paginator(cakes, 8)  # Display 4 cakes per page
+        paginator = Paginator(cakes, 5)  # Display 4 cakes per page
 
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -114,8 +114,7 @@ class BreadView(View):
 
 
 class ProductView(View):
-     
-     def get(self, request):
+    def get(self, request):
         # Get the latest banner
         latest_banner = Banner.objects.latest('id')
 
@@ -132,15 +131,20 @@ class ProductView(View):
         frozens_paginator = Paginator(frozens, 4)    # Show 4 frozens per page
         breads_paginator = Paginator(breads, 4)    # Show 4 breads per page
 
+        # Fetch category images
+        category_images = {ci.category: ci.image.url for ci in CategoryImage.objects.all()}
+
         context = {
             'banner': latest_banner,
             'cakes': cakes_paginator.get_page(1),
             'savories': savories_paginator.get_page(1),
             'frozens': frozens_paginator.get_page(1),
             'breads': breads_paginator.get_page(1),
+            'category_images': category_images,
         }
 
         return render(request, 'products/home.html', context)
+
 
 class ProductDetailView(View):
  def get(self, request, pk):

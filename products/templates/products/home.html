@@ -139,43 +139,42 @@
 {% block body %}
 {% load static %}
 <!-- ============================================-->
-<!-- <section> begin ============================-->
-   <section class="py-5 overflow-hidden" style="margin-bottom: -90px">
-    <div class="container">
-      <div class="row flex-center mb-6">
-        <div class="col-12">
-          <div class="carousel slide" id="carouselSearchByFood" data-bs-touch="false" data-bs-interval="false">
-            <div class="carousel-inner">
-              <div class="carousel-item active" data-bs-interval="10000">
-                <div class="row h-100 align-items-center justify-content-center">
-                  <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
-                    <a href="{% url 'cake' %}" class="card card-span h-100 text-decoration-none text-dark">
-                      <img class="img-fluid card-img-top" style="border-radius: 10px;" src="{% static 'assets/img/gallery/cake.jpg' %}" alt="Cakes" />
-                    </a>
-                  </div>
-                  <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
-                    <a href="{% url 'bread' %}" class="card card-span h-100 text-decoration-none text-dark">
-                      <img class="img-fluid card-img-top" style="border-radius: 10px;" src="{% static 'assets/img/gallery/bread.jpg' %}" alt="Bread & Cookies" />
-                    </a>
-                  </div>
-                  <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
-                    <a href="{% url 'savory' %}" class="card card-span h-100 text-decoration-none text-dark">
-                      <img class="img-fluid card-img-top" style="border-radius: 10px;" src="{% static 'assets/img/gallery/savory.jpg' %}" alt="Savory" />
-                    </a>
-                  </div>
-                  <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
-                    <a href="{% url 'frozen' %}" class="card card-span h-100 text-decoration-none text-dark">
-                      <img class="img-fluid card-img-top" style="border-radius: 10px;" src="{% static 'assets/img/gallery/frozen.jpg' %}" alt="Frozen" />
-                    </a>
-                  </div>
+<section class="py-5 overflow-hidden" style="margin-bottom: -90px">
+  <div class="container">
+    <div class="row flex-center mb-6">
+      <div class="col-12">
+        <div class="carousel slide" id="carouselSearchByFood" data-bs-touch="false" data-bs-interval="false">
+          <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="10000">
+              <div class="row h-100 align-items-center justify-content-center">
+                <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
+                  <a href="{% url 'cake' %}" class="card card-span h-100 text-decoration-none text-dark">
+                    <img class="img-fluid card-img-top" style="border-radius: 10px;" src="{{ category_images.cake }}" alt="Cakes" />
+                  </a>
                 </div>
-              </div>  
-            </div>
+                <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
+                  <a href="{% url 'bread' %}" class="card card-span h-100 text-decoration-none text-dark">
+                    <img class="img-fluid card-img-top" style="border-radius: 10px;" src="{{ category_images.bread }}" alt="Bread & Cookies" />
+                  </a>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
+                  <a href="{% url 'savory' %}" class="card card-span h-100 text-decoration-none text-dark">
+                    <img class="img-fluid card-img-top" style="border-radius: 10px;" src="{{ category_images.savory }}" alt="Savory" />
+                  </a>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3 mb-3 d-flex justify-content-center">
+                  <a href="{% url 'frozen' %}" class="card card-span h-100 text-decoration-none text-dark">
+                    <img class="img-fluid card-img-top" style="border-radius: 10px;" src="{{ category_images.frozen }}" alt="Frozen" />
+                  </a>
+                </div>
+              </div>
+            </div>  
           </div>
         </div>
       </div>
-    </div><!-- end of .container-->
-  </section>
+    </div>
+  </div><!-- end of .container-->
+</section>
   
 
 

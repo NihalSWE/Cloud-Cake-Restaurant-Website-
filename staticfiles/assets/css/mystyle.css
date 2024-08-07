@@ -1,0 +1,83 @@
+.cart-dropdown {
+    min-width: 250px;
+    /* Set a minimum width for the dropdown */
+}
+
+.cart-item {
+    padding: 10px;
+}
+
+.cart-item:hover {
+    background-color: #f8f9fa;
+    /* Change background color on hover */
+}
+
+.empty-cart {
+    padding: 10px;
+    color: #999;
+    /* Lighter color for empty cart message */
+}
+
+.dropdown-divider {
+    margin: 0;
+    /* Remove margin for better alignment */
+}
+
+
+.custom-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0; /* Reset margin for more control with media queries */
+}
+
+/* For extra large screens */
+@media (min-width: 1200px) {
+    .custom-bg {
+        height: 80vh; /* Slightly reduce the height */
+        margin-top: 0; /* Adjust margin to remove gap between navbar and banner */
+    }
+}
+
+/* For large screens */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .custom-bg {
+        height: 75vh; /* Adjusted height for large screens */
+        margin-top: 0; /* Adjust margin for large screens */
+    }
+}
+
+/* For medium screens */
+@media (min-width: 768px) and (max-width: 991px) {
+    .custom-bg {
+        height: 70vh; /* Adjusted height for medium screens */
+        margin-top: 0; /* Adjust margin for medium screens */
+    }
+}
+
+/* For small screens */
+@media (max-width: 767px) {
+    .custom-bg {
+        height: 50vh; /* Adjust height for smaller screens */
+        margin-top: 0; /* Adjust margin for smaller screens */
+        padding-left: 5px; /* Add padding to prevent right cut-off */
+        padding-right: 5px; /* Add padding to prevent right cut-off */
+    }
+}
+
+/* For extra small screens */
+@media (max-width: 575px) {
+    .custom-bg {
+        height: 40vh; /* Adjust height for extra small screens */
+        padding: 20px 0; /* Adjust padding for extra small screens */
+        padding-left: 5px; /* Add padding to prevent right cut-off */
+        padding-right: 5px; /* Add padding to prevent right cut-off */
+    }
+}

@@ -1,0 +1,111 @@
+/* admin_custom.css */
+
+/* Change background color of the top navbar */
+.navbar-dark {
+    background-color: #343a40 !important;
+}
+
+/* Change text color of the top navbar */
+.navbar-dark .navbar-brand,
+.navbar-dark .navbar-nav .nav-link {
+    color: #007bff !important;
+}
+
+/* Change hover color of top navbar links */
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #f8f9fa !important;
+}
+
+/* Add padding to the main content area */
+#content-main {
+    padding: 20px !important;
+}
+
+/* Style the sidebar */
+#jaz-main-sidebar {
+    background-color: #007bff !important;
+    border-right: 1px solid #007bff !important;
+}
+
+/* Style the sidebar headings */
+#jaz-main-sidebar .nav-sidebar .nav-sidebar-heading {
+    color: #000000 !important;
+    font-weight: bold !important;
+    padding: 10px 20px !important;
+    background-color: #f8f9fa !important;
+    border-bottom: 1px solid #dee2e6 !important;
+}
+
+/* Style the sidebar links */
+#jaz-main-sidebar .nav-sidebar .nav-item .nav-link {
+    color: #000000 !important;
+}
+
+/* Change the color of active sidebar links */
+#jaz-main-sidebar .nav-sidebar .nav-item .nav-link.active {
+    background-color: #007bff !important;
+    color: #ffffff !important;
+}
+
+/* Change the color of hover sidebar links */
+#jaz-main-sidebar .nav-sidebar .nav-item .nav-link:hover {
+    background-color: #007bff !important;
+    color: #ffffff !important;
+}
+
+/* Set the body background color to white */
+body {
+    background-color: #f8f9fa !important;
+}
+
+/* login_custom.css */
+
+/* Background color for login page */
+body.login {
+    background-color: #f8f9fa !important;
+}
+
+/* Card background color */
+.card {
+    background-color: #ffffff !important;
+    border: 1px solid #dee2e6 !important;
+    border-radius: 10px !important;
+}
+
+/* Card title */
+.card-title {
+    color: #343a40 !important;
+    font-size: 24px !important;
+}
+
+/* Input fields */
+input[type="text"],
+input[type="password"] {
+    background-color: #f8f9fa !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 5px !important;
+}
+
+/* Input field focus */
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #f0f2f3 !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+}
+
+/* Login button */
+.btn-primary {
+    background-color: #2b6df0 !important;
+    border: 1px solid #e5e9ed !important;
+}
+
+/* Login button hover */
+.btn-primary:hover {
+    background-color: #007bff !important;
+    border: 1px solid #0056b3 !important;
+}
+
+/* Login button focus */
+.btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5) !important;
+}

@@ -6,21 +6,42 @@ Outlets
 
 {% block body %}
 <style>
-    .map-container {
-        position: relative;
+    .map-container, .outlet-image {
+        height: 100%; /* Ensure both map and image fill their containers */
         width: 100%;
-        padding-bottom: 56.25%; /* 16:9 aspect ratio */
-        height: 0;
+        object-fit: cover; /* Ensure the image covers its container while maintaining aspect ratio */
         overflow: hidden;
     }
 
-    .map-container iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
+    .image-map-container {
+        display: flex;
+        gap: 10px; /* Optional: Adds space between the image and the map */
+        height: 300px; /* Set a fixed height for larger screens */
+    }
+
+    .image-map-container .image-section,
+    .image-map-container .map-section {
+        width: 50%;
+        height: 100%; /* Ensure both sections fill the container height */
+    }
+
+    .image-map-container .map-section iframe {
+        height: 100%; /* Ensure the iframe fills its container */
         width: 100%;
-        height: 100%;
-        border: 0;
+    }
+
+    /* Media query for smaller screens */
+    @media (max-width: 768px) {
+        .image-map-container {
+            flex-direction: column; /* Stack the image and map vertically */
+            height: auto; /* Let the height adjust automatically */
+        }
+
+        .image-map-container .image-section,
+        .image-map-container .map-section {
+            width: 100%;
+            height: 300px; /* Set height to make them square on small screens */
+        }
     }
 </style>
 
@@ -34,9 +55,21 @@ Outlets
             <div class="card mb-4 shadow">
                 <div class="card-body">
                     <h5 class="card-title">{{ outlet.title }} <i class="fas fa-store-alt"></i></h5>
-                    <div class="map-container">
-                        {{ outlet.map_iframe|safe }}  <!-- Use the safe filter to render HTML safely -->
+                    
+                    <div class="image-map-container">
+                        {% if outlet.image %}
+                        <div class="image-section">
+                            <img src="{{ outlet.image.url }}" alt="{{ outlet.title }}" class="outlet-image">
+                        </div>
+                        {% endif %}
+
+                        <div class="map-section">
+                            <div class="map-container">
+                                {{ outlet.map_iframe|safe }}  <!-- Use the safe filter to render HTML safely -->
+                            </div>
+                        </div>
                     </div>
+
                     <p class="card-text" style="margin-top: 10px;"><i class="fas fa-map-marker-alt"></i> {{ outlet.address }}</p>
                     <p class="card-text" style="margin-top: -13px;"><i class="fas fa-phone"></i> {{ outlet.phone_number }}</p>
                 </div>

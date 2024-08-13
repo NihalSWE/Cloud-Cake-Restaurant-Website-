@@ -94,6 +94,7 @@ class Outlet(models.Model):
     map_iframe = models.TextField(null=True)  # Store the full iframe HTML here
     address = models.TextField(null=True)
     phone_number = models.CharField(max_length=20)
+    image = models.ImageField(upload_to='outlet_images/', null=True, blank=True)  # New field for the outlet image
 
     def __str__(self):
         return self.title

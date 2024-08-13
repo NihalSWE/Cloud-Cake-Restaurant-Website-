@@ -2,6 +2,7 @@
 
 {% load static %}
 
+<!-- Navbar HTML -->
 <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container">
         <a class="navbar-brand" href="/">
@@ -20,10 +21,21 @@
                     <a class="nav-link text-white" aria-current="page" href="{% url 'home' %}">HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'outlet' %}">OUTLETS</a>
+                    <a class="nav-link text-white" href="{% url 'about' %}">ABOUT US</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'about' %}">ABOUT US</a>
+                    <a class="nav-link text-white" href="{% url 'outlet' %}">OUTLETS</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      PRODUCTS
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-white" aria-labelledby="navbarDarkDropdownMenuLink">
+                      <li><a class="dropdown-item text-brown" href="{% url 'cake' %}">Cake</a></li>
+                      <li><a class="dropdown-item text-brown" href="{% url 'bread' %}">Bread & Cookies</a></li>
+                      <li><a class="dropdown-item text-brown" href="{% url 'savory' %}">Savory</a></li>
+                      <li><a class="dropdown-item text-brown" href="{% url 'frozen' %}">Frozen</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{% url 'contactus' %}">CONTACT US</a>
@@ -32,6 +44,8 @@
                     <a class="nav-link text-white" href="{% url 'career' %}">CAREER</a>
                 </li>
             </ul>
+
+            <!-- Cart Dropdown -->
             <div class="nav-item dropdown">
                 <a class="nav-link text-white dropdown-toggle" href="{% url 'showcart' %}" id="navbarDropdownCart" role="button"
                    data-bs-toggle="dropdown" aria-expanded="false">
@@ -55,22 +69,33 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{% url 'showcart' %}">
+                            <a class="dropdown-item text-dark" href="{% url 'showcart' %}">
                                 VIEW CART <i class="fas fa-chevron-right"></i>
                             </a>
                         </li>
                     {% else %}
                         <li>
-                            <a class="dropdown-item empty-cart" href="#">
+                            <a class="dropdown-item text-dark empty-cart" href="#">
                                 YOUR CART IS EMPTY
                             </a>
                         </li>
                     {% endif %}
                 </ul>
             </div>
+
+            <!-- Social Media Icons -->
+            <div class="nav-item d-flex align-items-center">
+                <a class="nav-link social-icon" href="https://www.facebook.com/cloudcakebd" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a class="nav-link social-icon" href="https://www.youtube.com/yourchannel" target="_blank" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
         </div>
     </div>
 </nav>
+
 
 <style>
     :root {
@@ -130,5 +155,15 @@
 
     .nav-link.dropdown-toggle .badge {
         margin-left: 5px;
+    }
+
+    .nav-item .nav-link i {
+        font-size: 1.2rem; /* Adjust size as needed */
+        margin-left: 10px; /* Adjust spacing between icons */
+        transition: color 0.3s ease;
+    }
+    
+    .nav-item .nav-link:hover i {
+        color: var(--secondary-color); /* Change icon color on hover */
     }
 </style>

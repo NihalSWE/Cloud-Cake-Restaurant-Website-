@@ -84,14 +84,29 @@
             </div>
 
             <!-- Social Media Icons -->
-            <div class="nav-item d-flex align-items-center">
-                <a class="nav-link social-icon" href="https://www.facebook.com/cloudcakebd" target="_blank" title="Facebook">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a class="nav-link social-icon" href="https://www.youtube.com/yourchannel" target="_blank" title="YouTube">
-                    <i class="fab fa-youtube"></i>
-                </a>
-            </div>
+<div class="nav-item d-flex align-items-center">
+    <ul class="social-icons">
+        <li>
+            <a class="facebook" href="https://www.facebook.com/cloudcakebd" target="_blank" title="Facebook">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <i class="fab fa-facebook-f"></i>
+            </a>
+        </li>
+        <li>
+            <a class="youtube" href="https://www.youtube.com/yourchannel" target="_blank" title="YouTube">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <i class="fab fa-youtube"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
         </div>
     </div>
 </nav>
@@ -157,13 +172,124 @@
         margin-left: 5px;
     }
 
-    .nav-item .nav-link i {
-        font-size: 1.2rem; /* Adjust size as needed */
-        margin-left: 10px; /* Adjust spacing between icons */
-        transition: color 0.3s ease;
+
+
+
+    :root {
+        --facebook-color: #3b5998;
+        --youtube-color: #ff0000;
+        --icon-color: white;
     }
     
-    .nav-item .nav-link:hover i {
-        color: var(--secondary-color); /* Change icon color on hover */
+    .nav-item .social-icons {
+        position: relative;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        list-style: none;
     }
+    
+    .nav-item .social-icons li {
+        margin: 0 10px; /* Reduced margin */
+    }
+    
+    .nav-item .social-icons li a {
+        display: block;
+        position: relative;
+        width: 35px; /* Reduced width */
+        height: 35px; /* Reduced height */
+        line-height: 35px; /* Aligns icon vertically */
+        font-size: 20px; /* Reduced icon font size */
+        text-align: center;
+        text-decoration: none;
+        color: var(--icon-color);
+        transition: 0.5s;
+    }
+    
+    .nav-item .social-icons li a span {
+        position: absolute;
+        transition: transform 0.5s;
+    }
+    
+    .nav-item .social-icons li a span:nth-child(1),
+    .nav-item .social-icons li a span:nth-child(3) {
+        width: 100%;
+        height: 2px; /* Reduced thickness */
+        background: var(--icon-color);
+    }
+    
+    .nav-item .social-icons li a span:nth-child(1) {
+        top: 0;
+        left: 0;
+        transform-origin: right;
+    }
+    
+    .nav-item .social-icons li a:hover span:nth-child(1) {
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.5s;
+    }
+    
+    .nav-item .social-icons li a span:nth-child(3) {
+        bottom: 0;
+        left: 0;
+        transform-origin: left;
+    }
+    
+    .nav-item .social-icons li a:hover span:nth-child(3) {
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s;
+    }
+    
+    .nav-item .social-icons li a span:nth-child(2),
+    .nav-item .social-icons li a span:nth-child(4) {
+        width: 2px; /* Reduced thickness */
+        height: 100%;
+        background: var(--icon-color);
+    }
+    
+    .nav-item .social-icons li a span:nth-child(2) {
+        top: 0;
+        left: 0;
+        transform: scale(0);
+        transform-origin: bottom;
+    }
+    
+    .nav-item .social-icons li a:hover span:nth-child(2) {
+        transform: scale(1);
+        transform-origin: top;
+        transition: transform 0.5s;
+    }
+    
+    .nav-item .social-icons li a span:nth-child(4) {
+        top: 0;
+        right: 0;
+        transform: scale(0);
+        transform-origin: top;
+    }
+    
+    .nav-item .social-icons li a:hover span:nth-child(4) {
+        transform: scale(1);
+        transform-origin: bottom;
+        transition: transform 0.5s;
+    }
+    
+    .nav-item .social-icons li a.facebook:hover {
+        color: var(--facebook-color);
+    }
+    
+    .nav-item .social-icons li a.facebook:hover span {
+        background: var(--facebook-color);
+    }
+    
+    .nav-item .social-icons li a.youtube:hover {
+        color: var(--youtube-color);
+    }
+    
+    .nav-item .social-icons li a.youtube:hover span {
+        background: var(--youtube-color);
+    }
+    
+    
 </style>

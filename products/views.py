@@ -83,33 +83,40 @@ class CakeView(View):
 class SavoryView(View):
     def get(self, request):
         savories = Product.objects.filter(category='S').order_by('id')
-        savories_paginator = Paginator(savories, 8)    # Show 8 savories per page
-        savories_page_number = request.GET.get('savories_page')
+        paginator = Paginator(savories, 5)  # Display 5 savories per page
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
         context = {
-            'savories': savories_paginator.get_page(savories_page_number),
-            }
-        return render(request,'products/savory.html',context)
+            'savories': page_obj,
+        }
+        return render(request, 'products/savory.html', context)
+
 
 class FrozenView(View):
-    def get(self,request):
-        frozens=Product.objects.filter(category='F').order_by('id')
-        frozens_paginator = Paginator(frozens, 8)    # Show 8 frozens per page
-        frozens_page_number = request.GET.get('frozens_page')
+    def get(self, request):
+        frozens = Product.objects.filter(category='F').order_by('id')
+        paginator = Paginator(frozens, 5)  # Display 5 frozens per page
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
         context = {
-            'frozens': frozens_paginator.get_page(frozens_page_number),
-            }
-        return render(request,'products/frozen.html',context)
+            'frozens': page_obj,
+        }
+        return render(request, 'products/frozen.html', context)
 
 
 class BreadView(View):
-    def get(self,request):
-        breads=Product.objects.filter(category='B').order_by('id')
-        breads_paginator = Paginator(breads, 8)    # Show 8 beards per page
-        breads_page_number = request.GET.get('beards_page')
+    def get(self, request):
+        breads = Product.objects.filter(category='B').order_by('id')
+        paginator = Paginator(breads, 5)  # Display 5 breads per page
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
         context = {
-            'breads': breads_paginator.get_page(breads_page_number),
-            }
-        return render(request,'products/Bread&Cookies.html',context)
+            'breads': page_obj,
+        }
+        return render(request, 'products/Bread&Cookies.html', context)
 
 
 

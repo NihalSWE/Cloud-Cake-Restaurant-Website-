@@ -103,32 +103,50 @@ Career
                 </div>
                 <div class="sm:col-span-2">
                     <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Your Message</label>
-                    <textarea id="message" name="message"
-                        class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        rows="4" placeholder="Your Message" required></textarea>
+                    <div class="flex">
+                        <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                            <i class="fas fa-comment-alt"></i>
+                        </span>
+                        <textarea id="message" name="message"
+                            class="flex-1 block w-full px-3 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            rows="4" placeholder="Your Message" required></textarea>
+                    </div>
                 </div>
+                
                 <div class="sm:col-span-2">
                     <label for="cv" class="block text-sm font-medium text-gray-700 mb-1">Drop Your CV</label>
-                    <div
-                        class="flex items-center justify-center w-full h-32 md:h-40 border-2 border-gray-300 border-dashed rounded-md">
-                        <div class="text-center">
-                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none"
-                                viewBox="0 0 48 48" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M26 22v-8m0 0L21 17m5-5l-5 5m10 3v12a3 3 0 01-3 3H15a3 3 0 01-3-3V20a3 3 0 013-3h3m13-2a3 3 0 013 3v12a3 3 0 01-3 3H15a3 3 0 01-3-3V20a3 3 0 013-3h8m10 3l5-5m-5 5l5 5m0-5v8m0-8l-5 5m5-5l-5-5">
-                                </path>
-                            </svg>
-                            <p class="mt-1 text-sm text-gray-600">
-                                <button type="button"
-                                    class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
-                                    Upload a file
-                                </button>
-                                or drag and drop
-                            </p>
+                    <div class="flex items-center justify-center w-full h-32 md:h-40 border-2 border-gray-300 border-dashed rounded-md">
+                        <div class="flex flex-col items-center">
+                            <div class="flex items-center">
+                                <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                                    <i class="fas fa-file-upload"></i>
+                                </span>
+                                <div id="cv-drop-area"
+                                    class="flex-1 flex items-center justify-center w-full h-32 md:h-40 border-2 border-gray-300 border-dashed rounded-r-md">
+                                    <div id="cv-drop-message" class="text-center">
+                                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none"
+                                            viewBox="0 0 48 48" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M26 22v-8m0 0L21 17m5-5l-5 5m10 3v12a3 3 0 01-3 3H15a3 3 0 01-3-3V20a3 3 0 013-3h3m13-2a3 3 0 013 3v12a3 3 0 01-3 3H15a3 3 0 01-3-3V20a3 3 0 013-3h8m10 3l5-5m-5 5l5 5m0-5v8m0-8l-5 5m5-5l-5-5">
+                                            </path>
+                                        </svg>
+                                        <p class="mt-1 text-sm text-gray-600">
+                                            <button type="button" onclick="document.getElementById('cv').click();"
+                                                class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
+                                                Upload a file
+                                            </button>
+                                            or drag and drop
+                                        </p>
+                                        <p id="file-name" class="mt-2 text-sm text-gray-500"></p> <!-- This will show the file name -->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <input type="file" id="cv" name="cv" class="hidden">
                 </div>
+                
+                
                 <div class="sm:col-span-2">
                     <button type="submit"
                         class="mt-4 w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -139,5 +157,46 @@ Career
         </form>
     </div>
 </div>
+
+
+<script>
+        // Get the file input and the area to display the file name
+        const cvInput = document.getElementById('cv');
+        const fileNameDisplay = document.getElementById('file-name');
+        const cvDropArea = document.getElementById('cv-drop-area');
+    
+        // Listen for changes to the file input (i.e., when a file is selected or dropped)
+        cvInput.addEventListener('change', function() {
+            if (cvInput.files.length > 0) {
+                const fileName = cvInput.files[0].name;
+                fileNameDisplay.textContent = `File Selected: ${fileName}`;
+            } else {
+                fileNameDisplay.textContent = ''; // Clear the message if no file is selected
+            }
+        });
+    
+        // Add drag-and-drop feedback (optional, for better UX)
+        cvDropArea.addEventListener('dragover', function(event) {
+            event.preventDefault(); // Prevent default behavior (prevent file from being opened)
+            cvDropArea.classList.add('border-indigo-500'); // Highlight the drop area
+        });
+    
+        cvDropArea.addEventListener('dragleave', function() {
+            cvDropArea.classList.remove('border-indigo-500'); // Remove highlight
+        });
+    
+        cvDropArea.addEventListener('drop', function(event) {
+            event.preventDefault(); // Prevent default behavior (prevent file from being opened)
+            cvInput.files = event.dataTransfer.files; // Assign the dropped file to the input
+            cvDropArea.classList.remove('border-indigo-500'); // Remove highlight
+    
+            if (cvInput.files.length > 0) {
+                const fileName = cvInput.files[0].name;
+                fileNameDisplay.textContent = `File Dropped: ${fileName}`;
+            } else {
+                fileNameDisplay.textContent = ''; // Clear the message if no file is dropped
+            }
+        });
+</script>
 
 {% endblock %}

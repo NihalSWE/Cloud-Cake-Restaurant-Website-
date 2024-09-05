@@ -367,18 +367,42 @@ def contactus(request):
     return render(request, 'products/contactus.html')
 
 
+from django.http import JsonResponse
+from .models import FoodItems
+
 def foodmenu(request):
-    items=FoodItems.objects.all()
+    # Get the filter value if it exists
+    filter_value = request.GET.get('filter', '')
+
+    if filter_value:
+        # Filter items based on the search input
+        items = FoodItems.objects.filter(name__icontains=filter_value) | FoodItems.objects.filter(mrp__icontains=filter_value)
+    else:
+        items = FoodItems.objects.all()
+
+    # Check if the request is an AJAX request
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        # Return filtered items as JSON for the autocomplete
+        item_list = list(items.values('name'))
+        return JsonResponse(item_list, safe=False)
+    
     return render(request, 'products/foodmenu.html', {'items': items})
 
 
+from django.template.loader import render_to_string
 from xhtml2pdf import pisa
 from io import BytesIO
 from .models import FoodItems
 
 def download_food_menu(request):
-    # Get data from the database
-    items = FoodItems.objects.all()
+    # Get the filter value from the request
+    filter_value = request.GET.get('filter', '')
+
+    if filter_value:
+        # Filter items based on the search input
+        items = FoodItems.objects.filter(name__icontains=filter_value) | FoodItems.objects.filter(mrp__icontains=filter_value)
+    else:
+        items = FoodItems.objects.all()
 
     # Render the HTML template with context data
     template_path = 'products/food_menu_pdf.html'
@@ -390,7 +414,7 @@ def download_food_menu(request):
     buffer = BytesIO()
 
     # Render the template into a PDF
-    html = render(request, template_path, context).content.decode('utf-8')
+    html = render_to_string(template_path, context)
     pisa_status = pisa.CreatePDF(BytesIO(html.encode("utf-8")), dest=buffer)
 
     # If there's an error during PDF generation

@@ -10,21 +10,13 @@
         .font-weight-custom {
             font-weight: 450; /* Adjusted weight */
         }
-        
+
         .uppercase {
             text-transform: uppercase; /* Ensure the text is uppercase */
         }
-        
+
         .text-color {
             color: #ed1c24; /* Text color */
-        }
-
-        /* Heading styles */
-        h1 {
-            font-size: 3rem;
-            color: #2c3e50;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
         }
 
         /* Table styles */
@@ -39,77 +31,64 @@
         }
 
         .table th, .table td {
-            padding: 15px;
+            padding: 10px;
             text-align: center;
             vertical-align: middle;
         }
 
+        /* Left-align Food Item Name column */
+        .table td:nth-child(2) {
+            text-align: left;
+        }
+
         .table th {
-            background-color: #ed1c24; /* Updated header background color */
-            color: #ffffff;
+            background-color: #ed1c24;
+            color: white;
             text-transform: uppercase;
-            letter-spacing: 0.1rem;
-            font-weight: 600;
-            border-bottom: 1px solid #dddddd; /* Border color for header cells */
         }
 
-        .table td {
-            font-size: 1.2rem;
-            color: #2c3e50;
-            border-bottom: 1px solid #dddddd;
-            background-color: #ffffff; /* Ensure table cells have white background */
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        /* Serial number column background color */
+        /* Make SL column (Serial Number) background white */
         .table tbody th {
-            background-color: #ffffff; /* Serial number cells white background */
-            color: #2c3e50; /* Ensure text color contrasts well */
+            background-color: #ffffff; /* Ensure SL column background is white */
+            color: #2c3e50; /* Keep text color dark */
         }
 
-        .table-hover tbody tr {
-            transition: transform 0.3s ease;
-        }
-
-        .table-hover tbody tr:hover {
-            background-color: #eaf1f8;
-            transform: translateY(-3px);
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Alternate row styles */
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #f9fbfd;
-        }
-
-        /* MRP column styles with Taka symbol */
-        .table td:nth-child(3) {
+        .currency {
             font-weight: 600;
             color: #e74c3c;
         }
 
-        .table td:nth-child(3):before {
-            content: '৳'; /* Taka symbol */
-            margin-right: 5px;
-            font-size: 1.5rem; /* Bigger Taka symbol */
-            color: #e74c3c;
+        /* Search box styles */
+        .search-box {
+            margin-bottom: 20px;
+            text-align: right; /* Align the search box to the right */
         }
 
-        /* Rounded corners for the table */
-        .table thead th:first-child {
-            border-top-left-radius: 15px;
+        .search-box input {
+            width: 300px;
+            padding: 6px; /* Increased padding for visibility */
+            font-size: 1.2rem; /* Increased font size for more visibility */
+            border: 2px solid #a94225; /* Add a visible border */
+            border-radius: 5px; /* Add rounded corners */
+            outline: none;
         }
 
-        .table thead th:last-child {
-            border-top-right-radius: 15px;
+        .search-box button {
+            padding: 10px 20px;
+            background-color: #a94225;
+            color: red;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
         }
 
-        .table tbody tr:last-child td:first-child {
-            border-bottom-left-radius: 15px;
+        .search-box input:focus {
+            border-color: #ed1c24; /* Change border color when focused */
+            box-shadow: 0 0 5px rgba(237, 28, 36, 0.5); /* Add shadow on focus */
         }
 
-        .table tbody tr:last-child td:last-child {
-            border-bottom-right-radius: 15px;
+        .search-box button:hover {
+            background-color: #b8431f;
         }
 
         /* Download button styles */
@@ -118,7 +97,7 @@
             padding: 10px 20px;
             font-size: 1rem;
             color: #ffffff;
-            background-color: #0080fa;
+            background-color: #a94225;
             border: none;
             border-radius: 5px;
             text-align: center;
@@ -131,15 +110,38 @@
         .download-btn:hover {
             background-color: #b8431f;
         }
+
+        .search-download-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            gap: 20px; /* Space between search box and button */
+        }
+        
     </style>
 
     <div class="container my-5">
-        <h2 class="text-center mb-4 uppercase font-weight-custom text-color">CLOUD CAKE AND FOODS<br>MRP CHART</h2></h1>
+        <h2 class="text-center mb-4 uppercase font-weight-custom text-color">
+            <span class="bolder-text">CLOUD CAKE AND FOODS</span><br>MRP CHART
+        </h2>
+
         <hr>
-        <!-- Download button -->
-        <a href="{% url 'download_food_menu' %}" class="download-btn">Download Menu (PDF)</a>
+
+        <!-- Container for search box and download button -->
+<div class="search-download-container">
+    <!-- Search box -->
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search by product name or MRP..." onkeyup="filterTable()">
+    </div>
+
+    <!-- Download button -->
+    <button class="download-btn" onclick="downloadPDF()">Download Menu (PDF)</button>
+</div>
+
+
+        <!-- Table of products -->
         <div class="table-responsive">
-            <table class="table table-hover table-bordered table-striped">
+            <table class="table table-hover table-bordered table-striped" id="productTable">
                 <thead>
                     <tr>
                         <th scope="col">SL</th>
@@ -152,11 +154,42 @@
                     <tr>
                         <th scope="row">{{ forloop.counter }}</th>
                         <td>{{ item.name }}</td>
-                        <td>{{ item.mrp }}</td>
+                        <td class="currency">{{ item.mrp }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
+
+    <script>
+        function filterTable() {
+            var input, filter, table, tr, tdName, tdMRP, i, txtValueName, txtValueMRP;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("productTable");
+            tr = table.getElementsByTagName("tr");
+    
+            for (i = 1; i < tr.length; i++) {
+                tdName = tr[i].getElementsByTagName("td")[0];
+                tdMRP = tr[i].getElementsByTagName("td")[1];
+                if (tdName || tdMRP) {
+                    txtValueName = tdName.textContent || tdName.innerText;
+                    txtValueMRP = tdMRP.textContent || tdMRP.innerText;
+                    if (txtValueName.toUpperCase().indexOf(filter) > -1 || txtValueMRP.indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    
+        function downloadPDF() {
+            var filter = document.getElementById("searchInput").value;
+            window.location.href = "{% url 'download_food_menu' %}?filter=" + encodeURIComponent(filter);
+        }
+    </script>
+    
+
 {% endblock %}

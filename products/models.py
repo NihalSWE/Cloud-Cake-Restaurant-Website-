@@ -143,3 +143,16 @@ class CategoryImage(models.Model):
 
     def __str__(self):
         return self.category 
+    
+
+
+class FoodItems(models.Model):
+    name = models.CharField(max_length=100)
+    mrp = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.name
+    
+from django.db import models
+
+

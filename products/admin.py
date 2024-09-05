@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product,AddCart,Order,Banner,Outlet,Branch, Career,CategoryImage
+from .models import Product,AddCart,Order,Banner,Outlet,Branch, Career,CategoryImage,FoodItems
 # Register your models here.
 
 
@@ -125,3 +125,12 @@ class CareerAdmin(admin.ModelAdmin):
         return "No CV"
 
     cv_link.short_description = 'CV'
+
+
+
+@admin.register(FoodItems)
+class FoodItemsAdmin(admin.ModelAdmin):
+    list_display = ['id','name', 'mrp',]
+
+
+

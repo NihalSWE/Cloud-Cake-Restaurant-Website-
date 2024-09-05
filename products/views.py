@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponse,get_object_or_404,redirect
 from django.views import View
-from .models import Product,AddCart,Banner,CategoryImage
+from .models import Product,AddCart,Banner,CategoryImage,FoodItems
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 
@@ -367,3 +367,36 @@ def contactus(request):
     return render(request, 'products/contactus.html')
 
 
+def foodmenu(request):
+    items=FoodItems.objects.all()
+    return render(request, 'products/foodmenu.html', {'items': items})
+
+
+from xhtml2pdf import pisa
+from io import BytesIO
+from .models import FoodItems
+
+def download_food_menu(request):
+    # Get data from the database
+    items = FoodItems.objects.all()
+
+    # Render the HTML template with context data
+    template_path = 'products/food_menu_pdf.html'
+    context = {'items': items}
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="food_menu.pdf"'
+
+    # Create a byte stream buffer
+    buffer = BytesIO()
+
+    # Render the template into a PDF
+    html = render(request, template_path, context).content.decode('utf-8')
+    pisa_status = pisa.CreatePDF(BytesIO(html.encode("utf-8")), dest=buffer)
+
+    # If there's an error during PDF generation
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+
+    # Write the PDF buffer to the response
+    response.write(buffer.getvalue())
+    return response

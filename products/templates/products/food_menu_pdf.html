@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CCF Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #ffffff;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            color: #b23b3b;
+            margin: 0;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #dddddd;
+        }
+
+        th, td {
+            padding: 6px;  /* Reduced padding for smaller cell size */
+            text-align: center;
+            font-size: 1.4rem; /* Increased font size for table data */
+        }
+
+        th {
+            background-color: #ed1c24;
+            color: white;
+            font-size: 1.6rem; /* Slightly larger font size for headers */
+        }
+
+        .currency {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        
+        <h1>CLOUD CAKE AND FOODS<br>MRP CHART</h1>
+    </div>
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th>SL</th>
+                <th>Food Item Name</th>
+                <th>MRP</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td >{{ forloop.counter }}</td>
+                <td>{{ item.name }}</td>
+                <td class="currency">{{ item.mrp }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="footer">
+        <p>Thank you for choosing CCF! We hope you enjoy our delicious offerings.</p>
+    </div>
+</body>
+</html>

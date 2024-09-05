@@ -28,5 +28,8 @@ urlpatterns = [
     path('order_view/',views.order_view,name="order_view"),
     path('order_conferm/',views.order_conferm,name="order_conferm"),
 
+    path('foodmenu/',views.foodmenu,name="foodmenu"),
+    path('download_food_menu/', views.download_food_menu, name='download_food_menu'),
+
     
 ]

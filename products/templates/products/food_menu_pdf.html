@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,12 +21,21 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .header h1 {
+        .logo {
+            flex: 1;
+            display: flex;
+            align-items: left;
+        }
+
+        .txt {
+            flex: 2;
+            text-align: right;
+        }
+
+        .txt h1 {
             font-size: 3rem;
             color: #b23b3b;
             margin: 0;
-            text-align: center;
-            flex-grow: 1;
         }
 
         table {
@@ -65,8 +75,14 @@
 </head>
 <body>
     <div class="header">
-        
-        <h1>CLOUD CAKE AND FOODS<br>MRP CHART</h1>
+        <div class="logo">
+            <!-- Logo placeholder -->
+            <img src="{% static 'assets/img/gallery/MRP_logo.png' %}" alt="Logo" style="max-height: 50px;"/>
+
+        </div>
+        <div class="txt">
+            <h1>CLOUD CAKE AND FOODS<br>MRP CHART</h1>
+        </div>
     </div>
     <br>
     <table>
@@ -80,7 +96,7 @@
         <tbody>
             {% for item in items %}
             <tr>
-                <td >{{ forloop.counter }}</td>
+                <td>{{ forloop.counter }}</td>
                 <td>{{ item.name }}</td>
                 <td class="currency">{{ item.mrp }}</td>
             </tr>

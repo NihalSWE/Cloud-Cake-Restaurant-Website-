@@ -424,3 +424,7 @@ def download_food_menu(request):
     # Write the PDF buffer to the response
     response.write(buffer.getvalue())
     return response
+
+
+def error_page(request, exception):
+    return render(request, 'products/404.html')

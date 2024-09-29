@@ -1,39 +1,126 @@
 {% extends "products/base.html" %}
 
-{% block title %}
-About Us
-{% endblock %}
+{% block title %}About Us - Cloud Cake & Foods{% endblock %}
 
 {% block body %}
 {% load static %}
-<div class="bg-gray-100 py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-900 uppercase">About Us</h1>
-            <p class="mt-4 text-lg leading-6 text-gray-600">
-                Welcome to Cloud Cake & Foods, your number one source for all things related to delicious cakes and foods. We're dedicated to providing you the very best of cakes, with an emphasis on quality, customer service, and uniqueness.
-            </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="shadow-lg rounded-lg overflow-hidden">
-                <img class="w-full h-48 object-cover" style="height: 20rem;" src="{% static 'assets/img/gallery/ab1.jpg' %}" alt="Our Story">
-                <div class="p-6">
-                    <h2 class="text-2xl font-bold text-gray-900 text-center">Our Story</h2>
-                    <p class="mt-4 text-gray-600">
-                        Founded in 2021 by Jane Doe, Cloud Cake & Foods has come a long way from its beginnings in a home kitchen. When Jane first started out, her passion for baking drove her to start her own business.
+<div class="bg-gray-50">
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"> <!-- Changed from py-16 to py-8 for less padding -->
+        <!-- Our Story Section -->
+        <section class="mb-12"> <!-- Changed from mb-20 to mb-12 -->
+            <h2 class="text-3xl font-medium text-gray-800 mb-4 text-center tracking-tight">Our Story</h2> <!-- Changed from mb-8 to mb-4 -->
+            <div class="flex flex-col md:flex-row items-center space-y-10 md:space-y-0 md:space-x-10">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <img src="{% static 'assets/img/gallery/ab1.jpg' %}" alt="Our Story" class="rounded-lg shadow-md w-full h-auto object-cover transform hover:scale-105 transition duration-300">
+                </div>
+                <div class="md:w-1/2">
+                    <p class="text-lg text-gray-700 leading-relaxed mb-4"> <!-- Changed from mb-6 to mb-4 -->
+                        Founded in 2021 by visionary baker Jane Doe, Cloud Cake & Foods has rapidly evolved from a passionate home kitchen project into a culinary powerhouse. Our journey is a testament to the power of dedication, creativity, and a commitment to excellence.
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Today, we stand as a beacon of innovation in the world of confectionery and gourmet foods, constantly pushing boundaries and delighting taste buds across the nation.
                     </p>
                 </div>
             </div>
-            <div class="shadow-lg rounded-lg overflow-hidden">
-                <img class="w-full h-48 object-cover" style="height: 20rem;" src="{% static 'assets/img/gallery/ab2.jpg' %}" alt="Our Mission">
-                <div class="p-6">
-                    <h2 class="text-2xl font-bold text-gray-900 text-center">Our Mission</h2>
-                    <p class="mt-4 text-gray-600">
-                        Our mission is to provide high-quality cakes and food items that bring joy to our customers. We strive to create delicious, beautiful, and unique products that satisfy both the eye and the palate.
+        </section>
+
+        <!-- Our Mission Section -->
+        <section class="mb-12"> <!-- Changed from mb-20 to mb-12 -->
+            <h2 class="text-3xl font-medium text-gray-800 mb-4 text-center tracking-tight">Our Mission</h2> <!-- Changed from mb-8 to mb-4 -->
+            <div class="flex flex-col md:flex-row-reverse items-center space-y-10 md:space-y-0 md:space-x-10">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <img src="{% static 'assets/img/gallery/ab2.jpg' %}" alt="Our Mission" class="rounded-lg shadow-md w-full h-auto object-cover transform hover:scale-105 transition duration-300">
+                </div>
+                <div class="md:w-1/2">
+                    <p class="text-lg text-gray-700 leading-relaxed mb-4"> <!-- Changed from mb-6 to mb-4 -->
+                        At Cloud Cake & Foods, our mission is to create extraordinary culinary experiences that bring joy, celebration, and unforgettable moments to our customers' lives.
                     </p>
+                    <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+                        <li>Sourcing the finest ingredients</li>
+                        <li>Crafting innovative and delicious recipes</li>
+                        <li>Providing exceptional customer service</li>
+                        <li>Maintaining the highest standards of quality and food safety</li>
+                    </ul>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section>
+            <h2 class="text-3xl font-medium text-gray-800 mb-4 text-center tracking-tight">Our Achievements</h2> <!-- Changed from mb-12 to mb-4 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"> <!-- Changed gap-8 to gap-6 for tighter grid spacing -->
+                <!-- Achievement 1 -->
+                <div class="bg-gradient-to-br from-pink-500 to-orange-400 rounded-lg p-6 text-white text-center transform hover:scale-105 transition duration-300 shadow-md">
+                    <h3 class="text-6xl font-extrabold mb-2">
+                        <span class="count" data-count="2021">0</span>
+                    </h3>
+                    <p class="text-lg font-semibold uppercase">Founding Year</p>
+                </div>
+
+                <!-- Achievement 2 -->
+                <div class="bg-gradient-to-br from-purple-500 to-indigo-400 rounded-lg p-6 text-white text-center transform hover:scale-105 transition duration-300 shadow-md">
+                    <h3 class="text-6xl font-extrabold mb-2">
+                        <span class="count" data-count="9">0</span>
+                    </h3>
+                    <p class="text-lg font-semibold uppercase">Outlets</p>
+                </div>
+
+                <!-- Achievement 3 -->
+                <div class="bg-gradient-to-br from-green-500 to-teal-400 rounded-lg p-6 text-white text-center transform hover:scale-105 transition duration-300 shadow-md">
+                    <h3 class="text-6xl font-extrabold mb-2">
+                        <span class="count" data-count="10">0</span>
+                    </h3>
+                    <p class="text-lg font-semibold uppercase">Categories</p>
+                </div>
+
+                <!-- Achievement 4 -->
+                <div class="bg-gradient-to-br from-red-500 to-pink-400 rounded-lg p-6 text-white text-center transform hover:scale-105 transition duration-300 shadow-md">
+                    <h3 class="text-6xl font-extrabold mb-2">
+                        <span class="count" data-count="5600">0</span>
+                    </h3>
+                    <p class="text-lg font-semibold uppercase">Happy Customers</p>
+                </div>
+            </div>
+        </section>
     </div>
 </div>
+
+<script>
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counters = entry.target.querySelectorAll('.count');
+                const speed = 2000;
+
+                counters.forEach(counter => {
+                    const animate = () => {
+                        const value = +counter.getAttribute('data-count');
+                        const data = +counter.innerText;
+                        
+                        const time = value / speed;
+                        if (data < value) {
+                            counter.innerText = Math.ceil(data + time);
+                            setTimeout(animate, 30);  // Adjusted for smoother animation
+                        } else {
+                            counter.innerText = value;
+                        }
+                    }
+                    animate();
+                });
+
+                observer.unobserve(entry.target); // Stop observing after animation
+            }
+        });
+    }, observerOptions);
+
+    const counterSections = document.querySelectorAll('.bg-gradient-to-br'); // Select individual counters
+    counterSections.forEach(section => observer.observe(section));
+</script>
 {% endblock %}

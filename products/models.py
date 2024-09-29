@@ -60,7 +60,7 @@ from django.contrib.postgres.fields import JSONField
 class Order(models.Model):
     name = models.CharField(max_length=100)
     number = models.CharField(max_length=100)
-    address = models.TextField()
+    address = models.TextField(null=True, blank=True)
     cart_items = models.JSONField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)

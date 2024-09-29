@@ -226,7 +226,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 def showcart(request):
     cart = request.session.get('cart', {})
-    
+
     total_amount = 0
     for item in cart.values():
         if 'discount_price' in item:
@@ -240,16 +240,20 @@ def showcart(request):
             name = form.cleaned_data['name']
             phone = form.cleaned_data['phone']
             address = form.cleaned_data['address']
-            
+
             # Serialize cart items to JSON
             cart_items = json.dumps(list(cart.values()))
-            
+
+            # Create and save the order
             order = Order(name=name, number=phone, address=address, cart_items=cart_items)
             order.save()
+
+            # Save order ID in session
+            request.session['order_id'] = order.id
             
             # Clear the cart after placing the order
             request.session['cart'] = {}
-            
+
             return redirect("order_conferm")
     else:
         form = OrderForm()
@@ -263,9 +267,43 @@ def showcart(request):
     return render(request, 'products/showcart.html', context)
 
 
+import json
+from django.shortcuts import render, get_object_or_404
+from .models import Order
 
 def order_conferm(request):
-    return render(request,'products/order_conferm.html')
+    order_id = request.session.get('order_id')  # Get order ID from session
+
+    if order_id:
+        # Fetch the order object from the database
+        order = get_object_or_404(Order, id=order_id)  
+        
+        # Deserialize the cart items from JSON
+        cart_items = json.loads(order.cart_items)  
+
+        # Calculate the total amount from the cart items
+        total_amount = 0
+        for item in cart_items:
+            # Use discount_price if available, otherwise use regular price
+            item_price = item.get('discount_price', item['price'])
+            total_amount += item['quantity'] * item_price  # Calculate the total amount
+
+    else:
+        order = None
+        cart_items = []
+        total_amount = 0  # Initialize total amount as zero if no order
+
+    context = {
+        'order': order,
+        'cart_items': cart_items,  # Pass cart items to the context
+        'total_amount': total_amount,  # Include the total amount
+    }
+
+    return render(request, 'products/order_conferm.html', context)
+
+
+
+
 
 from django import forms
 import json

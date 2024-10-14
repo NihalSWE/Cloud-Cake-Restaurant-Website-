@@ -66,7 +66,16 @@ class OrderModelAdmin(ExportMixin, admin.ModelAdmin):
         else:
             return 'No items'
 
-    display_cart_items.short_description = 'Cart Items and Total Cost'  # Set column header@admin.register(Banner)
+    display_cart_items.short_description = 'Cart Items and Total Cost'  
+
+
+
+
+
+
+
+
+
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):

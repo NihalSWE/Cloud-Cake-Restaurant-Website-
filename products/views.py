@@ -234,6 +234,9 @@ def showcart(request):
         else:
             total_amount += item['quantity'] * item['price']
 
+    # Home delivery eligibility
+    home_delivery_available = total_amount > 500
+
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
@@ -241,17 +244,10 @@ def showcart(request):
             phone = form.cleaned_data['phone']
             address = form.cleaned_data['address']
 
-            # Serialize cart items to JSON
             cart_items = json.dumps(list(cart.values()))
-
-            # Create and save the order
             order = Order(name=name, number=phone, address=address, cart_items=cart_items)
             order.save()
-
-            # Save order ID in session
             request.session['order_id'] = order.id
-            
-            # Clear the cart after placing the order
             request.session['cart'] = {}
 
             return redirect("order_conferm")
@@ -260,11 +256,13 @@ def showcart(request):
 
     context = {
         'cart': cart,
-        'total_amount': total_amount,  # Add total_amount to context
+        'total_amount': total_amount,
         'form': form,
+        'home_delivery_available': home_delivery_available,  # Added this
     }
 
     return render(request, 'products/showcart.html', context)
+
 
 
 import json
@@ -466,3 +464,4 @@ def download_food_menu(request):
 
 def error_page(request, exception):
     return render(request, 'products/404.html')
+

@@ -116,6 +116,7 @@ Shopping Cart
                   <i class="fas fa-plus-square text-xl"></i>
                 </a>
               </div>
+              
               <div class="w-full sm:w-1/6 text-right">
                 {% if 'discount_price' in item %}
                   <p class="text-lg font-semibold text-green-600">Tk. {{ item.discount_price }}</p>
@@ -152,9 +153,12 @@ Shopping Cart
             <span>(including VAT & excluding shipping fare)</span>
           </li>
         </ul>
-        <button class="btn btn-custom text-center" style="background-color:#ef3e26; margin-left: 60px; border:none;" onclick="openModal()">
-          Proceed to Checkout
-        </button>
+        <button class="btn btn-custom text-center" style="background-color:#ef3e26; margin-left: 60px; border:none;" 
+  onclick="openModal({{ total_amount }})">
+  Proceed to Checkout
+</button>
+
+
         
 
       </div>
@@ -162,16 +166,21 @@ Shopping Cart
   </div>
 </div>
 
-<!-- Contact Form Modal -->
+<!-- Checkout Modal -->
 <div class="fixed inset-0 z-50 flex items-center justify-center hidden" id="contactModal">
   <div class="modal-overlay fixed inset-0 z-40"></div>
   <div class="modal-content bg-white w-full max-w-lg p-6 relative z-50">
     <div class="flex justify-between items-center border-b pb-4 mb-4">
-      <h5 class="text-2xl font-semibold text-gray-800">Contact Us</h5>
+      <h5 class="text-2xl font-semibold text-gray-800">Proceed to Checkout</h5>
       <button type="button" class="text-gray-500 hover:text-gray-700" aria-label="Close" onclick="closeModal()">
         <i class="fas fa-times text-2xl"></i>
       </button>
     </div>
+
+    <!-- Home Delivery Availability Message -->
+<p id="homeDeliveryMessage" class="text-center text-lg font-semibold text-red-600 mb-4 hidden"></p>
+
+
     <form method="post" action="{% url 'showcart' %}">
       {% csrf_token %}
       <div class="mb-4">
@@ -188,6 +197,7 @@ Shopping Cart
           </div>
         {% endif %}
       </div>
+
       <div class="mb-4">
         <label for="{{ form.phone.id_for_label }}" class="block text-sm font-medium text-gray-700">Number:</label>
         <div class="flex items-center">
@@ -202,6 +212,7 @@ Shopping Cart
           </div>
         {% endif %}
       </div>
+
       <div class="mb-4">
         <label for="{{ form.address.id_for_label }}" class="block text-sm font-medium text-gray-700">Address:</label>
         <div class="flex items-center">
@@ -216,6 +227,7 @@ Shopping Cart
           </div>
         {% endif %}
       </div>
+
       <div class="text-center mt-4">
         <button type="submit" class="btn btn-custom" style="background-color:#ef3e26;">
           <span class="flex items-center justify-center">
@@ -236,6 +248,22 @@ Shopping Cart
   function closeModal() {
     document.getElementById('contactModal').classList.add('hidden');
   }
+
+  function openModal(totalAmount) {
+    if (totalAmount < 500) {
+        document.getElementById('homeDeliveryMessage').innerText = 'Home delivery is only available for orders over 500tk. You have to collect it from our outlets.';
+        document.getElementById('homeDeliveryMessage').classList.remove('hidden');
+    } else {
+        document.getElementById('homeDeliveryMessage').classList.add('hidden');
+    }
+    document.getElementById('contactModal').classList.remove('hidden');
+}
+
+function closeModal() {
+    document.getElementById('contactModal').classList.add('hidden');
+}
+
+
 </script>
 
 {% endblock %}

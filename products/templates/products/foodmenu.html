@@ -128,16 +128,12 @@
         <hr>
 
         <!-- Container for search box and download button -->
-<div class="search-download-container">
-    <!-- Search box -->
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search by product name or MRP..." onkeyup="filterTable()">
-    </div>
-
-    <!-- Download button -->
-    <button class="download-btn" onclick="downloadPDF()">Download Menu (PDF)</button>
-</div>
-
+        <div class="search-download-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search by product name or MRP..." onkeyup="filterTable()">
+            </div>
+            <button class="download-btn" onclick="downloadPDF()">Download Menu (PDF)</button>
+        </div>
 
         <!-- Table of products -->
         <div class="table-responsive">
@@ -147,14 +143,26 @@
                         <th scope="col">SL</th>
                         <th scope="col">Food Item Name</th>
                         <th scope="col">MRP</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in items %}
+                    {% for product in products %}
                     <tr>
                         <th scope="row">{{ forloop.counter }}</th>
-                        <td>{{ item.name }}</td>
-                        <td class="currency">{{ item.mrp }}</td>
+                        <td>{{ product.title }}</td>
+                        <td class="currency">
+                            {% if product.discount_price %}
+                                <span class="text-muted"><s>{{ product.price }}</s></span> {{ product.discount_price }}
+                            {% else %}
+                                {{ product.price }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-success add-to-cart-btn" data-prod-id="{{ product.id }}">
+                                Add to Cart
+                            </button>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -162,6 +170,8 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <script>
         function filterTable() {
             var input, filter, table, tr, tdName, tdMRP, i, txtValueName, txtValueMRP;
@@ -169,7 +179,7 @@
             filter = input.value.toUpperCase();
             table = document.getElementById("productTable");
             tr = table.getElementsByTagName("tr");
-    
+
             for (i = 1; i < tr.length; i++) {
                 tdName = tr[i].getElementsByTagName("td")[0];
                 tdMRP = tr[i].getElementsByTagName("td")[1];
@@ -184,12 +194,59 @@
                 }
             }
         }
-    
+
         function downloadPDF() {
             var filter = document.getElementById("searchInput").value;
             window.location.href = "{% url 'download_food_menu' %}?filter=" + encodeURIComponent(filter);
         }
+
+        jQuery(document).ready(function($) {
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        
+            // AJAX function to add item to cart without reloading
+            $('.add-to-cart-btn').click(function(e) {
+                e.preventDefault();  // Prevent page reload
+        
+                const productId = $(this).data('prod-id');
+                const csrftoken = getCookie('csrftoken');
+        
+                $.ajax({
+                    type: "POST",
+                    url: "/addtocart/" + productId + "/",  // Update this URL to match your Django URL pattern
+                    data: {
+                        'csrfmiddlewaretoken': csrftoken
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            // Update the cart quantity display in the UI
+                            $('#cart-total').text(response.total_cart_quantity);
+                            
+                            // Show success message
+                            showNotification('Item added to cart!', 'success');
+                        } else {
+                            showNotification('Error adding item to cart.', 'error');
+                        }
+                    },
+                    error: function(xhr, errmsg, err) {
+                        console.log(xhr.status + ": " + xhr.responseText);
+                        showNotification('Error adding item to cart.', 'error');
+                    }
+                });
+            });
+        });
     </script>
-    
 
 {% endblock %}

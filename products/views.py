@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponse,get_object_or_404,redirect
 from django.views import View
-from .models import Product,AddCart,Banner,CategoryImage,FoodItems
+from .models import Product,AddCart,Banner,CategoryImage,FoodItems,AboutUs, AboutUs_TeamMember
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 
@@ -22,7 +22,12 @@ def outlet(request):
     return render(request,'products/outlets.html', {'outlets': outlets})
 
 def about(request):
-    return render(request,'products/about.html')
+    about_content = AboutUs.objects.first()  # Fetches the first entry of About
+    team_members = AboutUs_TeamMember.objects.all()
+    return render(request, 'products/about.html', {
+        'about_content': about_content,
+        'team_members': team_members
+    })
 
 def contactus(request):
     return render(request,'products/ContactUs.html')
@@ -406,23 +411,27 @@ def contactus(request):
 from django.http import JsonResponse
 from .models import FoodItems
 
+from products.models import Product  # Import the correct model
+
 def foodmenu(request):
     # Get the filter value if it exists
     filter_value = request.GET.get('filter', '')
 
     if filter_value:
         # Filter items based on the search input
-        items = FoodItems.objects.filter(name__icontains=filter_value) | FoodItems.objects.filter(mrp__icontains=filter_value)
+        products = Product.objects.filter(title__icontains=filter_value) | Product.objects.filter(price__icontains=filter_value)
     else:
-        items = FoodItems.objects.all()
+        products = Product.objects.all()
 
     # Check if the request is an AJAX request
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         # Return filtered items as JSON for the autocomplete
-        item_list = list(items.values('name'))
-        return JsonResponse(item_list, safe=False)
-    
-    return render(request, 'products/foodmenu.html', {'items': items})
+        product_list = list(products.values('title'))
+        return JsonResponse(product_list, safe=False)
+
+    # Pass the products to the template
+    return render(request, 'products/foodmenu.html', {'products': products})
+
 
 
 from django.template.loader import render_to_string

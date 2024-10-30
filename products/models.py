@@ -58,6 +58,13 @@ def total_cost(self):
 
 from django.contrib.postgres.fields import JSONField
 class Order(models.Model):
+
+    STATUS_CHOICES = [
+        ('Processing', 'Processing'),
+        ('Completed', 'Completed'),
+        ('Cancel', 'Cancel'),
+    ]
+
     name = models.CharField(max_length=100)
     number = models.CharField(max_length=100)
     address = models.TextField(null=True, blank=True)
@@ -65,9 +72,15 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
-    def __str__(self):
-        return self.name
+    # New status field with choices
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default='Processing'
+    )
 
+    def __str__(self):
+        return f"Order {self.id} - {self.status}"
 
 # models.py
 from django.db import models
@@ -166,3 +179,24 @@ class FoodItems(models.Model):
 from django.db import models
 
 
+
+
+from django.db import models
+
+
+
+class AboutUs(models.Model):
+    story = models.TextField(max_length=500)
+    story_image = models.ImageField(upload_to='about/', blank=True, null=True)
+    mission = models.TextField(max_length=500)
+    mission_image = models.ImageField(upload_to='about/', blank=True, null=True)
+
+    def __str__(self):
+        return "About Page Content"
+class AboutUs_TeamMember(models.Model):
+    name = models.CharField(max_length=100)
+    designation = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='team/')
+
+    def __str__(self):
+        return self.name

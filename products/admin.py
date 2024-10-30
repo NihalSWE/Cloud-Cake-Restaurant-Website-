@@ -26,18 +26,22 @@ from import_export import resources, fields
 class OrderResource(resources.ModelResource):
     created_at = fields.Field(attribute='created_at', column_name='Created At')
     updated_at = fields.Field(attribute='updated_at', column_name='Updated At')
+    status = fields.Field(attribute='status', column_name='Status')  # Include status field in export
 
     class Meta:
         model = Order
-        fields = ('id', 'name', 'number', 'address', 'created_at', 'updated_at', 'cart_items')
-        export_order = ('id', 'name', 'number', 'address', 'created_at', 'updated_at', 'cart_items')
+        fields = ('id', 'name', 'number', 'address', 'created_at', 'updated_at', 'cart_items', 'status')
+        export_order = ('id', 'name', 'number', 'address', 'created_at', 'updated_at', 'cart_items', 'status')
 
 # Register your models with the admin site using the resource class
 @admin.register(Order)
 class OrderModelAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = OrderResource
-    list_display = ['id', 'name', 'number', 'address', 'display_cart_items', 'created_at', 'updated_at']
+    list_display = ['id', 'name', 'number', 'address', 'display_cart_items', 'status', 'created_at', 'updated_at']
     search_fields = ['name', 'number', 'address']
+    list_filter = ['status']  # Filter by status in the admin panel
+    
+
 
     def display_cart_items(self, obj):
         """
@@ -143,3 +147,15 @@ class FoodItemsAdmin(admin.ModelAdmin):
 
 
 
+
+
+from .models import AboutUs, AboutUs_TeamMember
+
+@admin.register(AboutUs)
+class AboutUsAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'story', 'mission')
+    # Customize fields if you need
+
+@admin.register(AboutUs_TeamMember)
+class AboutUs_TeamMemberAdmin(admin.ModelAdmin):
+    list_display = ('name', 'designation')
